@@ -1,0 +1,73 @@
+name: gitgitgadget PR Action
+author: webstech
+description: >
+  This is a GitHub action to process pull request creates, updates and comments with
+  gitgitgadget.  It is used as a workflow dispatch action running in a separate repo.  The
+  use case is for repos that will not allow complex github actions in the codebase when
+  the github repo is a clone that is used to submit updates to a non-GitHub maintained
+  repo.
+
+inputs:
+  token:
+    description: A repo scoped GitHub Personal Access Token.
+    required: true
+  reaction-token:
+    description: 'An optional GitHub token to use for reactions.'
+    default: '${{ github.token }}'
+    required: true
+  reactions:
+    description: 'Add reactions to comments containing commands.'
+    required: true
+    default: 'true'
+  permission:
+    description: 'The repository permission level required by the user to dispatch commands.'
+    required: true
+    default: 'write'
+  repository-dir:
+    description: 'The location of the repository.'
+    required: true
+  config-repository-dir:
+    description: 'The location of the repository with gitgitgadget configuration information.'
+    required: true
+  configuration-file:
+    description: 'The file of configuration information.'
+    required: true
+  config:
+    description: 'JSON configuration for commands.'
+    required: true
+  config-from-file:
+    description: 'JSON configuration from a file for commands.'
+    required: true
+  repo-owner:
+    description: 'Repository owner.'
+    required: true
+  repo-name:
+    description: 'Repository name.'
+    required: true
+  repo-baseowner:
+    description: 'Repository pull target.'
+    required: true
+  pull-request-number:
+    description: 'Pull request number.'
+    required: true
+  comment-id:
+    description: 'Comment id for handling comments.'
+    required: false
+  action:
+    description: "Value of 'push' or 'comment'"
+    required: true
+  skip-update:
+    description: 'Comment id for handling comments.'
+    required: false
+
+outputs:
+  error-message:
+    description: 'Validation errors when using `workflow` dispatch.'
+
+runs:
+  using: 'node16'
+  main: 'dist/index.js'
+
+branding:
+  icon: 'target'
+  color: 'gray-dark'

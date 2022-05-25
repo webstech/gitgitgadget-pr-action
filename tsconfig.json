@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "target": "es6",
+    "module": "commonjs",
+    "lib": [
+      "es6"
+    ],
+    "outDir": "./build",                      /* Redirect output structure to the directory. */
+    "rootDir": "./src",
+    "declaration": true,
+    "strict": true,
+    "noImplicitAny": false,
+    "esModuleInterop": true
+  },
+  "exclude": ["__test__", "lib", "node_modules"],
+  "include": [
+    "src/*.ts",
+  ]
+}
