@@ -1,6 +1,8 @@
 import * as core from "@actions/core";
+import { dirname } from 'path';
 import { inspect } from "util";
 import { processWork } from "gitgitgadget/gitgitgadget-helper";
+import findGit, { Git } from 'find-git-exec';
 
 async function run(): Promise<void> {
     try {
@@ -29,6 +31,13 @@ async function run(): Promise<void> {
             throw new Error(`Missing required input 'token'.`);
         }
 
+        await setupGitEnvironment();
+        /*
+        if (gitInfo === null) {
+          throw new Error('External Git was not found on the host system.');
+        }
+        */
+
         await processWork({ ...inputs });
     } catch (err) {
         const error = err as Error;
@@ -50,3 +59,15 @@ async function run(): Promise<void> {
 }
 
 void run();
+
+async function setupGitEnvironment(): Promise<Git> {
+    const gitInfo = await findGit();
+
+    if (gitInfo.path && gitInfo.execPath) {
+      // Set the environment variables to be able to use an external Git.
+      process.env.GIT_EXEC_PATH = gitInfo.execPath;
+      process.env.LOCAL_GIT_DIRECTORY = dirname(dirname(gitInfo.path));
+    }
+
+    return gitInfo;
+}
