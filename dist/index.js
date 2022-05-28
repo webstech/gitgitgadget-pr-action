@@ -4005,10 +4005,9 @@ exports.request = request;
 /***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
-var __webpack_unused_export__;
 
 
-__webpack_unused_export__ = ({ value: true });
+Object.defineProperty(exports, "__esModule", ({ value: true }));
 
 var core = __nccwpck_require__(6762);
 var pluginRequestLog = __nccwpck_require__(8883);
@@ -4021,7 +4020,7 @@ const Octokit = core.Octokit.plugin(pluginRequestLog.requestLog, pluginRestEndpo
   userAgent: `octokit-rest.js/${VERSION}`
 });
 
-exports.v = Octokit;
+exports.Octokit = Octokit;
 //# sourceMappingURL=index.js.map
 
 
@@ -6931,16 +6930,15 @@ class GitTask {
 /***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
-var __webpack_unused_export__;
 
-__webpack_unused_export__ = ({ value: true });
+Object.defineProperty(exports, "__esModule", ({ value: true }));
 var git_process_1 = __nccwpck_require__(4681);
-exports.nY = git_process_1.GitProcess;
-__webpack_unused_export__ = git_process_1.GitTaskCancelResult;
+exports.GitProcess = git_process_1.GitProcess;
+exports.GitTaskCancelResult = git_process_1.GitTaskCancelResult;
 var errors_1 = __nccwpck_require__(3061);
-__webpack_unused_export__ = errors_1.GitError;
-__webpack_unused_export__ = errors_1.RepositoryDoesNotExistErrorCode;
-__webpack_unused_export__ = errors_1.GitNotFoundErrorCode;
+exports.GitError = errors_1.GitError;
+exports.RepositoryDoesNotExistErrorCode = errors_1.RepositoryDoesNotExistErrorCode;
+exports.GitNotFoundErrorCode = errors_1.GitNotFoundErrorCode;
 //# sourceMappingURL=index.js.map
 
 /***/ }),
@@ -13370,6 +13368,206 @@ Object.defineProperty(exports, "decodeHTML4Strict", ({ enumerable: true, get: fu
 Object.defineProperty(exports, "decodeHTML5Strict", ({ enumerable: true, get: function () { return decode_2.decodeHTMLStrict; } }));
 Object.defineProperty(exports, "decodeXMLStrict", ({ enumerable: true, get: function () { return decode_2.decodeXML; } }));
 
+
+/***/ }),
+
+/***/ 1664:
+/***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
+
+"use strict";
+
+/*
+ * Copyright (c) 2017 TypeFox. Licensed under the MIT License.
+ * See the LICENSE file in the project root for license information.
+ */
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __generator = (this && this.__generator) || function (thisArg, body) {
+    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
+    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
+    function verb(n) { return function (v) { return step([n, v]); }; }
+    function step(op) {
+        if (f) throw new TypeError("Generator is already executing.");
+        while (_) try {
+            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+            if (y = 0, t) op = [op[0] & 2, t.value];
+            switch (op[0]) {
+                case 0: case 1: t = op; break;
+                case 4: _.label++; return { value: op[1], done: false };
+                case 5: _.label++; y = op[1]; op = [0]; continue;
+                case 7: op = _.ops.pop(); _.trys.pop(); continue;
+                default:
+                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
+                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
+                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
+                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
+                    if (t[2]) _.ops.pop();
+                    _.trys.pop(); continue;
+            }
+            op = body.call(thisArg, _);
+        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
+        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
+    }
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+// The current implementation is based on https://github.com/microsoft/vscode/blob/master/extensions/git/src/git.ts#L50-L141
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+var path = __nccwpck_require__(1017);
+var which = __nccwpck_require__(4207);
+var cp = __nccwpck_require__(2081);
+/**
+ * Resolves to the path of the locally available Git executable. Will be rejected if Git cannot be found on the system.
+ * `hint` can be provided as the initial lookup path, and `onLookup` function is used for logging during the Git discovery.
+ */
+function default_1(_a) {
+    var _b = _a === void 0 ? {} : _a, hint = _b.hint, onLookup = _b.onLookup;
+    return __awaiter(this, void 0, void 0, function () {
+        var lookup, first;
+        var _this = this;
+        return __generator(this, function (_c) {
+            lookup = onLookup !== null && onLookup !== void 0 ? onLookup : (function () { });
+            first = hint ? findSpecificGit(hint, lookup) : Promise.reject(null);
+            return [2 /*return*/, first
+                    .then(undefined, function () { return __awaiter(_this, void 0, void 0, function () {
+                    var _a, gitOnPath;
+                    return __generator(this, function (_b) {
+                        switch (_b.label) {
+                            case 0:
+                                _a = process.platform;
+                                switch (_a) {
+                                    case 'darwin': return [3 /*break*/, 1];
+                                    case 'win32': return [3 /*break*/, 2];
+                                }
+                                return [3 /*break*/, 3];
+                            case 1: return [2 /*return*/, findGitDarwin(lookup)];
+                            case 2: return [2 /*return*/, findGitWin32(lookup)];
+                            case 3: return [4 /*yield*/, which('git')];
+                            case 4:
+                                gitOnPath = _b.sent();
+                                return [4 /*yield*/, findSpecificGit(gitOnPath, lookup)];
+                            case 5: return [2 /*return*/, _b.sent()];
+                        }
+                    });
+                }); })
+                    .then(null, function () { return Promise.reject(new Error('Git installation not found.')); })];
+        });
+    });
+}
+exports["default"] = default_1;
+function toUtf8String(buffers) {
+    return Buffer.concat(buffers).toString('utf8').trim();
+}
+function parseVersion(raw) {
+    return raw.replace(/^git version /, '');
+}
+function normalizePath(pathToNormalize) {
+    return path.normalize(pathToNormalize);
+}
+function findSpecificGit(path, onLookup) {
+    return new Promise(function (c, e) {
+        onLookup(path);
+        exec(path, '--version').then(function (version) {
+            exec(path, '--exec-path').then(function (execPath) {
+                c({ path: path, version: parseVersion(version), execPath: normalizePath(execPath) });
+            });
+        }).catch(function (err) {
+            e(err);
+        });
+    });
+}
+function exec(path, command) {
+    return __awaiter(this, void 0, void 0, function () {
+        return __generator(this, function (_a) {
+            return [2 /*return*/, new Promise(function (c, e) {
+                    var buffers = [];
+                    var child = cp.spawn(path, Array.isArray(command) ? command : [command]);
+                    child.stdout.on('data', function (b) { return buffers.push(b); });
+                    child.on('error', e);
+                    child.on('close', function (code) { return code ? e(new Error("Git not found under '" + path + "'.")) : c(toUtf8String(buffers)); });
+                })];
+        });
+    });
+}
+function findGitDarwin(onLookup) {
+    return new Promise(function (c, e) {
+        cp.exec('which git', function (err, gitPathBuffer) {
+            if (err) {
+                return e('git not found');
+            }
+            var path = gitPathBuffer.toString().replace(/^\s+|\s+$/g, '');
+            function getVersion(path) {
+                onLookup(path);
+                // make sure git executes
+                cp.exec('git --version', function (err, stdout) {
+                    if (err) {
+                        return e('git not found');
+                    }
+                    var version = parseVersion(stdout.trim());
+                    cp.exec('git --exec-path', function (err, stdout) {
+                        if (err) {
+                            return e('git not found');
+                        }
+                        var execPath = normalizePath(stdout.trim());
+                        return c({ path: path, version: version, execPath: execPath });
+                    });
+                });
+            }
+            if (path !== '/usr/bin/git') {
+                return getVersion(path);
+            }
+            // must check if XCode is installed
+            cp.exec('xcode-select -p', function (err) {
+                if (err && err.code === 2) {
+                    // git is not installed, and launching /usr/bin/git
+                    // will prompt the user to install it
+                    return e('git not found');
+                }
+                getVersion(path);
+            });
+        });
+    });
+}
+function findSystemGitWin32(base, onLookup) {
+    if (!base) {
+        return Promise.reject('Not found');
+    }
+    return findSpecificGit(path.join(base, 'Git', 'cmd', 'git.exe'), onLookup);
+}
+function findGitWin32InPath(onLookup) {
+    return __awaiter(this, void 0, void 0, function () {
+        var path;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, which('git.exe')];
+                case 1:
+                    path = _a.sent();
+                    return [2 /*return*/, findSpecificGit(path, onLookup)];
+            }
+        });
+    });
+}
+function findGitWin32(onLookup) {
+    return __awaiter(this, void 0, void 0, function () {
+        return __generator(this, function (_a) {
+            return [2 /*return*/, findSystemGitWin32(process.env['ProgramW6432'], onLookup)
+                    .then(undefined, function () { return findSystemGitWin32(process.env['ProgramFiles(x86)'], onLookup); })
+                    .then(undefined, function () { return findSystemGitWin32(process.env['ProgramFiles'], onLookup); })
+                    .then(undefined, function () { return findSystemGitWin32(path.join(process.env['LocalAppData'], 'Programs'), onLookup); })
+                    .then(undefined, function () { return findGitWin32InPath(onLookup); })];
+        });
+    });
+}
+//# sourceMappingURL=find-git-exec.js.map
 
 /***/ }),
 
@@ -20604,6 +20802,167 @@ function isPlainObject(o) {
 }
 
 exports.isPlainObject = isPlainObject;
+
+
+/***/ }),
+
+/***/ 7126:
+/***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
+
+var fs = __nccwpck_require__(7147)
+var core
+if (process.platform === 'win32' || global.TESTING_WINDOWS) {
+  core = __nccwpck_require__(2001)
+} else {
+  core = __nccwpck_require__(9728)
+}
+
+module.exports = isexe
+isexe.sync = sync
+
+function isexe (path, options, cb) {
+  if (typeof options === 'function') {
+    cb = options
+    options = {}
+  }
+
+  if (!cb) {
+    if (typeof Promise !== 'function') {
+      throw new TypeError('callback not provided')
+    }
+
+    return new Promise(function (resolve, reject) {
+      isexe(path, options || {}, function (er, is) {
+        if (er) {
+          reject(er)
+        } else {
+          resolve(is)
+        }
+      })
+    })
+  }
+
+  core(path, options || {}, function (er, is) {
+    // ignore EACCES because that just means we aren't allowed to run it
+    if (er) {
+      if (er.code === 'EACCES' || options && options.ignoreErrors) {
+        er = null
+        is = false
+      }
+    }
+    cb(er, is)
+  })
+}
+
+function sync (path, options) {
+  // my kingdom for a filtered catch
+  try {
+    return core.sync(path, options || {})
+  } catch (er) {
+    if (options && options.ignoreErrors || er.code === 'EACCES') {
+      return false
+    } else {
+      throw er
+    }
+  }
+}
+
+
+/***/ }),
+
+/***/ 9728:
+/***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
+
+module.exports = isexe
+isexe.sync = sync
+
+var fs = __nccwpck_require__(7147)
+
+function isexe (path, options, cb) {
+  fs.stat(path, function (er, stat) {
+    cb(er, er ? false : checkStat(stat, options))
+  })
+}
+
+function sync (path, options) {
+  return checkStat(fs.statSync(path), options)
+}
+
+function checkStat (stat, options) {
+  return stat.isFile() && checkMode(stat, options)
+}
+
+function checkMode (stat, options) {
+  var mod = stat.mode
+  var uid = stat.uid
+  var gid = stat.gid
+
+  var myUid = options.uid !== undefined ?
+    options.uid : process.getuid && process.getuid()
+  var myGid = options.gid !== undefined ?
+    options.gid : process.getgid && process.getgid()
+
+  var u = parseInt('100', 8)
+  var g = parseInt('010', 8)
+  var o = parseInt('001', 8)
+  var ug = u | g
+
+  var ret = (mod & o) ||
+    (mod & g) && gid === myGid ||
+    (mod & u) && uid === myUid ||
+    (mod & ug) && myUid === 0
+
+  return ret
+}
+
+
+/***/ }),
+
+/***/ 2001:
+/***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
+
+module.exports = isexe
+isexe.sync = sync
+
+var fs = __nccwpck_require__(7147)
+
+function checkPathExt (path, options) {
+  var pathext = options.pathExt !== undefined ?
+    options.pathExt : process.env.PATHEXT
+
+  if (!pathext) {
+    return true
+  }
+
+  pathext = pathext.split(';')
+  if (pathext.indexOf('') !== -1) {
+    return true
+  }
+  for (var i = 0; i < pathext.length; i++) {
+    var p = pathext[i].toLowerCase()
+    if (p && path.substr(-p.length).toLowerCase() === p) {
+      return true
+    }
+  }
+  return false
+}
+
+function checkStat (stat, path, options) {
+  if (!stat.isSymbolicLink() && !stat.isFile()) {
+    return false
+  }
+  return checkPathExt(path, options)
+}
+
+function isexe (path, options, cb) {
+  fs.stat(path, function (er, stat) {
+    cb(er, er ? false : checkStat(stat, path, options))
+  })
+}
+
+function sync (path, options) {
+  return checkStat(fs.statSync(path), path, options)
+}
 
 
 /***/ }),
@@ -39218,7 +39577,6 @@ module.exports = LeWindows;
 /***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
 
 "use strict";
-var __webpack_unused_export__;
 
 
 const Mailer = __nccwpck_require__(833);
@@ -39238,7 +39596,7 @@ const ETHEREAL_CACHE = ['true', 'yes', 'y', '1'].includes((process.env.ETHEREAL_
 
 let testAccount = false;
 
-module.exports.qv = function (transporter, defaults) {
+module.exports.createTransport = function (transporter, defaults) {
     let urlConfig;
     let options;
     let mailer;
@@ -39276,7 +39634,7 @@ module.exports.qv = function (transporter, defaults) {
     return mailer;
 };
 
-__webpack_unused_export__ = function (apiUrl, callback) {
+module.exports.createTestAccount = function (apiUrl, callback) {
     let promise;
 
     if (!callback && typeof apiUrl === 'function') {
@@ -39344,7 +39702,7 @@ __webpack_unused_export__ = function (apiUrl, callback) {
     return promise;
 };
 
-__webpack_unused_export__ = function (info) {
+module.exports.getTestMessageUrl = function (info) {
     if (!info || !info.response) {
         return false;
     }
@@ -50218,6 +50576,138 @@ module.exports.implForWrapper = function (wrapper) {
 
 /***/ }),
 
+/***/ 4207:
+/***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
+
+const isWindows = process.platform === 'win32' ||
+    process.env.OSTYPE === 'cygwin' ||
+    process.env.OSTYPE === 'msys'
+
+const path = __nccwpck_require__(1017)
+const COLON = isWindows ? ';' : ':'
+const isexe = __nccwpck_require__(7126)
+
+const getNotFoundError = (cmd) =>
+  Object.assign(new Error(`not found: ${cmd}`), { code: 'ENOENT' })
+
+const getPathInfo = (cmd, opt) => {
+  const colon = opt.colon || COLON
+
+  // If it has a slash, then we don't bother searching the pathenv.
+  // just check the file itself, and that's it.
+  const pathEnv = cmd.match(/\//) || isWindows && cmd.match(/\\/) ? ['']
+    : (
+      [
+        // windows always checks the cwd first
+        ...(isWindows ? [process.cwd()] : []),
+        ...(opt.path || process.env.PATH ||
+          /* istanbul ignore next: very unusual */ '').split(colon),
+      ]
+    )
+  const pathExtExe = isWindows
+    ? opt.pathExt || process.env.PATHEXT || '.EXE;.CMD;.BAT;.COM'
+    : ''
+  const pathExt = isWindows ? pathExtExe.split(colon) : ['']
+
+  if (isWindows) {
+    if (cmd.indexOf('.') !== -1 && pathExt[0] !== '')
+      pathExt.unshift('')
+  }
+
+  return {
+    pathEnv,
+    pathExt,
+    pathExtExe,
+  }
+}
+
+const which = (cmd, opt, cb) => {
+  if (typeof opt === 'function') {
+    cb = opt
+    opt = {}
+  }
+  if (!opt)
+    opt = {}
+
+  const { pathEnv, pathExt, pathExtExe } = getPathInfo(cmd, opt)
+  const found = []
+
+  const step = i => new Promise((resolve, reject) => {
+    if (i === pathEnv.length)
+      return opt.all && found.length ? resolve(found)
+        : reject(getNotFoundError(cmd))
+
+    const ppRaw = pathEnv[i]
+    const pathPart = /^".*"$/.test(ppRaw) ? ppRaw.slice(1, -1) : ppRaw
+
+    const pCmd = path.join(pathPart, cmd)
+    const p = !pathPart && /^\.[\\\/]/.test(cmd) ? cmd.slice(0, 2) + pCmd
+      : pCmd
+
+    resolve(subStep(p, i, 0))
+  })
+
+  const subStep = (p, i, ii) => new Promise((resolve, reject) => {
+    if (ii === pathExt.length)
+      return resolve(step(i + 1))
+    const ext = pathExt[ii]
+    isexe(p + ext, { pathExt: pathExtExe }, (er, is) => {
+      if (!er && is) {
+        if (opt.all)
+          found.push(p + ext)
+        else
+          return resolve(p + ext)
+      }
+      return resolve(subStep(p, i, ii + 1))
+    })
+  })
+
+  return cb ? step(0).then(res => cb(null, res), cb) : step(0)
+}
+
+const whichSync = (cmd, opt) => {
+  opt = opt || {}
+
+  const { pathEnv, pathExt, pathExtExe } = getPathInfo(cmd, opt)
+  const found = []
+
+  for (let i = 0; i < pathEnv.length; i ++) {
+    const ppRaw = pathEnv[i]
+    const pathPart = /^".*"$/.test(ppRaw) ? ppRaw.slice(1, -1) : ppRaw
+
+    const pCmd = path.join(pathPart, cmd)
+    const p = !pathPart && /^\.[\\\/]/.test(cmd) ? cmd.slice(0, 2) + pCmd
+      : pCmd
+
+    for (let j = 0; j < pathExt.length; j ++) {
+      const cur = p + pathExt[j]
+      try {
+        const is = isexe.sync(cur, { pathExt: pathExtExe })
+        if (is) {
+          if (opt.all)
+            found.push(cur)
+          else
+            return cur
+        }
+      } catch (ex) {}
+    }
+  }
+
+  if (opt.all && found.length)
+    return found
+
+  if (opt.nothrow)
+    return null
+
+  throw getNotFoundError(cmd)
+}
+
+module.exports = which
+which.sync = whichSync
+
+
+/***/ }),
+
 /***/ 2940:
 /***/ ((module) => {
 
@@ -50258,6 +50748,3931 @@ function wrappy (fn, cb) {
 
 /***/ }),
 
+/***/ 9027:
+/***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
+
+"use strict";
+
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.processWork = void 0;
+const ci_helper_1 = __nccwpck_require__(8707);
+const fs_util_1 = __nccwpck_require__(7927);
+// import { gitConfig } from "./lib/git";
+const gitgitgadget_config_1 = __nccwpck_require__(3650);
+const project_config_1 = __nccwpck_require__(5520);
+const path_1 = __importDefault(__nccwpck_require__(1017));
+function processWork(work) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const config = work.config ? (0, project_config_1.setConfig)(yield getExternalConfig(work.config)) : (0, gitgitgadget_config_1.getConfig)();
+        // Update with current values
+        config.repo.name = work.repoName;
+        config.repo.owner = work.repoOwner;
+        config.repo.baseOwner = work.repoBaseowner;
+        (0, project_config_1.setConfig)(config);
+        lintConfig(config);
+        if (!(yield (0, fs_util_1.isDirectory)(work.repositoryDir))) {
+            throw new Error(`git WorkDir '${work.repositoryDir}' not found.`);
+        }
+        const ci = new ci_helper_1.CIHelper(work.repositoryDir, work.skipUpdate ? true : false, work.configRepositoryDir);
+        if (work.action === "comment") {
+            if (work.commentId) {
+                const commentId = parseInt(work.commentId, 10);
+                yield ci.handleComment(work.repoOwner, commentId);
+            }
+            else {
+                throw new Error(`Action '${work.action}' requires a comment-id.`);
+            }
+        }
+        else if (work.action === "push") {
+            const pullRequestNumber = parseInt(work.pullRequestNumber, 10);
+            yield ci.handlePush(work.repoOwner, pullRequestNumber);
+        }
+        else {
+            throw new Error(`Action '${work.action}' not found.`);
+        }
+    });
+}
+exports.processWork = processWork;
+function getExternalConfig(file) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const newConfig = yield (0, project_config_1.loadConfig)(path_1.default.resolve(file));
+        if (!newConfig.hasOwnProperty("project")) {
+            throw new Error(`User configurations must have a 'project:'.  Not found in ${file}`);
+        }
+        if (!newConfig.repo.owner.match(/^[a-z\d](?:[a-z\d]|-(?=[a-z\d])){0,38}$/i)) {
+            throw new Error(`Invalid 'owner' ${newConfig.repo.owner} in ${file}`);
+        }
+        if (!newConfig.repo.baseOwner.match(/^[a-z\d](?:[a-z\d]|-(?=[a-z\d])){0,38}$/i)) {
+            throw new Error(`Invalid 'baseOwner' ${newConfig.repo.baseOwner} in ${file}`);
+        }
+        return newConfig;
+    });
+}
+function lintConfig(config) {
+    if (!config.hasOwnProperty("project")) {
+        throw new Error(`User configurations must have a 'project:'.  Not found in ${path_1.default}`);
+    }
+    if (!config.repo.owner.match(/^[a-z\d](?:[a-z\d]|-(?=[a-z\d])){0,38}$/i)) {
+        throw new Error(`Invalid 'owner' ${config.repo.owner} in ${path_1.default}`);
+    }
+    if (!config.repo.baseOwner.match(/^[a-z\d](?:[a-z\d]|-(?=[a-z\d])){0,38}$/i)) {
+        throw new Error(`Invalid 'baseOwner' ${config.repo.baseOwner} in ${path_1.default}`);
+    }
+}
+
+
+/***/ }),
+
+/***/ 8707:
+/***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
+
+"use strict";
+
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.CIHelper = void 0;
+const fs = __importStar(__nccwpck_require__(7147));
+const util = __importStar(__nccwpck_require__(3837));
+// import addressparser = require("nodemailer/lib/addressparser");
+const addressparser_1 = __importDefault(__nccwpck_require__(7382));
+const commit_lint_1 = __nccwpck_require__(8058);
+const git_1 = __nccwpck_require__(888);
+const git_notes_1 = __nccwpck_require__(7170);
+const gitgitgadget_1 = __nccwpck_require__(4216);
+const github_glue_1 = __nccwpck_require__(4047);
+const mail_archive_helper_1 = __nccwpck_require__(2312);
+const mail_commit_mapping_1 = __nccwpck_require__(8544);
+const project_config_1 = __nccwpck_require__(5520);
+const pullRequestKey_1 = __nccwpck_require__(4988);
+const readFile = util.promisify(fs.readFile);
+/*
+ * This class offers functions to support the operations we want to perform from
+ * automated builds, e.g. identify corresponding commits in git.git,
+ * corresponding branches in https://github.com/gitster/git, identify which
+ * git.git branches integrated said branch already (if any), and via which merge
+ * commit.
+ */
+class CIHelper {
+    constructor(workDir, skipUpdate, gggConfigDir = ".") {
+        var _a;
+        this.config = (0, project_config_1.getConfig)();
+        this.gggConfigDir = gggConfigDir;
+        this.workDir = workDir;
+        this.notes = new git_notes_1.GitNotes(workDir);
+        this.gggNotesUpdated = !!skipUpdate;
+        this.mail2commit = new mail_commit_mapping_1.MailCommitMapping(this.notes.workDir);
+        this.mail2CommitMapUpdated = !!skipUpdate;
+        this.github = new github_glue_1.GitHubGlue(workDir, this.config.repo.owner, this.config.repo.name);
+        this.testing = false;
+        this.maxCommitsExceptions = ((_a = this.config.lint) === null || _a === void 0 ? void 0 : _a.maxCommitsIgnore) || [];
+        this.urlBase = `https://github.com/${this.config.repo.owner}/`;
+        this.urlRepo = `${this.urlBase}${this.config.repo.name}/`;
+    }
+    /*
+     * Given a commit that was contributed as a patch via GitGitGadget (i.e.
+     * a commit with a Message-ID recorded in `refs/notes/gitgitgadget`),
+     * identify the commit (if any) in `git.git`.
+     */
+    identifyUpstreamCommit(originalCommit) {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield this.maybeUpdateMail2CommitMap();
+            const messageId = yield this.getMessageIdForOriginalCommit(originalCommit);
+            if (!messageId) {
+                return undefined;
+            }
+            return yield this.mail2commit.getGitGitCommitForMessageId(messageId);
+        });
+    }
+    /**
+     * Given an original commit that was contributed as a patch via
+     * GitGitGadget (i.e. a commit with a Message-ID recorded in
+     * `refs/notes/gitgitgadget`), and the (known and verified) commit in
+     * `git.git`, update the `refs/notes/mail-to-commit` ref accordingly.
+     * This is sometimes needed when the automated job fails to identify
+     * the correct commit.
+     *
+     * @param originalCommit the original, contributed commit
+     * @param gitGitCommit the corresponding commit in git.git
+     */
+    setUpstreamCommit(originalCommit, gitGitCommit) {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield this.maybeUpdateMail2CommitMap();
+            if (!this.commit2mailNotes) {
+                this.commit2mailNotes = new git_notes_1.GitNotes(this.mail2commit.workDir, "refs/notes/commit-to-mail");
+                yield this.commit2mailNotes.update(this.urlRepo);
+            }
+            const messageId = yield this.getMessageIdForOriginalCommit(originalCommit);
+            if (!messageId) {
+                return undefined;
+            }
+            yield this.mail2commit.mail2CommitNotes.setString(messageId, gitGitCommit, true);
+            yield this.commit2mailNotes.appendCommitNote(gitGitCommit, messageId);
+        });
+    }
+    /**
+     * Given a Message-Id, identify the upstream commit (if any), and if there
+     * is one, and if it was not yet recorded in GitGitGadget's metadata, record
+     * it and create a GitHub Commit Status.
+     *
+     * @returns `true` if the metadata had to be updated
+     */
+    updateCommitMapping(messageID, upstreamCommit) {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield this.maybeUpdateGGGNotes();
+            const mailMeta = yield this.notes.get(messageID);
+            if (!mailMeta) {
+                throw new Error(`No metadata found for ${messageID}`);
+            }
+            if (upstreamCommit === undefined) {
+                yield this.maybeUpdateMail2CommitMap();
+                upstreamCommit = yield this.mail2commit.getGitGitCommitForMessageId(messageID);
+            }
+            if (!upstreamCommit || upstreamCommit === mailMeta.commitInGitGit) {
+                return false;
+            }
+            mailMeta.commitInGitGit = upstreamCommit;
+            if (!mailMeta.originalCommit) {
+                const originalCommit = yield this.getOriginalCommitForMessageId(messageID);
+                if (!originalCommit) {
+                    throw new Error(`No original commit found for ${messageID}`);
+                }
+                mailMeta.originalCommit = originalCommit;
+            }
+            yield this.notes.set(messageID, mailMeta, true);
+            if (!this.testing && mailMeta.pullRequestURL && mailMeta.pullRequestURL.startsWith(this.urlBase)) {
+                yield this.github.annotateCommit(mailMeta.originalCommit, upstreamCommit, this.config.repo.owner, this.config.repo.baseOwner);
+            }
+            return true;
+        });
+    }
+    updateCommitMappings() {
+        return __awaiter(this, void 0, void 0, function* () {
+            if (!this.gggNotesUpdated) {
+                const args = [];
+                args.push(...this.config.repo.branches.map(branch => `+refs/heads/${branch}:refs/remotes/upstream/${branch}`));
+                yield (0, git_1.git)(["fetch", this.urlRepo, "--tags",
+                    "+refs/notes/gitgitgadget:refs/notes/gitgitgadget",
+                    ...args], { workDir: this.workDir });
+                this.gggNotesUpdated = true;
+            }
+            const options = yield this.getGitGitGadgetOptions();
+            if (!options.openPRs) {
+                return false;
+            }
+            const commitsInSeen = new Set((yield (0, git_1.git)(["rev-list", "--no-merges",
+                "^refs/remotes/upstream/maint~100",
+                "refs/remotes/upstream/seen"], { workDir: this.workDir })).split("\n"));
+            let result = false;
+            /*
+             * Both `bases` and `heads` accumulate the `-p<commit-hash>` parameters
+             * for the `git commit-tree` command for the two octopus merges. We
+             * need to make sure that no parent is listed twice, as `git
+             * commit-tree` would error out on that.
+             */
+            const bases = new Set();
+            const heads = new Set();
+            for (const pullRequestURL of Object.keys(options.openPRs)) {
+                const info = yield this.getPRMetadata(pullRequestURL);
+                if (info === undefined || info.latestTag === undefined ||
+                    info.baseCommit === undefined ||
+                    info.headCommit === undefined || info.baseLabel === undefined ||
+                    info.baseLabel.match(/^gitgitgadget:git-gui\//)) {
+                    continue;
+                }
+                const messageID = yield this.getMessageIdForOriginalCommit(info.headCommit);
+                if (!messageID) {
+                    continue;
+                }
+                const meta = yield this.getMailMetadata(messageID);
+                if (!meta) {
+                    continue;
+                }
+                if (meta.commitInGitGit !== undefined) {
+                    if (commitsInSeen.has(meta.commitInGitGit)) {
+                        continue;
+                    }
+                    console.log(`Upstream commit ${meta.commitInGitGit} for ${info.headCommit} of ${info.pullRequestURL} no longer found in 'seen'`);
+                    meta.commitInGitGit = undefined;
+                    result = true;
+                }
+                bases.add(`-p${info.baseCommit}`);
+                heads.add(`-p${info.headCommit}`);
+            }
+            if (heads.size > 0) {
+                /*
+                 * Generate throw-away octopus merges to combine multiple commit
+                 * ranges into a single one.
+                 */
+                const octopus = (set) => __awaiter(this, void 0, void 0, function* () {
+                    const array = Array.from(set);
+                    if (array.length === 1) {
+                        return array[0];
+                    }
+                    return yield (0, git_1.git)(["commit-tree", ...array, git_1.emptyTreeName, "-m", "()"], { workDir: this.workDir });
+                });
+                const range1 = `${yield octopus(bases)}..${yield octopus(heads)}`;
+                const range2 = "refs/remotes/upstream/maint~100..refs/remotes/upstream/seen";
+                const start = Date.now();
+                const out = yield (0, git_1.git)(["-c", "core.abbrev=40", "range-diff", "-s",
+                    range1, range2], { workDir: this.workDir });
+                const duration = Date.now() - start;
+                if (duration > 2000)
+                    console.log(`warning: \`git range-diff ${range1} ${range2}\` took ${duration / 1000} seconds`);
+                for (const line of out.split("\n")) {
+                    const match = line.match(/^[^:]*: *([^ ]*) [!=][^:]*: *([^ ]*)/);
+                    if (!match) {
+                        continue;
+                    }
+                    const messageID2 = yield this.getMessageIdForOriginalCommit(match[1]);
+                    if (messageID2 === undefined) {
+                        continue;
+                    }
+                    if (yield this.updateCommitMapping(messageID2, match[2])) {
+                        result = true;
+                    }
+                }
+            }
+            return result;
+        });
+    }
+    /**
+     * Process all open PRs.
+     *
+     * @returns true if `refs/notes/gitgitgadget` was updated (and needs to
+     * be pushed)
+     */
+    handleOpenPRs() {
+        return __awaiter(this, void 0, void 0, function* () {
+            const options = yield this.getGitGitGadgetOptions();
+            if (!options.openPRs) {
+                return false;
+            }
+            let result = false;
+            let optionsUpdated = false;
+            for (const pullRequestURL in options.openPRs) {
+                if (!options.openPRs.hasOwnProperty(pullRequestURL)) {
+                    continue;
+                }
+                console.log(`Handling ${pullRequestURL}`);
+                const [notesUpdated, optionsUpdated2] = yield this.handlePR(pullRequestURL, options);
+                if (notesUpdated) {
+                    result = true;
+                }
+                if (optionsUpdated2) {
+                    optionsUpdated = true;
+                }
+            }
+            if (optionsUpdated) {
+                yield this.notes.set("", options, true);
+                result = true;
+            }
+            return result;
+        });
+    }
+    /**
+     * Handles one PR, i.e. looks whether an upstream commit has been
+     * created/updated that corresponds to the tip commit of the PR, whether it
+     * got its own branch in gitster/git, whether it has been integrated into
+     * any upstream branch, whether it was kicked out of a branch, etc, and
+     * updates the PR on GitHub accordingly (labels, add a comment to inform the
+     * user, close the PR, etc).
+     *
+     * @param {string} pullRequestURL the PR to handle
+     * @param {IGitGitGadgetOptions} options the GitGitGadget options which may
+     * need to be updated.
+     *
+     * @returns two booleans; the first is `true` if there were updates that
+     * require `refs/notes/gitgitgadget` to be pushed. The second is `true`
+     * if the `options` were updated.
+     */
+    handlePR(pullRequestURL, options) {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield this.maybeUpdateGGGNotes();
+            yield this.maybeUpdateMail2CommitMap();
+            let updateOptionsInRef;
+            if (options) {
+                updateOptionsInRef = false;
+            }
+            else {
+                options = yield this.getGitGitGadgetOptions();
+                updateOptionsInRef = true;
+            }
+            const prMeta = yield this.notes.get(pullRequestURL);
+            if (!prMeta || !prMeta.coverLetterMessageId) {
+                return [false, false];
+            }
+            const headMessageID = yield this.getMessageIdForOriginalCommit(prMeta.headCommit);
+            const headMeta = headMessageID && (yield this.getMailMetadata(headMessageID));
+            const tipCommitInGitGit = headMeta && headMeta.commitInGitGit;
+            if (!tipCommitInGitGit) {
+                return [false, false];
+            }
+            let notesUpdated = false;
+            if (tipCommitInGitGit !== prMeta.tipCommitInGitGit) {
+                prMeta.tipCommitInGitGit = tipCommitInGitGit;
+                notesUpdated = true;
+            }
+            const prKey = (0, pullRequestKey_1.getPullRequestKeyFromURL)(pullRequestURL);
+            // Identify branch in maintainer repo
+            const maintainerBranch = `refs/remotes/${this.config.repo.maintainerBranch}/`;
+            const maintainerRepo = `${this.config.repo.maintainerBranch}.${this.config.repo.name}`;
+            let gitsterBranch = yield (0, git_1.git)(["for-each-ref", `--points-at=${tipCommitInGitGit}`,
+                "--format=%(refname)", maintainerBranch], { workDir: this.workDir });
+            if (gitsterBranch) {
+                const newline = gitsterBranch.indexOf("\n");
+                if (newline > 0) {
+                    const comment2 = `Found multiple candidates in ${maintainerRepo}:\n${gitsterBranch};\n\nUsing the first one.`;
+                    const url2 = yield this.github.addPRComment(prKey, comment2);
+                    console.log(`Added comment about ${gitsterBranch}: ${url2}`);
+                    gitsterBranch = gitsterBranch.substring(0, newline);
+                }
+                gitsterBranch = gitsterBranch.substring(maintainerBranch.length);
+                const comment = `This branch is now known as [\`${gitsterBranch}\`](https://github.com/${maintainerRepo}/commits/${gitsterBranch}).`;
+                if (prMeta.branchNameInGitsterGit !== gitsterBranch) {
+                    prMeta.branchNameInGitsterGit = gitsterBranch;
+                    notesUpdated = true;
+                    const url = yield this.github.addPRComment(prKey, comment);
+                    console.log(`Added comment about ${gitsterBranch}: ${url}`);
+                }
+            }
+            let closePR;
+            const prLabelsToAdd = [];
+            for (const branch of this.config.repo.trackingBranches) {
+                const mergeCommit = yield this.identifyMergeCommit(branch, tipCommitInGitGit);
+                if (!mergeCommit) {
+                    continue;
+                }
+                if (this.config.repo.closingBranches.includes(branch)) {
+                    closePR = mergeCommit;
+                }
+                if (!prMeta.mergedIntoUpstream) {
+                    prMeta.mergedIntoUpstream = {};
+                }
+                if (prMeta.mergedIntoUpstream[branch] !== mergeCommit) {
+                    prMeta.mergedIntoUpstream[branch] = mergeCommit;
+                    notesUpdated = true;
+                    // Add label on GitHub
+                    prLabelsToAdd.push(branch);
+                    // Add comment on GitHub
+                    const comment = `This patch series was integrated into ${branch} via https://github.com/${this.config.repo.baseOwner}/${this.config.repo.name}/commit/${mergeCommit}.`;
+                    const url = yield this.github.addPRComment(prKey, comment);
+                    console.log(`Added comment about ${branch}: ${url}`);
+                }
+            }
+            if (prLabelsToAdd.length) {
+                yield this.github.addPRLabels(prKey, prLabelsToAdd);
+            }
+            let optionsUpdated = false;
+            if (closePR) {
+                if (options.openPRs) {
+                    delete options.openPRs[pullRequestURL];
+                    optionsUpdated = true;
+                }
+                // Remove items from activeMessageIDs
+                if (options.activeMessageIDs) {
+                    for (const rev of yield this.getOriginalCommitsForPR(prMeta)) {
+                        const messageID = yield this.notes.getLastCommitNote(rev);
+                        delete options.activeMessageIDs[messageID];
+                    }
+                    optionsUpdated = true;
+                }
+                yield this.github.closePR(prKey, closePR);
+            }
+            if (notesUpdated) {
+                yield this.notes.set(pullRequestURL, prMeta, true);
+            }
+            if (optionsUpdated && updateOptionsInRef) {
+                yield this.notes.set("", options, true);
+            }
+            return [notesUpdated, optionsUpdated];
+        });
+    }
+    getMessageIdForOriginalCommit(commit) {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield this.maybeUpdateGGGNotes();
+            return yield this.notes.getLastCommitNote(commit);
+        });
+    }
+    getOriginalCommitForMessageId(messageID) {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield this.maybeUpdateGGGNotes();
+            const note = yield this.notes.get(messageID);
+            return note ? note.originalCommit : undefined;
+        });
+    }
+    /*
+     * Given a branch and a commit, identify the merge that integrated that
+     * commit into that branch.
+     */
+    identifyMergeCommit(upstreamBranch, integratedCommit) {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield this.maybeUpdateMail2CommitMap();
+            const revs = yield (0, git_1.git)(["rev-list", "--ancestry-path", "--parents",
+                `${integratedCommit}..upstream/${upstreamBranch}`], { workDir: this.workDir });
+            if (revs === "") {
+                return undefined;
+            }
+            let commit = integratedCommit;
+            // Was it integrated via a merge?
+            let match = revs.match(`(^|\n)([^ ]+) ([^\n]+) ${commit}`);
+            if (!match) {
+                // Look for a descendant that *was* integrated via a merge
+                for (;;) {
+                    match = revs.match(`(^|\n)([^ ]+) ${commit}(\n|$)`);
+                    if (!match) {
+                        // None found, return the original commit
+                        return integratedCommit;
+                    }
+                    commit = match[2];
+                    match = revs.match(`(^|\n)([^ ]+) ([^\n]+) ${commit}`);
+                    if (match) {
+                        // found a merge!
+                        break;
+                    }
+                }
+            }
+            for (;;) {
+                commit = match[2];
+                // was this merge integrated via another merge?
+                match = revs.match(`(^|\n)([^ ]+) ([^\n]+) ${commit}`);
+                if (!match) {
+                    return commit;
+                }
+            }
+        });
+    }
+    getGitGitGadgetOptions() {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield this.maybeUpdateGGGNotes();
+            const options = yield this.notes.get("");
+            if (options === undefined) {
+                throw new Error("No GitGitGadgetOptions?!?!?");
+            }
+            return options;
+        });
+    }
+    getPRMetadata(pullRequestURL) {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield this.maybeUpdateGGGNotes();
+            return this.notes.get(pullRequestURL);
+        });
+    }
+    getMailMetadata(messageID) {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield this.maybeUpdateGGGNotes();
+            return this.notes.get(messageID);
+        });
+    }
+    getOriginalCommitsForPR(prMeta) {
+        return __awaiter(this, void 0, void 0, function* () {
+            if (!this.workDir) {
+                throw new Error("Need a workDir");
+            }
+            if (!(yield (0, git_1.commitExists)(prMeta.headCommit, this.workDir))) {
+                if (!prMeta.pullRequestURL) {
+                    throw new Error(`Require URL in ${JSON.stringify(prMeta, null, 4)}`);
+                }
+                if (!prMeta.latestTag) {
+                    throw new Error("Cannot fetch commits without tag");
+                }
+                const prKey = (0, pullRequestKey_1.getPullRequestKeyFromURL)(prMeta.pullRequestURL);
+                const fetchURL = `https://github.com/${prKey.owner}/${prKey.repo}`;
+                const fetchRef = `refs/pull/${prKey.pull_number}/head`;
+                yield (0, git_1.git)(["fetch", fetchURL, fetchRef, prMeta.latestTag], {
+                    workDir: this.workDir,
+                });
+            }
+            const revs = yield (0, git_1.git)(["rev-list",
+                `${prMeta.baseCommit}..${prMeta.headCommit}`], { workDir: this.workDir });
+            return revs.split(/\s+/);
+        });
+    }
+    warnOnMissingPublicEmail(username) {
+        return `WARNING: ${username} has no public email address set on GitHub;
+GitGitGadget needs an email address to Cc: you on your contribution, so that you receive any feedback ${""}on the Git mailing list. Go to https://github.com/settings/profile to make your preferred email public ${""}to let GitGitGadget know which email address to use.`;
+    }
+    /**
+     * Retrieves comments on PRs and handles `/submit` and friends.
+     *
+     * @param commentID the ID of the PR comment to handle
+     */
+    handleComment(repositoryOwner, commentID) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const comment = yield this.github.getPRComment(repositoryOwner, commentID);
+            const match = comment.body.match(/^\s*(\/[-a-z]+)(\s+(.*?))?\s*$/);
+            if (!match) {
+                console.log(`Not a command; doing nothing: '${comment.body}'`);
+                return; /* nothing to do */
+            }
+            const command = match[1];
+            const argument = match[3];
+            const prKey = {
+                owner: repositoryOwner,
+                repo: this.config.repo.name,
+                pull_number: comment.prNumber
+            };
+            const pullRequestURL = `https://github.com/${repositoryOwner}/${this.config.repo.name}/pull/${comment.prNumber}`;
+            console.log(`Handling command ${command} with argument ${argument} at ${pullRequestURL}#issuecomment-${commentID}`);
+            const addComment = (body) => __awaiter(this, void 0, void 0, function* () {
+                const redacted = CIHelper.redactGitHubToken(body);
+                console.log(`Adding comment to ${pullRequestURL}:\n${redacted}`);
+                yield this.github.addPRComment(prKey, redacted);
+            });
+            try {
+                const gitGitGadget = yield gitgitgadget_1.GitGitGadget.get(this.gggConfigDir, this.workDir);
+                if (!gitGitGadget.isUserAllowed(comment.author)) {
+                    throw new Error(`User ${comment.author} is not yet permitted to use ${this.config.app.displayName}`);
+                }
+                const getPRAuthor = () => __awaiter(this, void 0, void 0, function* () {
+                    const pr = yield this.github.getPRInfo(prKey);
+                    return pr.author;
+                });
+                if (command === "/submit") {
+                    if (argument && argument !== "") {
+                        throw new Error(`/submit does not accept arguments ('${argument}')`);
+                    }
+                    const pr = yield this.getPRInfo(prKey);
+                    if (pr.author !== comment.author) {
+                        throw new Error("Only the owner of a PR can submit it!");
+                    }
+                    const userInfo = yield this.getUserInfo(comment.author);
+                    const commitOkay = yield this.checkCommits(pr, addComment, userInfo);
+                    if (commitOkay) {
+                        const extraComment = userInfo.email === null ?
+                            `\n\n${this.warnOnMissingPublicEmail(comment.author)}` : "";
+                        const metadata = yield gitGitGadget.submit(pr, userInfo);
+                        const code = "\n```";
+                        yield addComment(`Submitted as [${metadata === null || metadata === void 0 ? void 0 : metadata.coverLetterMessageId}](https://${this.config.mailrepo.host}/${this.config.mailrepo.name}/${metadata === null || metadata === void 0 ? void 0 : metadata.coverLetterMessageId})\n\nTo fetch this version into \`FETCH_HEAD\`:${code}\ngit fetch ${this.urlRepo} ${metadata === null || metadata === void 0 ? void 0 : metadata.latestTag}${code}\n\nTo fetch this version to local tag \`${metadata === null || metadata === void 0 ? void 0 : metadata.latestTag}\`:${code}\ngit fetch --no-tags ${this.urlRepo} tag ${metadata === null || metadata === void 0 ? void 0 : metadata.latestTag}${code}${extraComment}`);
+                    }
+                }
+                else if (command === "/preview") {
+                    if (argument && argument !== "") {
+                        throw new Error(`/preview does not accept arguments ('${argument}')`);
+                    }
+                    const pr = yield this.getPRInfo(prKey);
+                    const userInfo = yield this.getUserInfo(comment.author);
+                    const commitOkay = yield this.checkCommits(pr, addComment, userInfo);
+                    if (!userInfo.email) {
+                        throw new Error(`Could not determine public email of ${comment.author}`);
+                    }
+                    if (commitOkay) {
+                        const metadata = yield gitGitGadget.preview(pr, userInfo);
+                        yield addComment(`Preview email sent as ${metadata === null || metadata === void 0 ? void 0 : metadata.coverLetterMessageId}`);
+                    }
+                }
+                else if (command === "/allow") {
+                    const accountName = argument || (yield getPRAuthor());
+                    let extraComment = "";
+                    try {
+                        const userInfo = yield this.github.getGitHubUserInfo(accountName);
+                        if (userInfo.email === null) {
+                            extraComment = `\n\n${this.warnOnMissingPublicEmail(accountName)}`;
+                        }
+                    }
+                    catch (reason) {
+                        throw new Error(`User ${accountName} is not a valid GitHub username: ${reason}`);
+                    }
+                    if (yield gitGitGadget.allowUser(comment.author, accountName)) {
+                        yield addComment(`User ${accountName} is now allowed to use ${this.config.app.displayName}.${extraComment}`);
+                    }
+                    else {
+                        yield addComment(`User ${accountName} already allowed to use ${this.config.app.displayName}.`);
+                    }
+                }
+                else if (command === "/disallow") {
+                    const accountName = argument || (yield getPRAuthor());
+                    if (yield gitGitGadget.denyUser(comment.author, accountName)) {
+                        yield addComment(`User ${accountName} is no longer allowed to use ${this.config.app.displayName}.`);
+                    }
+                    else {
+                        yield addComment(`User ${accountName} already not allowed to use ${this.config.app.displayName}.`);
+                    }
+                }
+                else if (command === "/cc") {
+                    yield this.handleCC(argument, prKey);
+                }
+                else if (command === "/test") {
+                    yield addComment(`Received test '${argument}'`);
+                }
+                else {
+                    console.log(`Ignoring unrecognized command ${command} in ${pullRequestURL}#issuecomment-${commentID}`);
+                }
+            }
+            catch (e) {
+                const error = e;
+                yield addComment(error.toString());
+            }
+        });
+    }
+    checkCommits(pr, addComment, userInfo) {
+        return __awaiter(this, void 0, void 0, function* () {
+            let result = true;
+            const maxCommits = this.config.lint.maxCommits;
+            if (!this.maxCommitsExceptions.includes(pr.pullRequestURL) &&
+                pr.commits && pr.commits > maxCommits) {
+                yield addComment(`The pull request has ${pr.commits} commits.  The max allowed is ${maxCommits}.  Please split the patch series into multiple pull requests. Also consider ${""}squashing related commits.`);
+                result = false;
+            }
+            const commits = yield this.github.getPRCommits(pr.baseOwner, pr.number);
+            const merges = [];
+            for (const cm of commits) {
+                if (cm.parentCount > 1) {
+                    merges.push(cm.commit);
+                }
+                if (cm.author.email.endsWith("@users.noreply.github.com")) {
+                    yield addComment(`Invalid author email in ${cm.commit}: "${cm.author.email}"`);
+                    result = false;
+                    continue;
+                }
+                // Update email from git info if not already set
+                if (userInfo && !userInfo.email) {
+                    if (userInfo.login === cm.author.login) {
+                        userInfo.email = cm.author.email;
+                    }
+                    else if (userInfo.login === cm.committer.login) {
+                        userInfo.email = cm.committer.email;
+                    }
+                }
+            }
+            if (merges.length) {
+                yield addComment(`There ${merges.length > 1 ? "are merge commits" : "is a merge commit"} in this Pull Request:\n\n    ${merges.join("\n    ")}\n\nPlease rebase the branch and force-push.`);
+                result = false;
+            }
+            // if no initial failure, run linting checks
+            if (result) {
+                const results = yield Promise.all(commits.map((commit) => {
+                    const linter = new commit_lint_1.LintCommit(commit);
+                    return linter.lint();
+                }));
+                for (const lintError of results.filter((el) => el)) {
+                    yield addComment(lintError.message);
+                    if (lintError.checkFailed) {
+                        result = false;
+                    }
+                }
+            }
+            return result;
+        });
+    }
+    static redactGitHubToken(text) {
+        return text.replace(/(https:\/\/)x-access-token:.*?@/g, "$1");
+    }
+    handleCC(ccSet, prKey) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const addresses = (0, addressparser_1.default)(ccSet, { flatten: true });
+            for (const address of addresses) {
+                const cc = address.name ? `${address.name} <${address.address}>` : address.address;
+                yield this.github.addPRCc(prKey, cc);
+            }
+        });
+    }
+    handlePush(repositoryOwner, prNumber) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const prKey = {
+                owner: repositoryOwner,
+                repo: this.config.repo.name,
+                pull_number: prNumber
+            };
+            const pr = yield this.github.getPRInfo(prKey);
+            const addComment = (body) => __awaiter(this, void 0, void 0, function* () {
+                const redacted = CIHelper.redactGitHubToken(body);
+                console.log(`Adding comment to ${pr.pullRequestURL}:\n${redacted}`);
+                yield this.github.addPRComment(prKey, redacted);
+            });
+            const gitGitGadget = yield gitgitgadget_1.GitGitGadget.get(this.gggConfigDir, this.workDir);
+            if (!pr.hasComments && !gitGitGadget.isUserAllowed(pr.author)) {
+                const welcome = (yield readFile("res/WELCOME.md")).toString()
+                    .replace(/\${username}/g, pr.author);
+                yield this.github.addPRComment(prKey, welcome);
+                yield this.github.addPRLabels(prKey, ["new user"]);
+            }
+            const commitOkay = yield this.checkCommits(pr, addComment);
+            if (!commitOkay) { // make check fail to get user attention
+                throw new Error("Failing check due to commit linting errors.");
+            }
+        });
+    }
+    handleNewMails(mailArchiveGitDir, onlyPRs) {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield (0, git_1.git)(["fetch"], { workDir: mailArchiveGitDir });
+            const prFilter = !onlyPRs ? undefined :
+                (pullRequestURL) => {
+                    const match = pullRequestURL.match(/.*\/(\d+)$/);
+                    return !match ? false : onlyPRs.has(parseInt(match[1], 10));
+                };
+            yield this.maybeUpdateGGGNotes();
+            const mailArchiveGit = yield mail_archive_helper_1.MailArchiveGitHelper.get(this.notes, mailArchiveGitDir, this.github, this.config.mailrepo.branch);
+            return yield mailArchiveGit.processMails(prFilter);
+        });
+    }
+    getPRInfo(prKey) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const pr = yield this.github.getPRInfo(prKey);
+            if (!this.config.repo.owners.includes(pr.baseOwner) ||
+                pr.baseRepo !== this.config.repo.name) {
+                throw new Error(`Unsupported repository: ${pr.pullRequestURL}`);
+            }
+            if (!pr.baseLabel || !pr.baseCommit || !pr.headLabel || !pr.headCommit) {
+                throw new Error(`Could not determine PR details for ${pr.pullRequestURL}`);
+            }
+            if (!pr.title || (!pr.body && pr.commits !== 1)) {
+                throw new Error("Ignoring PR with empty title and/or body");
+            }
+            if (!pr.mergeable) {
+                throw new Error("Refusing to submit a patch series that does not merge cleanly.");
+            }
+            return pr;
+        });
+    }
+    getUserInfo(author) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const userInfo = yield this.github.getGitHubUserInfo(author);
+            if (!userInfo.name) {
+                if (this.config.user.allowUserAsLogin) {
+                    userInfo.name = userInfo.login;
+                }
+                else {
+                    throw new Error(`Could not determine full name of ${author}`);
+                }
+                throw new Error(`Could not determine full name of ${author}`);
+            }
+            return userInfo;
+        });
+    }
+    maybeUpdateGGGNotes() {
+        return __awaiter(this, void 0, void 0, function* () {
+            if (!this.gggNotesUpdated) {
+                yield this.notes.update(this.urlRepo);
+                this.gggNotesUpdated = true;
+            }
+        });
+    }
+    maybeUpdateMail2CommitMap() {
+        return __awaiter(this, void 0, void 0, function* () {
+            if (!this.mail2CommitMapUpdated) {
+                yield this.mail2commit.updateMail2CommitAndBranches();
+                this.mail2CommitMapUpdated = true;
+            }
+        });
+    }
+}
+exports.CIHelper = CIHelper;
+
+
+/***/ }),
+
+/***/ 8058:
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.LintCommit = void 0;
+/*
+ * Simple single use class to drive lint tests on commit messages.
+ */
+class LintCommit {
+    constructor(patch, options) {
+        this.messages = [];
+        this.maxColumns = 76;
+        // Test for a minimum viable commit message.
+        // - the body of the commit message should not be empty
+        this.commitViable = () => {
+            if (this.lines.length < 3) {
+                this.block("Commit checks stopped - the message is too short");
+            }
+        };
+        // The first line should not be too long
+        this.commitMessageLength = () => {
+            if (this.lines[0].length > this.maxColumns) {
+                this.block(`First line of commit message is too long (> ${this.maxColumns} columns)`);
+            }
+        };
+        // More tests of the commit message structure.
+        // - the first line should be followed by an empty line
+        // other lines should not be too long
+        this.commitTextLength = () => {
+            if (this.lines.length > 2 && this.lines[1].length) {
+                this.block("The first line must be separated from the rest by an "
+                    + "empty line");
+            }
+            for (let i = 1; i < this.lines.length; i++) {
+                if (this.lines[i].length > this.maxColumns &&
+                    // Allow long lines if they cannot be wrapped at some
+                    // white-space character, e.g. URLs. To allow ` [1] <URL>`
+                    // lines, we skip the first 10 characters.
+                    this.lines[i].slice(10).match(/\s/)) {
+                    this.block(`Lines in the body of the commit messages ${""}should be wrapped between 60 and ${this.maxColumns} characters.`);
+                    break;
+                }
+            }
+        };
+        // Verify if the first line starts with a prefix (e.g. tests:), it continues
+        // in lower-case (except for ALL_CAPS as that is likely to be a code
+        // identifier)
+        this.lowerCaseAfterPrefix = () => {
+            const match = this.lines[0].match(/^\S+?:\s*?([A-Z][a-z ])/);
+            if (match) {
+                this.block("Prefixed commit message must be in lower case");
+            }
+        };
+        // Reject commits that appear to require rebasing
+        this.bangPrefix = () => {
+            if (this.lines[0].match(/^(squash|fixup|amend)!/)) {
+                this.block("Rebase needed to squash commit");
+            }
+        };
+        // Verify there is a Signed-off-by: line - DCO check does this
+        // already, but put out a message if it is indented
+        this.signedOffBy = () => {
+            let signedFound = false;
+            this.lines.map((line) => {
+                const match = line.match(/^(\s*)Signed-off-by:\s+(.*)/);
+                if (match) {
+                    signedFound = true;
+                    if (match[1].length) {
+                        this.block(`Leading whitespace in sign off: ${line}`);
+                    }
+                }
+            });
+            if (!signedFound) {
+                this.block("Commit not signed off");
+            }
+        };
+        // Verify the body of the commit message does not consist of a hyperlink,
+        // without any other explanation.
+        // Should all lines be checked ie is it an array of links?
+        // Low hanging fruit: check the first line.
+        // Hyperlink validation is NOT part of the test.
+        this.moreThanAHyperlink = () => {
+            const line = this.lines[2];
+            const match = line.match(/^(\w*)\s*https*:\/\/\S+\s*(\w*)/);
+            if (match) {
+                if (!match[1].length && !match[2].length &&
+                    this.lines.length === 5) {
+                    this.block("A hyperlink requires some explanation");
+                }
+            }
+        };
+        this.blocked = false;
+        this.lines = patch.message.split("\n");
+        this.patch = patch;
+        if (options !== undefined) {
+            if (options.maxColumns !== undefined) {
+                this.maxColumns = options.maxColumns;
+            }
+        }
+    }
+    /**
+     * Linter method to run checks on the commit message.
+     */
+    lint() {
+        const phase1 = [
+            this.commitViable
+        ];
+        const phase2 = [
+            this.commitMessageLength,
+            this.bangPrefix,
+            this.lowerCaseAfterPrefix,
+            this.signedOffBy
+        ];
+        const phase3 = [
+            this.commitTextLength,
+            this.moreThanAHyperlink
+        ];
+        phase1.map((linter) => { linter(); });
+        const phase1Okay = false === this.blocked;
+        phase2.map((linter) => { linter(); });
+        if (phase1Okay) {
+            phase3.map((linter) => { linter(); });
+        }
+        if (this.messages.length) {
+            this.messages.unshift(`\`${this.lines[0]}\``);
+            return { checkFailed: this.blocked,
+                message: `There ${this.messages.length > 1 ?
+                    "are issues" : "is an issue"} in commit ${this.patch.commit}:\n${this.messages.join("\n")}`,
+            };
+        }
+    }
+    addMessage(message) {
+        this.messages.push(message);
+    }
+    block(message) {
+        this.blocked = true;
+        this.addMessage(message);
+    }
+}
+exports.LintCommit = LintCommit;
+
+
+/***/ }),
+
+/***/ 7927:
+/***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
+
+"use strict";
+
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.isFile = exports.isDirectory = void 0;
+const fs = __importStar(__nccwpck_require__(7147));
+const util = __importStar(__nccwpck_require__(3837));
+const stat = util.promisify(fs.stat);
+/**
+ * Determine whether a given path refers to an existing directory.
+ *
+ * @param {string} path the path to the directory
+ * @returns {boolean} whether the specified path points to an existing directory
+ */
+function isDirectory(path) {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            if ((yield stat(path)).isDirectory()) {
+                return true;
+            }
+        }
+        catch (reason) {
+            /* it's okay */
+        }
+        return false;
+    });
+}
+exports.isDirectory = isDirectory;
+/**
+ * Determine whether a given path refers to an existing file.
+ *
+ * @param {string} path the path to the file
+ * @returns {boolean} whether the specified path points to an existing file
+ */
+function isFile(path) {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            if ((yield stat(path)).isFile()) {
+                return true;
+            }
+        }
+        catch (reason) {
+            /* it's okay */
+        }
+        return false;
+    });
+}
+exports.isFile = isFile;
+
+
+/***/ }),
+
+/***/ 7170:
+/***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
+
+"use strict";
+
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.GitNotes = void 0;
+const git_1 = __nccwpck_require__(888);
+const json_util_1 = __nccwpck_require__(2524);
+class GitNotes {
+    constructor(workDir, notesRef) {
+        this.workDir = workDir;
+        this.notesRef = notesRef || GitNotes.defaultNotesRef;
+    }
+    get(key) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const json = yield this.getString(key);
+            if (json === undefined) {
+                return undefined;
+            }
+            return (0, json_util_1.fromJSON)(json);
+        });
+    }
+    getString(key) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const obj = yield this.key2obj(key);
+            try {
+                return yield this.notes("show", obj);
+            }
+            catch (reason) {
+                return undefined;
+            }
+        });
+    }
+    set(key, value, force) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return yield this.setString(key, (0, json_util_1.toJSON)(value), force);
+        });
+    }
+    setString(key, value, force) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const obj = yield this.key2obj(key);
+            if (obj !== git_1.emptyBlobName &&
+                !(yield (0, git_1.revParse)(`${obj}^{blob}`, this.workDir))) {
+                try {
+                    /*
+                     * Annotate the notes ref's tip itself, just to make sure that
+                     * there is a reachable blob that has `key` as contents.
+                     */
+                    yield this.notes("add", "-m", key, this.notesRef);
+                    // Remove the note to avoid clutter
+                    yield this.notes("remove", `${this.notesRef}^`);
+                }
+                catch (reason) {
+                    /*
+                     * Apparently there is no notes ref yet. Initialize it, by
+                     * annotating the empty blob and immediately removing the note.
+                     */
+                    yield this.notes("add", "-m", key, git_1.emptyBlobName);
+                    yield this.notes("remove", git_1.emptyBlobName);
+                }
+            }
+            if (force) {
+                yield this.notes("add", "-f", "-m", value, obj);
+            }
+            else {
+                yield this.notes("add", "-m", value, obj);
+            }
+        });
+    }
+    appendCommitNote(commit, note) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return yield this.notes("append", "-m", note, commit);
+        });
+    }
+    getCommitNotes(commit) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return yield this.notes("show", commit);
+        });
+    }
+    getLastCommitNote(commit) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const notes = yield this.getCommitNotes(commit);
+            return notes.replace(/^[^]*\n\n/, "");
+        });
+    }
+    update(url) {
+        return __awaiter(this, void 0, void 0, function* () {
+            if (this.notesRef === "refs/notes/gitgitgadget" ||
+                this.notesRef === "refs/notes/commit-to-mail" ||
+                this.notesRef === "refs/notes/mail-to-commit") {
+                yield (0, git_1.git)(["fetch", url,
+                    `+${this.notesRef}:${this.notesRef}`], { workDir: this.workDir });
+            }
+            else {
+                throw new Error(`Don't know how to update ${this.notesRef}`);
+            }
+        });
+    }
+    key2obj(key) {
+        return __awaiter(this, void 0, void 0, function* () {
+            if (!key) {
+                return git_1.emptyBlobName;
+            }
+            return yield (0, git_1.git)(["hash-object", "--stdin"], {
+                stdin: `${key}\n`,
+                workDir: this.workDir,
+            });
+        });
+    }
+    notes(...args) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return yield (0, git_1.git)(["notes", `--ref=${this.notesRef}`, ...args], {
+                workDir: this.workDir,
+            });
+        });
+    }
+}
+exports.GitNotes = GitNotes;
+GitNotes.defaultNotesRef = "refs/notes/gitgitgadget";
+
+
+/***/ }),
+
+/***/ 888:
+/***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
+
+"use strict";
+
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.gitCommandExists = exports.gitConfigForEach = exports.gitConfig = exports.commitExists = exports.revListCount = exports.revParse = exports.git = exports.emptyTreeName = exports.emptyBlobName = void 0;
+const dugite_1 = __nccwpck_require__(9577);
+exports.emptyBlobName = "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391";
+exports.emptyTreeName = "4b825dc642cb6eb9a060e54bf8d69288fbee4904";
+function trimTrailingNewline(str) {
+    return str.replace(/\r?\n$/, "");
+}
+function git(args, options) {
+    const workDir = options && options.workDir || ".";
+    if (options && options.trace) {
+        process.stderr.write(`Called 'git ${args.join(" ")}' in '${workDir}':\n${new Error().stack}\n`);
+    }
+    return new Promise((resolve, reject) => {
+        if (options && options.lineHandler) {
+            const lineHandler = options.lineHandler;
+            if (options.processCallback) {
+                reject(new Error("line handler *and* process callback set"));
+                return;
+            }
+            options.processCallback = (process) => {
+                process.on("exit", (code, signal) => {
+                    if (signal) {
+                        reject(new Error(`Received signal ${signal}`));
+                    }
+                    else if (code) {
+                        reject(new Error(`Received code ${code}`));
+                    }
+                });
+                if (!process.stdout) {
+                    throw new Error(`No stdout for "git ${args.join(" ")}`);
+                }
+                let linePromise;
+                const handleLine = (line) => {
+                    try {
+                        if (!linePromise) {
+                            linePromise = lineHandler(line);
+                        }
+                        else {
+                            linePromise = linePromise.then(() => {
+                                return lineHandler(line);
+                            });
+                        }
+                        linePromise.catch((reason) => {
+                            reject(reason);
+                            process.kill();
+                        });
+                    }
+                    catch (reason) {
+                        reject(reason);
+                        process.kill();
+                        return false;
+                    }
+                    return true;
+                };
+                let buffer = "";
+                process.stdout.on("data", (chunk) => {
+                    buffer += chunk;
+                    for (;;) {
+                        const eol = buffer.indexOf("\n");
+                        if (eol < 0) {
+                            break;
+                        }
+                        if (!handleLine(buffer.substr(0, eol))) {
+                            return;
+                        }
+                        buffer = buffer.substr(eol + 1);
+                    }
+                });
+                process.stdout.on("end", () => {
+                    if (buffer.length > 0) {
+                        handleLine(buffer);
+                    }
+                    if (linePromise) {
+                        linePromise.then(() => { resolve(""); })
+                            .catch((reason) => { reject(reason); });
+                    }
+                    else {
+                        resolve("");
+                    }
+                });
+            };
+        }
+        dugite_1.GitProcess.exec(args, workDir, options)
+            .then((result) => {
+            if (result.exitCode) {
+                reject(new Error(`git ${args.join(" ")} failed: ${result.exitCode},\n${result.stderr}`));
+                return;
+            }
+            if (options && options.trace) {
+                process.stderr.write(`Output of 'git ${args.join(" ")}':\nstderr: ${result.stderr}\nstdout: ${result.stdout}\n`);
+            }
+            resolve(!options || options.trimTrailingNewline === false ?
+                result.stdout : trimTrailingNewline(result.stdout));
+        }).catch((reason) => {
+            reject(reason);
+        });
+    });
+}
+exports.git = git;
+/**
+ * Call `git rev-parse --verify` to verify an object name.
+ *
+ * Note that it will *always* return the argument back to the user if it is
+ * a hex string of length 40. This is consistent with `rev-parse`. To
+ * verify objects by full SHA-1, you have to add `^{blob}` or similar.
+ *
+ * @param { string } argument the name referring to a Git object
+ * @param { string | undefined } workDir
+ *    the working directory in which to run `git rev-parse`
+ * @returns { string | undefined } the full SHA-1, or undefined
+ */
+function revParse(argument, workDir) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const result = yield dugite_1.GitProcess.exec(["rev-parse", "--verify", "-q",
+            argument], workDir || ".");
+        return result.exitCode ? undefined : trimTrailingNewline(result.stdout);
+    });
+}
+exports.revParse = revParse;
+/**
+ * Call `git rev-list --count` to count objects in a commit range.
+ *
+ * @param { string[] } rangeArgs the arguments to pass to `git rev-list`
+ * @param { string | undefined } workDir
+ *    the working directory in which to run `git rev-parse`
+ * @returns number the number of commits in the commit range
+ */
+function revListCount(rangeArgs, workDir = ".") {
+    return __awaiter(this, void 0, void 0, function* () {
+        const gitArgs = ["rev-list", "--count"];
+        if (typeof (rangeArgs) === "string") {
+            gitArgs.push(rangeArgs);
+        }
+        else {
+            gitArgs.push(...rangeArgs);
+        }
+        const result = yield dugite_1.GitProcess.exec(gitArgs, workDir);
+        if (result.exitCode) {
+            throw new Error(`Could not determine count for ${rangeArgs}: ${result.stderr}`);
+        }
+        return parseInt(result.stdout, 10);
+    });
+}
+exports.revListCount = revListCount;
+/**
+ * Determine whether a certain commit exists
+ *
+ * @param {string} commit the name of the commit
+ * @param {string} workDir the Git worktree where to look
+ * @returns {boolean} whether the commit exists
+ */
+function commitExists(commit, workDir) {
+    return __awaiter(this, void 0, void 0, function* () {
+        return (yield revParse(`${commit}^{commit}`, workDir)) !== undefined;
+    });
+}
+exports.commitExists = commitExists;
+function gitConfig(key, workDir) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const result = yield dugite_1.GitProcess.exec(["config", key], workDir || ".");
+        if (result.exitCode !== 0) {
+            return undefined;
+        }
+        return trimTrailingNewline(result.stdout);
+    });
+}
+exports.gitConfig = gitConfig;
+function gitConfigForEach(key, callbackfn, workDir) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const result = yield dugite_1.GitProcess.exec(["config", "--get-all", key], workDir || ".");
+        result.stdout.split(/\r?\n/).map(callbackfn);
+    });
+}
+exports.gitConfigForEach = gitConfigForEach;
+function gitCommandExists(command, workDir) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const result = yield dugite_1.GitProcess.exec([command, "-h"], workDir || ".");
+        return result.exitCode === 129;
+    });
+}
+exports.gitCommandExists = gitCommandExists;
+
+
+/***/ }),
+
+/***/ 3650:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.getConfig = void 0;
+const project_config_1 = __nccwpck_require__(5520);
+const defaultConfig = {
+    repo: {
+        name: "git",
+        owner: "gitgitgadget",
+        baseOwner: "git",
+        owners: ["gitgitgadget", "git", "dscho"],
+        branches: ["maint", "seen"],
+        closingBranches: ["maint", "master"],
+        trackingBranches: ["maint", "seen", "master", "next"],
+        maintainerBranch: "gitster",
+        host: "github.com",
+    },
+    mailrepo: {
+        name: "git",
+        owner: "gitgitgadget",
+        branch: "master",
+        host: "lore.kernel.org",
+    },
+    mail: {
+        author: "GitGitGadget",
+        sender: "GitGitGadget"
+    },
+    app: {
+        appID: 12836,
+        installationID: 195971,
+        name: "gitgitgadget",
+        displayName: "GitGitGadget",
+        altname: "gitgitgadget-git"
+    },
+    lint: {
+        maxCommitsIgnore: [
+            "https://github.com/gitgitgadget/git/pull/923"
+        ],
+        maxCommits: 30,
+    },
+    user: {
+        allowUserAsLogin: false,
+    }
+};
+exports["default"] = defaultConfig;
+(0, project_config_1.setConfig)(defaultConfig);
+function getConfig() {
+    return (0, project_config_1.setConfig)(defaultConfig);
+}
+exports.getConfig = getConfig;
+
+
+/***/ }),
+
+/***/ 4216:
+/***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
+
+"use strict";
+
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.GitGitGadget = void 0;
+const fs_util_1 = __nccwpck_require__(7927);
+const git_1 = __nccwpck_require__(888);
+const git_notes_1 = __nccwpck_require__(7170);
+const patch_series_1 = __nccwpck_require__(2300);
+const project_config_1 = __nccwpck_require__(5520);
+const send_mail_1 = __nccwpck_require__(7025);
+/**
+ * The central class of the GitHub App.
+ */
+class GitGitGadget {
+    constructor(notes, options, allowedUsers, smtpOptions, publishTagsAndNotesToRemote) {
+        this.config = (0, project_config_1.getConfig)();
+        if (!notes.workDir) {
+            throw new Error("Could not determine Git worktree");
+        }
+        this.workDir = notes.workDir;
+        this.notes = notes;
+        this.options = options;
+        this.allowedUsers = allowedUsers;
+        this.smtpOptions = smtpOptions;
+        this.publishTagsAndNotesToRemote = publishTagsAndNotesToRemote;
+    }
+    static getWorkDir(gitGitGadgetDir) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const workDir = yield (0, git_1.gitConfig)("gitgitgadget.workDir", gitGitGadgetDir);
+            if (!workDir) {
+                throw new Error("Could not find GitGitGadget's work tree");
+            }
+            return workDir;
+        });
+    }
+    static get(gitGitGadgetDir, workDir) {
+        return __awaiter(this, void 0, void 0, function* () {
+            if (!workDir) {
+                workDir = yield this.getWorkDir(gitGitGadgetDir);
+            }
+            const publishTagsAndNotesToRemote = yield (0, git_1.gitConfig)("gitgitgadget.publishRemote", gitGitGadgetDir);
+            if (!publishTagsAndNotesToRemote) {
+                throw new Error("No remote to which to push configured");
+            }
+            // Initialize the worktree if necessary
+            if (!(yield (0, fs_util_1.isDirectory)(workDir))) {
+                yield (0, git_1.git)(["init", "--bare", workDir]);
+            }
+            // Always fetch the Git notes first thing
+            yield (0, git_1.git)(["fetch", publishTagsAndNotesToRemote, "--",
+                `+${git_notes_1.GitNotes.defaultNotesRef}:${git_notes_1.GitNotes.defaultNotesRef}`], { workDir });
+            const notes = new git_notes_1.GitNotes(workDir);
+            const smtpUser = yield (0, git_1.gitConfig)("gitgitgadget.smtpUser", gitGitGadgetDir);
+            const smtpHost = yield (0, git_1.gitConfig)("gitgitgadget.smtpHost", gitGitGadgetDir);
+            const smtpPass = yield (0, git_1.gitConfig)("gitgitgadget.smtpPass", gitGitGadgetDir);
+            const smtpOpts = yield (0, git_1.gitConfig)("gitgitgadget.smtpOpts", gitGitGadgetDir);
+            if (!smtpUser || !smtpHost || !smtpPass) {
+                throw new Error("No SMTP settings configured");
+            }
+            const [options, allowedUsers] = yield GitGitGadget.readOptions(notes);
+            return new GitGitGadget(notes, options, allowedUsers, { smtpHost, smtpOpts, smtpPass, smtpUser }, publishTagsAndNotesToRemote);
+        });
+    }
+    static readOptions(notes) {
+        var _a;
+        return __awaiter(this, void 0, void 0, function* () {
+            const defaultOptions = { allowedUsers: [], };
+            const options = (_a = yield notes.get("")) !== null && _a !== void 0 ? _a : defaultOptions;
+            const allowedUsers = new Set(options.allowedUsers);
+            return [options, allowedUsers];
+        });
+    }
+    isUserAllowed(user) {
+        return this.allowedUsers.has(user);
+    }
+    allowUser(vouchingUser, user) {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield this.fetchAndReReadOptions();
+            if (!this.isUserAllowed(vouchingUser)) {
+                throw new Error(`User ${vouchingUser} lacks permission for this.`);
+            }
+            if (this.isUserAllowed(user)) {
+                return false;
+            }
+            this.allowedUsers.add(user);
+            this.options.allowedUsers.push(user);
+            yield this.notes.set("", this.options, true);
+            yield this.pushNotesRef();
+            return true;
+        });
+    }
+    denyUser(vouchingUser, user) {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield this.fetchAndReReadOptions();
+            if (!this.isUserAllowed(vouchingUser)) {
+                throw new Error(`User ${vouchingUser} lacks permission for this.`);
+            }
+            if (!this.isUserAllowed(user)) {
+                return false;
+            }
+            for (let i = 0; i < this.options.allowedUsers.length; i++) {
+                if (this.options.allowedUsers[i] === user) {
+                    this.options.allowedUsers.splice(i, 1);
+                    break;
+                }
+            }
+            this.allowedUsers.delete(user);
+            yield this.notes.set("", this.options, true);
+            yield this.pushNotesRef();
+            return true;
+        });
+    }
+    // Send emails only to the user
+    preview(pr, userInfo) {
+        return __awaiter(this, void 0, void 0, function* () {
+            if (!userInfo.email) {
+                throw new Error(`No email in user info for ${userInfo.login}`);
+            }
+            const email = userInfo.email;
+            const send = (mail) => __awaiter(this, void 0, void 0, function* () {
+                const mbox = yield (0, send_mail_1.parseMBox)(mail);
+                mbox.cc = [];
+                mbox.to = email;
+                console.log(mbox);
+                return yield (0, send_mail_1.sendMail)(mbox, this.smtpOptions);
+            });
+            return yield this.genAndSend(pr, userInfo, { noUpdate: true }, send);
+        });
+    }
+    // Send emails out for review
+    submit(pr, userInfo) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const send = (mail) => __awaiter(this, void 0, void 0, function* () {
+                return yield (0, send_mail_1.parseHeadersAndSendMail)(mail, this.smtpOptions);
+            });
+            return yield this.genAndSend(pr, userInfo, {}, send);
+        });
+    }
+    updateNotesAndPullRef(repositoryOwner, pullRequestNumber, additionalRef) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const pullRequestRef = `refs/pull/${pullRequestNumber}/head`;
+            const pullRequestMerge = `refs/pull/${pullRequestNumber}/merge`;
+            const args = [
+                "fetch",
+                this.publishTagsAndNotesToRemote,
+                "--",
+                `+${this.notes.notesRef}:${this.notes.notesRef}`
+            ];
+            args.push(...this.config.repo.trackingBranches.map(branch => `+refs/heads/${branch}:refs/remotes/upstream/${branch}`));
+            const prArgs = [
+                `+${pullRequestRef}:${pullRequestRef}`,
+                `+${pullRequestMerge}:${pullRequestMerge}`,
+            ];
+            if (additionalRef) {
+                args.push(`+${additionalRef}:${additionalRef}`);
+            }
+            if (repositoryOwner === this.config.repo.owner) {
+                args.push(...prArgs);
+            }
+            else {
+                yield (0, git_1.git)(["fetch", `https://github.com/${repositoryOwner}/${this.config.repo.name}`, ...prArgs], { workDir: this.workDir });
+            }
+            yield (0, git_1.git)(args, { workDir: this.workDir });
+            // re-read options
+            [this.options, this.allowedUsers] = yield GitGitGadget.readOptions(this.notes);
+            return pullRequestRef;
+        });
+    }
+    fetchAndReReadOptions() {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield (0, git_1.git)(["fetch", this.publishTagsAndNotesToRemote, "--",
+                `+${git_notes_1.GitNotes.defaultNotesRef}:${git_notes_1.GitNotes.defaultNotesRef}`], { workDir: this.workDir });
+            [this.options, this.allowedUsers] =
+                yield GitGitGadget.readOptions(this.notes);
+        });
+    }
+    pushNotesRef() {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield (0, git_1.git)(["push", this.publishTagsAndNotesToRemote, "--",
+                `${this.notes.notesRef}`], { workDir: this.workDir });
+            // re-read options
+            [this.options, this.allowedUsers] =
+                yield GitGitGadget.readOptions(this.notes);
+        });
+    }
+    // Finish the job for preview and submit
+    genAndSend(pr, userInfo, options, send) {
+        return __awaiter(this, void 0, void 0, function* () {
+            // get metadata in work repo
+            const metadata = yield this.notes.get(pr.pullRequestURL);
+            const previousTag = metadata && metadata.latestTag ?
+                `refs/tags/${metadata.latestTag}` : undefined;
+            // update work repo from base
+            yield this.updateNotesAndPullRef(pr.baseOwner, pr.number, previousTag);
+            const series = yield patch_series_1.PatchSeries.getFromNotes(this.notes, pr.pullRequestURL, pr.title, pr.body, pr.baseLabel, pr.baseCommit, pr.headLabel, pr.headCommit, options, userInfo.name, userInfo.email);
+            const patchSeriesMetadata = yield series.generateAndSend(console, send, this.publishTagsAndNotesToRemote, pr.pullRequestURL, new Date());
+            return patchSeriesMetadata;
+        });
+    }
+}
+exports.GitGitGadget = GitGitGadget;
+
+
+/***/ }),
+
+/***/ 4047:
+/***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
+
+"use strict";
+
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.GitHubGlue = void 0;
+const addressparser_1 = __importDefault(__nccwpck_require__(7382));
+const rest_1 = __nccwpck_require__(5375);
+const git_1 = __nccwpck_require__(888);
+const pullRequestKey_1 = __nccwpck_require__(4988);
+class GitHubGlue {
+    constructor(workDir, owner, repo) {
+        this.client = new rest_1.Octokit({ log: console }); // add { log: console } to debug
+        this.owner = owner;
+        this.repo = repo;
+        this.workDir = workDir;
+    }
+    annotateCommit(originalCommit, gitGitCommit, repositoryOwner, baseOwner) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const output = yield (0, git_1.git)(["show", "-s", "--format=%h %cI", gitGitCommit], { workDir: this.workDir });
+            const match = output.match(/^(\S+) (\S+)$/);
+            if (!match) {
+                throw new Error(`Could not find ${gitGitCommit}: '${output}'`);
+            }
+            const [, short, completedAt] = match;
+            const url = `https://github.com/${baseOwner}/${this.repo}/commit/${gitGitCommit}`;
+            yield this.ensureAuthenticated(repositoryOwner);
+            const checks = yield this.client.rest.checks.create({
+                completed_at: completedAt,
+                conclusion: "success",
+                details_url: url,
+                head_sha: originalCommit,
+                name: "upstream commit",
+                output: {
+                    summary: `Integrated into ${baseOwner}.${this.repo} as [${short}](${url}).`,
+                    title: `In ${baseOwner}.${this.repo}: ${short}`,
+                },
+                owner: repositoryOwner,
+                repo: this.repo,
+                started_at: completedAt,
+                status: "completed",
+            });
+            return checks.data.id;
+        });
+    }
+    /**
+     * Add a cc to a Pull Request
+     *
+     * @param {pullRequestKeyInfo} pullRequest - the Pull Request to comment on
+     * @param {string} cc to add
+     * @returns the comment ID and the URL to the comment
+     */
+    addPRCc(pullRequest, cc) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const id = cc.match(/<(.*)>/);
+            if (!id || id[1] === "gitster@pobox.com") {
+                return;
+            }
+            const ccLower = id[1].toLowerCase();
+            const prKey = (0, pullRequestKey_1.getPullRequestKey)(pullRequest);
+            const pr = yield this.getPRInfo(prKey);
+            const trimBody = pr.body.trimRight();
+            let footer = trimBody.match(/^[^]+\r?\n\s*?\r?\n([^]+)$/);
+            // handle PR descriptions that have no body, just footers
+            if (!footer && !trimBody.match(/\r?\n\r?\n/)) {
+                footer = trimBody.match(/^([a-z][-a-z0-9]+:\s*[^]+)$/i);
+            }
+            let found = false;
+            let footerSeparator = "\r\n";
+            if (footer && footer[1].match(/:/))
+                try {
+                    footer[1].split(/\r?\n/).reverse().forEach(line => {
+                        const match = line.match(/^([a-z][-a-z0-9]+):\s*(.*)$/i);
+                        if (!match) { // stop if not a footer
+                            throw new Error("No Footer");
+                        }
+                        footerSeparator = ""; // body already has footers
+                        if (!found && match[1].toLowerCase() === "cc")
+                            try {
+                                (0, addressparser_1.default)(match[2], { flatten: true }).forEach(email => {
+                                    if (ccLower === email.address.toLowerCase()) {
+                                        found = true;
+                                        throw new Error("Found");
+                                    }
+                                });
+                            }
+                            catch (_) {
+                                // quick exit for cc matched (comment to quiet linter)
+                            }
+                    });
+                }
+                catch (_) {
+                    found = false; // ensure it was not a cc: false positive
+                    footerSeparator = "\r\n"; // reset
+                }
+            if (!found) {
+                const user = yield this.getGitHubUserInfo(pr.author);
+                if (!user.email || ccLower !== user.email.toLowerCase()) {
+                    yield this.updatePR(prKey, `${trimBody}${footerSeparator}\r\ncc: ${cc}`);
+                    yield this.addPRComment(prKey, `User \`${cc}\` has been added to the cc: list.`);
+                }
+            }
+        });
+    }
+    /**
+     * Add a Pull Request comment
+     *
+     * @param {pullRequestKeyInfo} pullRequest - the Pull Request to comment on
+     * @param {string} comment the comment
+     * @returns the comment ID and the URL to the comment
+     */
+    addPRComment(pullRequest, comment) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const prKey = (0, pullRequestKey_1.getPullRequestKey)(pullRequest);
+            yield this.ensureAuthenticated(prKey.owner);
+            const status = yield this.client.rest.issues.createComment({
+                body: comment,
+                issue_number: prKey.pull_number,
+                owner: prKey.owner,
+                repo: prKey.repo,
+            });
+            return {
+                id: status.data.id,
+                url: status.data.html_url,
+            };
+        });
+    }
+    /**
+     * Add a Pull Request comment on a specific commit
+     *
+     * @param {pullRequestKeyInfo} pullRequest - the Pull Request to comment on
+     * @param {string} commit the hash of the commit to comment on
+     * @param {string} comment the comment
+     * @returns the comment ID and the URL to the comment
+     */
+    addPRCommitComment(pullRequest, commit, gitWorkDir, comment) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const prKey = (0, pullRequestKey_1.getPullRequestKey)(pullRequest);
+            yield this.ensureAuthenticated(prKey.owner);
+            const files = yield (0, git_1.git)(["diff", "--name-only",
+                `${commit}^..${commit}`, "--"], { workDir: gitWorkDir });
+            const path = files.replace(/\n[^]*/, "");
+            const status = yield this.client.rest.pulls.createReviewComment(Object.assign({ body: comment, commit_id: commit, path, position: 1 }, prKey));
+            return {
+                id: status.data.id,
+                url: status.data.html_url,
+            };
+        });
+    }
+    /**
+     * Add a Pull Request comment as reply to a specific comment
+     *
+     * @param {pullRequestKeyInfo} pullRequest - the Pull Request to comment on
+     * @param {number} id the ID of the comment to which to reply
+     * @param {string} comment the comment to add
+     * @returns the comment ID and the URL to the added comment
+     */
+    addPRCommentReply(pullRequest, id, comment) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const prKey = (0, pullRequestKey_1.getPullRequestKey)(pullRequest);
+            yield this.ensureAuthenticated(prKey.owner);
+            const status = yield this.client.rest.pulls.createReplyForReviewComment(Object.assign({ body: comment, comment_id: id }, prKey));
+            return {
+                id: status.data.id,
+                url: status.data.html_url,
+            };
+        });
+    }
+    /**
+     * Update a Pull Request body or title
+     *
+     * @param {pullRequestKey} prKey - the Pull Request to update
+     * @param {string} body the updated body
+     * @param {string} title the updated title
+     * @returns the PR number
+     */
+    updatePR(prKey, body, title) {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield this.ensureAuthenticated(prKey.owner);
+            const result = yield this.client.rest.pulls.update(Object.assign({ "body": body || undefined, "title": title || undefined }, prKey));
+            return result.data.id;
+        });
+    }
+    addPRLabels(pullRequest, labels) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const prKey = (0, pullRequestKey_1.getPullRequestKey)(pullRequest);
+            yield this.ensureAuthenticated(prKey.owner);
+            const result = yield this.client.rest.issues.addLabels({
+                issue_number: prKey.pull_number,
+                labels,
+                owner: prKey.owner,
+                repo: prKey.repo,
+            });
+            return result.data.map((res) => `${res.id}`);
+        });
+    }
+    closePR(pullRequest, viaMergeCommit) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const prKey = (0, pullRequestKey_1.getPullRequestKey)(pullRequest);
+            yield this.ensureAuthenticated(prKey.owner);
+            yield this.client.rest.pulls.update(Object.assign({ state: "closed" }, prKey));
+            const result = yield this.client.rest.issues.createComment({
+                body: `Closed via ${viaMergeCommit}.`,
+                issue_number: prKey.pull_number,
+                owner: prKey.owner,
+                repo: prKey.repo,
+            });
+            return result.data.id;
+        });
+    }
+    // The following public methods do not require authentication
+    getOpenPRs(repositoryOwner) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const result = [];
+            const response = yield this.client.rest.pulls.list({
+                owner: repositoryOwner,
+                per_page: 1000,
+                repo: this.repo,
+                state: "open",
+            });
+            response.data.map((pr) => {
+                if (!pr.user || !pr.base.repo.owner) {
+                    throw new Error(`PR ${pr.number} is missing information. ${pr.toString()}`);
+                }
+                result.push({
+                    author: pr.user.login,
+                    baseCommit: pr.base.sha,
+                    baseLabel: pr.base.label,
+                    baseOwner: pr.base.repo.owner.login,
+                    baseRepo: pr.base.repo.name,
+                    body: pr.body || "",
+                    hasComments: pr.updated_at !== pr.created_at,
+                    headCommit: pr.head.sha,
+                    headLabel: pr.head.label,
+                    mergeable: true,
+                    number: pr.number,
+                    pullRequestURL: pr.html_url,
+                    title: pr.title,
+                });
+            });
+            return result;
+        });
+    }
+    /**
+     * Retrieve a Pull Request's information relevant to GitGitGadget's operations.
+     *
+     * @param prKey the Pull Request's basic id (owner, repo, number)
+     * @returns information about that Pull Request
+     */
+    getPRInfo(prKey) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const response = yield this.client.rest.pulls.get(Object.assign({}, prKey));
+            const pullRequest = response.data;
+            if (!pullRequest.user) {
+                throw new Error(`PR ${pullRequest.number} is missing information. ${pullRequest.toString()}`);
+            }
+            return {
+                author: pullRequest.user.login,
+                baseCommit: pullRequest.base.sha,
+                baseLabel: pullRequest.base.label,
+                baseOwner: pullRequest.base.repo.owner.login,
+                baseRepo: pullRequest.base.repo.name,
+                body: pullRequest.body || "",
+                commits: pullRequest.commits,
+                hasComments: pullRequest.comments > 0,
+                headCommit: pullRequest.head.sha,
+                headLabel: pullRequest.head.label,
+                mergeable: pullRequest.mergeable || true,
+                number: pullRequest.number,
+                pullRequestURL: pullRequest.html_url,
+                title: pullRequest.title,
+            };
+        });
+    }
+    /**
+     * Retrieves the body of the specified PR/issue comment.
+     *
+     * @param commentID the ID of the PR/issue comment
+     * @returns the text in the comment
+     */
+    getPRComment(repositoryOwner, commentID) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const response = yield this.client.rest.issues.getComment({
+                comment_id: commentID,
+                owner: repositoryOwner,
+                repo: this.repo,
+            });
+            const match = response.data.html_url.match(/\/pull\/([0-9]+)/);
+            const prNumber = match ? parseInt(match[1], 10) : -1;
+            if (!response.data.user) {
+                throw new Error(`PR ${prNumber} comment is missing information. ${response.data.toString()}`);
+            }
+            return {
+                author: response.data.user.login,
+                body: response.data.body || "",
+                prNumber,
+            };
+        });
+    }
+    /**
+     * Retrieves the commits of the specified PR.
+     *
+     * @param repositoryOwner owner of the GitHub repo for the pull request
+     * @param prNumber the Pull Request's number
+     * @returns the set of commits
+     */
+    getPRCommits(repositoryOwner, prNumber) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const response = yield this.client.rest.pulls.listCommits({
+                owner: repositoryOwner,
+                pull_number: prNumber,
+                repo: this.repo,
+            });
+            const result = [];
+            response.data.map((cm) => {
+                if (!cm.commit.committer || !cm.commit.author || !cm.sha) {
+                    throw new Error(`Commit information missing for PR ${prNumber} - ${cm.toString()}`);
+                }
+                const committer = cm.commit.committer;
+                const author = cm.commit.author;
+                result.push({
+                    author: {
+                        email: author.email || "unknown email",
+                        login: cm.author ? cm.author.login : "unknown login",
+                        name: author.name || "unknown name",
+                    },
+                    commit: cm.sha,
+                    committer: {
+                        email: committer.email || "unknown email",
+                        login: cm.committer ? cm.committer.login : "unknown login",
+                        name: committer.name || "unknown name",
+                    },
+                    message: cm.commit.message,
+                    parentCount: cm.parents.length,
+                });
+            });
+            return result;
+        });
+    }
+    /**
+     * Obtain basic information for a given GitHub user.
+     *
+     * @param login the GitHub login
+     */
+    getGitHubUserInfo(login) {
+        return __awaiter(this, void 0, void 0, function* () {
+            // required to get email
+            yield this.ensureAuthenticated(this.authenticated || this.owner);
+            const response = yield this.client.rest.users.getByUsername({
+                username: login,
+            });
+            if (response.status === 200) {
+                return {
+                    email: response.data.email,
+                    login: response.data.login,
+                    name: response.data.name || "",
+                    type: response.data.type,
+                };
+            }
+            else {
+                throw new Error(`GitHub unresponsive for getByUsername`);
+            }
+        });
+    }
+    ensureAuthenticated(repositoryOwner) {
+        return __awaiter(this, void 0, void 0, function* () {
+            console.log(`authenticating ${repositoryOwner}`);
+            if (repositoryOwner !== this.authenticated) {
+                const infix = repositoryOwner === "gitgitgadget" ?
+                    "" : `.${repositoryOwner}`;
+                const token = yield (0, git_1.gitConfig)(`gitgitgadget${infix}.githubToken`);
+                if (!token) {
+                    throw new Error(`Need a GitHub token for ${repositoryOwner}`);
+                }
+                this.client = new rest_1.Octokit({ auth: token }); // add log: console to debug
+                this.authenticated = repositoryOwner;
+                console.log(`authenticated ${this.authenticated}`);
+            }
+        });
+    }
+}
+exports.GitHubGlue = GitHubGlue;
+
+
+/***/ }),
+
+/***/ 2524:
+/***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
+
+"use strict";
+
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.toPrettyJSON = exports.toJSON = exports.fromJSON = void 0;
+const json_stable_stringify_1 = __importDefault(__nccwpck_require__(6645));
+function fromJSON(input) {
+    return JSON.parse(input);
+}
+exports.fromJSON = fromJSON;
+function toJSON(input) {
+    return (0, json_stable_stringify_1.default)(input);
+}
+exports.toJSON = toJSON;
+function toPrettyJSON(input) {
+    return (0, json_stable_stringify_1.default)(input, { space: 4 });
+}
+exports.toPrettyJSON = toPrettyJSON;
+
+
+/***/ }),
+
+/***/ 2312:
+/***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
+
+"use strict";
+
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.MailArchiveGitHelper = exports.stateKey = void 0;
+const crypto_1 = __nccwpck_require__(6113);
+const git_1 = __nccwpck_require__(888);
+const send_mail_1 = __nccwpck_require__(7025);
+const sous_chef_1 = __nccwpck_require__(7368);
+exports.stateKey = "git@vger.kernel.org <-> GitGitGadget";
+const replyToThisURL = "https://github.com/gitgitgadget/gitgitgadget/wiki/ReplyToThis";
+class MailArchiveGitHelper {
+    constructor(gggNotes, mailArchiveGitDir, githubGlue, state, branch) {
+        this.branch = branch;
+        this.gggNotes = gggNotes;
+        this.mailArchiveGitDir = mailArchiveGitDir;
+        this.githubGlue = githubGlue;
+        this.state = state;
+    }
+    static get(gggNotes, mailArchiveGitDir, githubGlue, branch) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const state = (yield gggNotes.get(exports.stateKey)) || {};
+            return new MailArchiveGitHelper(gggNotes, mailArchiveGitDir, githubGlue, state, branch);
+        });
+    }
+    /**
+     * Returns the object name Git would generate if the key (plus a trailing
+     * newline) were fed to `git hash-object`.
+     *
+     * @param key the content to hash (a newline is automatically appended)
+     * @returns the object name
+     */
+    static hashKey(key) {
+        const hash = (0, crypto_1.createHash)("sha1", { encoding: "utf8" });
+        hash.update(`blob ${Buffer.byteLength(key) + 1}`);
+        hash.update(`\0${key}\n`);
+        return hash.digest("hex");
+    }
+    static mbox2markdown(mbox) {
+        const body = mbox.body;
+        if (!body.length) {
+            return "";
+        }
+        const backTicks = "``````````";
+        const wrapTop = `${backTicks}email\n`;
+        const wrapBottom = `${backTicks}\n`;
+        return `${wrapTop}${body}${body.endsWith("\n") ? "" : "\n"}${wrapBottom}`;
+    }
+    processMails(prFilter) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const keys = new Set();
+            (yield (0, git_1.git)(["ls-tree", "-r", `${this.gggNotes.notesRef}:`], { workDir: this.gggNotes.workDir })).split("\n")
+                .map((line) => {
+                keys.add(line.substr(53).replace(/\//g, ""));
+            });
+            const seen = (messageID) => {
+                return keys.has(MailArchiveGitHelper.hashKey(messageID));
+            };
+            const handleWhatsCooking = (mbox) => __awaiter(this, void 0, void 0, function* () {
+                const options = yield this.gggNotes.get("");
+                if (!options || !options.openPRs) {
+                    return;
+                }
+                /*
+                 * This map points from branch names in `gitster/git` to their
+                 * corresponding Pull Request URL.
+                 */
+                const branchNameMap = new Map();
+                for (const pullRequestURL of Object.keys(options.openPRs)) {
+                    if (prFilter && !prFilter(pullRequestURL)) {
+                        continue;
+                    }
+                    const prMeta = yield this.gggNotes
+                        .get(pullRequestURL);
+                    if (prMeta && prMeta.branchNameInGitsterGit) {
+                        branchNameMap.set(prMeta.branchNameInGitsterGit, pullRequestURL);
+                    }
+                }
+                const sousChef = new sous_chef_1.SousChef(mbox);
+                if (!sousChef.messageID) {
+                    throw new Error(`Could not parse Message-ID of ${mbox}`);
+                }
+                console.log(`Handling "${sousChef.subject}"`);
+                const whatsCookingBaseURL = "https://lore.kernel.org/git/";
+                for (const branchName of sousChef.branches.keys()) {
+                    const pullRequestURL = branchNameMap.get(branchName);
+                    if (pullRequestURL) {
+                        const branchBaseURL = "https://github.com/gitgitgadget/git/commits/";
+                        const info = sousChef.branches.get(branchName);
+                        const pre = info === null || info === void 0 ? void 0 : info.text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+                        let comment;
+                        if (!pre || pre.trim() === "") {
+                            comment = `The branch [\`${branchName}\`](${branchBaseURL}${branchName}) was mentioned in the "${info === null || info === void 0 ? void 0 : info.sectionName}" section of the [status updates](${whatsCookingBaseURL}${sousChef.messageID}) on the Git mailing list.`;
+                        }
+                        else {
+                            comment = `There was a [status update](${whatsCookingBaseURL}${sousChef.messageID}) in the "${info === null || info === void 0 ? void 0 : info.sectionName}" section about the branch [\`${branchName}\`](${branchBaseURL}${branchName}) on the Git mailing list:\n\n<pre>\n${pre}\n</pre>`;
+                        }
+                        console.log(`\n${pullRequestURL}: ${comment}`);
+                        yield this.githubGlue
+                            .addPRComment(pullRequestURL, comment);
+                    }
+                }
+            });
+            const mboxHandler = (mbox) => __awaiter(this, void 0, void 0, function* () {
+                var _a;
+                const parsedMbox = yield (0, send_mail_1.parseMBox)(mbox, true);
+                if (!parsedMbox.headers) {
+                    throw new Error(`Could not parse ${mbox}`);
+                }
+                const parsed = (0, send_mail_1.parseMBoxMessageIDAndReferences)(parsedMbox);
+                if (((_a = parsedMbox.subject) === null || _a === void 0 ? void 0 : _a.match(/^What's cooking in git.git /)) &&
+                    parsedMbox.from === "Junio C Hamano <gitster@pobox.com>") {
+                    return handleWhatsCooking(mbox);
+                }
+                if (seen(parsed.messageID)) {
+                    console.log(`Already handled: ${parsed.messageID}`);
+                    return;
+                }
+                let pullRequestURL;
+                let originalCommit;
+                let issueCommentId;
+                for (const reference of parsed.references.filter(seen)) {
+                    const data = yield this.gggNotes.get(reference);
+                    if (data && data.pullRequestURL) {
+                        if (prFilter && !prFilter(data.pullRequestURL)) {
+                            continue;
+                        }
+                        /* Cover letters were recorded with their tip commits */
+                        const commit = reference.match(/^pull/) ?
+                            undefined : data.originalCommit;
+                        if (!pullRequestURL ||
+                            (!originalCommit && commit) ||
+                            (!issueCommentId && data.issueCommentId)) {
+                            pullRequestURL = data.pullRequestURL;
+                            issueCommentId = data.issueCommentId;
+                            originalCommit = commit;
+                        }
+                    }
+                }
+                if (!pullRequestURL) {
+                    return;
+                }
+                console.log(`Message-ID ${parsed.messageID} (length ${mbox.length}) for PR ${pullRequestURL}, commit ${originalCommit}, comment ID: ${issueCommentId}`);
+                const archiveURL = `https://lore.kernel.org/git/${parsed.messageID}`;
+                const header = `[On the Git mailing list](${archiveURL}), ` +
+                    (parsedMbox.from ?
+                        parsedMbox.from.replace(/ *<.*>/, "") : "Somebody") +
+                    ` wrote ([reply to this](${replyToThisURL})):\n\n`;
+                const comment = header +
+                    MailArchiveGitHelper.mbox2markdown(parsedMbox);
+                if (issueCommentId) {
+                    yield this.githubGlue.addPRCommentReply(pullRequestURL, issueCommentId, comment);
+                }
+                else if (originalCommit) {
+                    const result = yield this.githubGlue
+                        .addPRCommitComment(pullRequestURL, originalCommit, this.gggNotes.workDir, comment);
+                    issueCommentId = result.id;
+                }
+                else {
+                    /*
+                     * We will not use the ID of this comment, as it is an
+                     * issue comment, really, not a Pull Request comment.
+                     */
+                    yield this.githubGlue
+                        .addPRComment(pullRequestURL, comment);
+                }
+                yield this.githubGlue.addPRCc(pullRequestURL, parsedMbox.from || "");
+                yield this.gggNotes.set(parsed.messageID, {
+                    issueCommentId,
+                    messageID: parsed.messageID,
+                    originalCommit,
+                    pullRequestURL,
+                });
+                /* It is now known */
+                keys.add(MailArchiveGitHelper.hashKey(parsed.messageID));
+            });
+            let buffer = "";
+            let counter = 0;
+            const lineHandler = (line) => __awaiter(this, void 0, void 0, function* () {
+                if (line.startsWith("@@ ")) {
+                    const match = line.match(/^@@ -(\d+,)?\d+ \+(\d+,)?(\d+)?/);
+                    if (match) {
+                        if (counter) {
+                            console.log(`Oops: unprocessed buffer ${buffer}`);
+                        }
+                        counter = parseInt(match[3], 10);
+                        buffer = "";
+                    }
+                }
+                else if (counter && line.match(/^[ +]/)) {
+                    buffer += line.substr(1) + "\n";
+                    if (--counter) {
+                        return;
+                    }
+                    try {
+                        yield mboxHandler(buffer);
+                    }
+                    catch (reason) {
+                        console.log(`${reason}: skipping`);
+                    }
+                }
+            });
+            if (!this.state.latestRevision) {
+                throw new Error(`Mail archive email commit tip not set.  Please run \`misc-helper init-email-commit-tip\` ${""}to set the value.`);
+            }
+            const head = yield (0, git_1.revParse)(this.branch, this.mailArchiveGitDir);
+            if (this.state.latestRevision === head) {
+                return false;
+            }
+            const range = `${this.state.latestRevision}..${head}`;
+            console.log(`Handling commit range ${range}`);
+            yield (0, git_1.git)(["log", "-p", "-U99999", "--reverse", range], { lineHandler, workDir: this.mailArchiveGitDir });
+            this.state.latestRevision = head;
+            yield this.gggNotes.set(exports.stateKey, this.state, true);
+            return true;
+        });
+    }
+}
+exports.MailArchiveGitHelper = MailArchiveGitHelper;
+
+
+/***/ }),
+
+/***/ 8544:
+/***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
+
+"use strict";
+
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.MailCommitMapping = void 0;
+const git_1 = __nccwpck_require__(888);
+const git_notes_1 = __nccwpck_require__(7170);
+const project_config_1 = __nccwpck_require__(5520);
+class MailCommitMapping {
+    constructor(workDir) {
+        this.config = (0, project_config_1.getConfig)();
+        this.workDir = workDir;
+        this.mail2CommitNotes = new git_notes_1.GitNotes(workDir, "refs/notes/mail-to-commit");
+    }
+    getGitGitCommitForMessageId(messageID) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return yield this.mail2CommitNotes.getString(messageID);
+        });
+    }
+    updateMail2CommitAndBranches() {
+        return __awaiter(this, void 0, void 0, function* () {
+            return yield this.update(true, true, true);
+        });
+    }
+    updateMail2CommitRef() {
+        return __awaiter(this, void 0, void 0, function* () {
+            return yield this.update(true);
+        });
+    }
+    update(includeNotesRef, includeUpstreamBranches, includeGitsterBranches) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const refs = [];
+            if (includeNotesRef) {
+                refs.push("refs/notes/mail-to-commit:refs/notes/mail-to-commit");
+            }
+            if (includeUpstreamBranches) {
+                for (const ref of this.config.repo.trackingBranches) {
+                    refs.push(`+refs/heads/${ref}:refs/remotes/upstream/${ref}`);
+                }
+            }
+            if (includeGitsterBranches && this.config.repo.maintainerBranch) {
+                refs.push(`+refs/heads/*:refs/remotes/${this.config.repo.maintainerBranch}/*`);
+            }
+            if (refs.length) {
+                yield (0, git_1.git)(["fetch", `https://github.com/${this.config.repo.owner}/${this.config.repo.name}`, ...refs], { workDir: this.workDir });
+            }
+        });
+    }
+}
+exports.MailCommitMapping = MailCommitMapping;
+
+
+/***/ }),
+
+/***/ 8535:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.md2text = void 0;
+const html_to_text_1 = __nccwpck_require__(7015);
+const marked_1 = __nccwpck_require__(5741);
+// Provide our own renderings of headings and block quotes.
+function md2text(markdown, columns = 76) {
+    let quoteDepth = 0;
+    const formatOptions = {
+        wordwrap: columns,
+        formatters: {
+            headerFormatter: (elem, walk, builder, options) => {
+                builder.openBlock({
+                    leadingLineBreaks: options.leadingLineBreaks || 2
+                });
+                walk(elem.children, builder);
+                builder.closeBlock({
+                    trailingLineBreaks: options.trailingLineBreaks || 2,
+                    blockTransform: str => {
+                        const underline = str.substr(str.lastIndexOf("\n") + 1)
+                            .replace(/./g, "=");
+                        return `${str}\n${underline}`;
+                    }
+                });
+            },
+            blockFormatter: (elem, walk, builder, options) => {
+                builder.openBlock({
+                    leadingLineBreaks: options.leadingLineBreaks || 2,
+                    reservedLineLength: quoteDepth ? 1 : 2
+                });
+                quoteDepth++;
+                walk(elem.children, builder);
+                quoteDepth--;
+                builder.closeBlock({ trailingLineBreaks: options.trailingLineBreaks || 2,
+                    blockTransform: str => {
+                        return str
+                            .replace(/^>/mg, ">>") // add to quote
+                            .replace(/^(?!>|$)/mg, "> ") // new quote
+                            .replace(/(^|\n)(\n)(?!$)/g, "$1>$2"); // quote empty
+                    } });
+            },
+        },
+        selectors: [
+            {
+                selector: "a",
+                options: {
+                    hideLinkHrefIfSameAsText: true,
+                },
+            },
+            {
+                selector: "h1",
+                options: {
+                    uppercase: false
+                },
+                format: "headerFormatter",
+            },
+            {
+                selector: "h2",
+                options: {
+                    uppercase: false
+                },
+                format: "headerFormatter",
+            },
+            {
+                selector: "h3",
+                options: {
+                    uppercase: false
+                },
+                format: "headerFormatter",
+            },
+            {
+                selector: "blockquote",
+                options: {
+                    trimEmptyLines: false
+                },
+                format: "blockFormatter"
+            },
+        ],
+    };
+    return (0, html_to_text_1.htmlToText)(marked_1.marked.parse(markdown), formatOptions);
+}
+exports.md2text = md2text;
+
+
+/***/ }),
+
+/***/ 2300:
+/***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
+
+"use strict";
+
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.PatchSeries = void 0;
+const addressparser_1 = __importDefault(__nccwpck_require__(7382));
+const mime_funcs_1 = __importDefault(__nccwpck_require__(994));
+// import { encodeWords } from "nodemailer/lib/mime-funcs";
+const git_1 = __nccwpck_require__(888);
+const git_notes_1 = __nccwpck_require__(7170);
+const markdown_renderer_1 = __nccwpck_require__(8535);
+const project_config_1 = __nccwpck_require__(5520);
+const project_options_1 = __nccwpck_require__(7849);
+const pullRequestKey_1 = __nccwpck_require__(4988);
+// NOTE: first values is used when emitting headers in addSingletonHeaders
+// unless it is an empty string
+const singletonHeaders = [
+    {
+        key: "Content-Description",
+        values: [],
+    },
+    {
+        key: "Content-ID",
+        values: [],
+    },
+    {
+        key: "Content-Type",
+        values: ["text/plain; charset=UTF-8", "text/plain; charset=\"UTF-8\"",
+            "text/plain; charset=utf-8", "text/plain"],
+    },
+    {
+        key: "Content-Transfer-Encoding",
+        values: ["8bit", "7bit"],
+    },
+    {
+        key: "MIME-Version",
+        values: ["1.0"],
+    },
+];
+class PatchSeries {
+    constructor(notes, options, project, metadata, rangeDiff, patchCount, coverLetter, senderName) {
+        this.config = (0, project_config_1.getConfig)();
+        this.notes = notes;
+        this.options = options;
+        this.project = project;
+        this.metadata = metadata;
+        this.rangeDiff = rangeDiff;
+        this.coverLetter = coverLetter;
+        this.senderName = senderName;
+        this.patchCount = patchCount;
+    }
+    static getFromTag(options, project) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const latestTag = yield this.getLatestTag(project.branchName, options.redo);
+            const baseCommit = yield (0, git_1.revParse)(project.upstreamBranch);
+            if (!baseCommit) {
+                throw new Error(`Cannot determine tip of ${project.basedOn}`);
+            }
+            const headCommit = yield (0, git_1.revParse)("HEAD");
+            if (!headCommit) {
+                throw new Error("Cannot determine HEAD revision");
+            }
+            const metadata = {
+                baseCommit,
+                baseLabel: project.upstreamBranch,
+                headCommit,
+                headLabel: project.branchName,
+                iteration: 1,
+            };
+            let rangeDiff = "";
+            if (latestTag) {
+                const range = latestTag + "..." + project.branchName;
+                if (!(yield (0, git_1.git)(["rev-list", range]))) {
+                    throw new Error(`Branch ${project.branchName} was already submitted: ${latestTag}`);
+                }
+                let match = latestTag.match(/-v([1-9][0-9]*)$/);
+                metadata.iteration = parseInt(match && match[1] || "0", 10) + 1;
+                const tagMessage = yield (0, git_1.git)(["cat-file", "tag", latestTag]);
+                match = tagMessage.match(/^[\s\S]*?\n\n([\s\S]*)/);
+                (match ? match[1] : tagMessage).split("\n").map((line) => {
+                    match = line
+                        .match(/https:\/\/lore\.kernel\.org\/.*\/([^/]+)/);
+                    if (!match) {
+                        const re = /https:\/\/public-inbox\.org\/.*\/([^/]+)/;
+                        match = line.match(re);
+                    }
+                    if (!match) {
+                        const re = /https:\/\/www\.mail-archive\.com\/.*\/([^/]+)/;
+                        match = line.match(re);
+                    }
+                    if (!match) {
+                        match = line.match(/http:\/\/mid.gmane.org\/(.*)/);
+                    }
+                    if (!match) {
+                        match = line.match(/^[^ :]*: Message-ID: ([^/]+)/);
+                    }
+                    if (match) {
+                        if (metadata.referencesMessageIds) {
+                            metadata.referencesMessageIds.unshift(match[1]);
+                        }
+                        else {
+                            metadata.referencesMessageIds = [match[1]];
+                        }
+                    }
+                });
+                if (yield (0, git_1.gitCommandExists)("range-diff", project.workDir)) {
+                    rangeDiff = yield (0, git_1.git)(["range-diff", "--creation-factor=95",
+                        "--no-color", range]);
+                }
+            }
+            const patchCount = yield (0, git_1.revListCount)(["--no-merges",
+                `${baseCommit}..${headCommit}`], project.workDir);
+            const notes = new git_notes_1.GitNotes(project.workDir, "refs/notes/mail-patch-series");
+            return new PatchSeries(notes, options, project, metadata, rangeDiff, patchCount);
+        });
+    }
+    static getFromNotes(notes, pullRequestURL, pullRequestTitle, pullRequestBody, baseLabel, baseCommit, headLabel, headCommit, options, senderName, senderEmail) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const workDir = notes.workDir;
+            if (!workDir) {
+                throw new Error("Need a worktree!");
+            }
+            let metadata = yield notes.get(pullRequestURL);
+            const currentRange = `${baseCommit}..${headCommit}`;
+            const patchCount = yield (0, git_1.revListCount)(["--no-merges", currentRange], workDir);
+            if (!patchCount) {
+                throw new Error(`Invalid commit range: ${currentRange}`);
+            }
+            let rangeDiff = "";
+            if (metadata === undefined) {
+                metadata = {
+                    baseCommit,
+                    baseLabel,
+                    coverLetterMessageId: "not yet sent",
+                    headCommit,
+                    headLabel,
+                    iteration: 1,
+                    pullRequestURL,
+                };
+            }
+            else {
+                if (!options.noUpdate && // allow reprint of submitted PRs
+                    !(yield (0, git_1.git)(["rev-list",
+                        `${metadata.headCommit}...${headCommit}`], { workDir }))) {
+                    throw new Error(`${headCommit} was already submitted`);
+                }
+                const previousRange = `${metadata.baseCommit}..${metadata.headCommit}`;
+                if (yield (0, git_1.gitCommandExists)("range-diff", workDir)) {
+                    rangeDiff = yield (0, git_1.git)(["range-diff", "--no-color",
+                        "--creation-factor=95",
+                        previousRange, currentRange], { workDir });
+                }
+                metadata.iteration++;
+                metadata.baseCommit = baseCommit;
+                metadata.baseLabel = baseLabel;
+                metadata.headCommit = headCommit;
+                metadata.headLabel = headLabel;
+                if (metadata.coverLetterMessageId) {
+                    if (!metadata.referencesMessageIds) {
+                        metadata.referencesMessageIds = [];
+                    }
+                    metadata.referencesMessageIds
+                        .push(metadata.coverLetterMessageId);
+                }
+                metadata.coverLetterMessageId = "not yet sent";
+            }
+            const indentCoverLetter = patchCount > 1 ? "" : "    ";
+            const wrapCoverLetterAt = 76 - indentCoverLetter.length;
+            const { basedOn, cc, coverLetter, } = yield PatchSeries.parsePullRequest(workDir, pullRequestTitle, pullRequestBody, wrapCoverLetterAt, indentCoverLetter);
+            // if known, add submitter to email chain
+            if (senderEmail) {
+                cc.push(`${senderName} <${senderEmail}>`);
+            }
+            if (basedOn && !(yield (0, git_1.revParse)(basedOn, workDir))) {
+                throw new Error(`Cannot find base branch ${basedOn}`);
+            }
+            const publishToRemote = undefined;
+            const project = yield project_options_1.ProjectOptions.get(workDir, headCommit, cc, basedOn, publishToRemote, baseCommit);
+            return new PatchSeries(notes, options, project, metadata, rangeDiff, patchCount, coverLetter, senderName);
+        });
+    }
+    static parsePullRequest(workDir, prTitle, prBody, wrapCoverLetterAtColumn, indentCoverLetter) {
+        return __awaiter(this, void 0, void 0, function* () {
+            // Replace \r\n with \n to simplify remaining parsing.
+            // Note that md2text() in the end will do the replacement anyway.
+            prBody = prBody.replace(/\r\n/g, "\n");
+            // Remove template from description (if template exists)
+            try {
+                let prTemplate = yield (0, git_1.git)(["show",
+                    "upstream/master:.github/PULL_REQUEST_TEMPLATE.md"], { workDir });
+                // Depending on the core.autocrlf setting, the template may contain
+                // \r\n line endings.
+                prTemplate = prTemplate.replace(/\r\n/g, "\n");
+                prBody = prBody.replace(prTemplate, "");
+            }
+            catch (_) {
+                // Just ignore it
+            }
+            const { basedOn, cc, coverLetterBody, } = PatchSeries.parsePullRequestBody(prBody);
+            const coverLetter = `${prTitle}\n${coverLetterBody.length ?
+                `\n${coverLetterBody}` : ""}`;
+            let wrappedLetter = (0, markdown_renderer_1.md2text)(coverLetter, wrapCoverLetterAtColumn);
+            if (indentCoverLetter) {
+                wrappedLetter = wrappedLetter.replace(/^/mg, indentCoverLetter);
+            }
+            return {
+                basedOn,
+                cc,
+                coverLetter: wrappedLetter,
+            };
+        });
+    }
+    static parsePullRequestBody(prBody) {
+        let basedOn;
+        const cc = [];
+        let coverLetterBody = prBody.trim();
+        // parse the footers of the pullRequestDescription
+        let match = prBody.match(/^([^]+)\n\n([^]+)$/);
+        if (!match && !prBody.match(/\n\n/)) {
+            // handle PR descriptions that have no body, just footers
+            match = prBody.match(/^()([-A-Za-z]+: [^]+)$/);
+        }
+        if (match) {
+            coverLetterBody = match[1];
+            const footer = [];
+            for (const line of match[2].trimRight().split("\n")) {
+                const match2 = line.match(/^([-A-Za-z]+:)\s*(.*)$/);
+                if (!match2) {
+                    footer.push(line);
+                }
+                else {
+                    switch (match2[1].toLowerCase()) {
+                        case "based-on:":
+                            if (basedOn) {
+                                throw new Error(`Duplicate Based-On footer: ${basedOn} vs ${match2[2]}`);
+                            }
+                            basedOn = match2[2];
+                            break;
+                        case "cc:":
+                            (0, addressparser_1.default)(match2[2], { flatten: true })
+                                .forEach((e) => {
+                                if (e.name) {
+                                    cc.push(`${e.name} <${e.address}>`);
+                                }
+                                else {
+                                    cc.push(e.address);
+                                }
+                            });
+                            break;
+                        default:
+                            footer.push(line);
+                    }
+                }
+            }
+            if (footer.length > 0) {
+                coverLetterBody += `\n\n${footer.join("\n")}`;
+            }
+        }
+        return {
+            basedOn,
+            cc,
+            coverLetterBody,
+        };
+    }
+    static getLatestTag(branchName, redo) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const args = [
+                "for-each-ref", "--format=%(refname)", "--sort=-taggerdate",
+                "refs/tags/" + branchName + "-v*[0-9]",
+            ];
+            const latesttags = (yield (0, git_1.git)(args)).split("\n");
+            if (redo) {
+                return latesttags.length > 1 ? latesttags[1] : "";
+            }
+            return latesttags.length > 0 ? latesttags[0] : "";
+        });
+    }
+    static splitMails(mbox) {
+        const re = /\n(?=From [0-9a-f]{40} Mon Sep 17 00:00:00 2001\n)/;
+        return mbox.split(re);
+    }
+    static removeDuplicateHeaders(mails) {
+        mails.map((mail, i) => {
+            const endOfHeader = mail.indexOf("\n\n");
+            if (endOfHeader < 0) {
+                return;
+            }
+            let headers = mail.substr(0, endOfHeader + 1);
+            singletonHeaders.forEach((header) => {
+                headers = PatchSeries.stripDuplicateHeaders(headers, header);
+            });
+            mails[i] = headers + mail.substr(endOfHeader + 1);
+        });
+    }
+    static stripDuplicateHeaders(headers, header) {
+        const needle = "\n" + header.key + ":";
+        let offset;
+        if (headers.startsWith(`${header.key}:`)) {
+            offset = 0;
+        }
+        else {
+            offset = headers.indexOf(needle) + 1;
+            if (!offset) {
+                return headers;
+            }
+        }
+        let endOfKey = offset + needle.length - 1;
+        offset = headers.indexOf(needle, endOfKey);
+        if (offset < 0) {
+            return headers;
+        }
+        // extract values to determine if they match.
+        let endOfHdr = headers.indexOf("\n", endOfKey);
+        const value1 = headers.substr(endOfKey, endOfHdr - endOfKey).trim();
+        do {
+            endOfKey = offset + needle.length;
+            endOfHdr = headers.indexOf("\n", endOfKey);
+            const value2 = headers.substr(endOfKey, endOfHdr - endOfKey).trim();
+            if (value1 !== value2) {
+                if (0 >= header.values.indexOf(value2)) {
+                    console.log("Found multiple headers where only one allowed"
+                        + `\n    ${header.key}: ${value1}\n    `
+                        + `${header.key}: ${value2}\nProcessing headers:\n`
+                        + headers);
+                }
+            }
+            // substr up to \n and concat from next \n
+            headers = headers.substr(0, offset) + headers.substr(endOfHdr);
+            offset = headers.indexOf(needle, offset);
+        } while (offset >= 0);
+        return headers;
+    }
+    static encodeSender(sender) {
+        const encoded = mime_funcs_1.default.encodeWords(sender);
+        /* Don't quote if already quoted */
+        if (encoded.startsWith("\"") && encoded.match(/"\s*</)) {
+            return encoded;
+        }
+        const match = encoded.match(/^([^<]*[()<>[\]:;@\\,."][^<]*?)(\s*)(<.*)/);
+        if (!match) {
+            return encoded;
+        }
+        return `"${match[1]
+            .replace(/["\\\\]/g, "\\$&")}"${match[2]}${match[3]}`;
+    }
+    insertCcAndFromLines(mails, thisAuthor, senderName) {
+        const isGitGitGadget = thisAuthor.match(`^${this.config.mail.author} (<.*)$`);
+        mails.map((mail, i) => {
+            const match = mail.match(/^([^]*?)(\n\n[^]*)$/);
+            if (!match) {
+                throw new Error(`No header found in mail #${i}:\n${mail}`);
+            }
+            let header = match[1];
+            const authorMatch = header.match(/^([^]*\nFrom: )([^]*?)(\n(?![ \t])[^]*)$/);
+            if (!authorMatch) {
+                throw new Error("No From: line found in header:\n\n" + header);
+            }
+            let replaceSender = PatchSeries.encodeSender(thisAuthor);
+            if (isGitGitGadget) {
+                const onBehalfOf = i === 0 && senderName ?
+                    PatchSeries.encodeSender(senderName) :
+                    authorMatch[2].replace(/ <.*>$/, "");
+                // Special-case GitGitGadget to send from  "<author> via GitGitGadget"
+                replaceSender = `\"${onBehalfOf.replace(/^"(.*)"$/, "$1").replace(/"/g, "\\\"")} via ${this.config.mail.sender}" ${isGitGitGadget[1]}`;
+            }
+            else if (authorMatch[2] === thisAuthor) {
+                return;
+            }
+            header = authorMatch[1] + replaceSender + authorMatch[3];
+            if (mails.length > 1 && i === 0 && senderName) {
+                // skip Cc:ing and From:ing in the cover letter
+                mails[i] = header + match[2];
+                return;
+            }
+            const ccMatch = header.match(/^([^]*\nCc: [^]*?)(|\n(?![ \t])[^]*)$/);
+            if (ccMatch) {
+                header = ccMatch[1] + ",\n    " + authorMatch[2] + ccMatch[2];
+            }
+            else {
+                header += "\nCc: " + authorMatch[2];
+            }
+            mails[i] = header + "\n\nFrom: " + authorMatch[2] + match[2];
+        });
+    }
+    static adjustCoverLetter(coverLetter) {
+        const regex = new RegExp("^([^]*?\\nSubject: .* )"
+            + "\\*\\*\\* SUBJECT HERE \\*\\*\\*"
+            + "(?=\\n)([^]*?\\n\\n)"
+            + "\\*\\*\\* BLURB HERE \\*\\*\\*\\n\\n"
+            + "([^]*?)\\n\\n([^]*)$");
+        const match = coverLetter.match(regex);
+        if (!match) {
+            throw new Error("Could not parse cover letter:\n\n" + coverLetter);
+        }
+        const subject = match[3].split(/\n(?=.)/).join("\n ");
+        return match[1] + subject + match[2] + match[4];
+    }
+    static generateTagMessage(mail, isCoverLetter, midUrlPrefix, inReplyTo) {
+        const regex = isCoverLetter ?
+            /\nSubject: (\[.*?\] )?([^]*?(?=\n[^ ]))[^]*?\n\n([^]*?)\n*-- \n/ :
+            /\nSubject: (\[.*?\] )?([^]*?(?=\n[^ ]))[^]*?\n\n([^]*?)\n*---\n/;
+        const match = mail.match(regex);
+        if (!match) {
+            throw new Error("Could not generate tag message from mail:\n\n"
+                + mail);
+        }
+        const messageID = mail.match(/\nMessage-ID: <(.*?)>\n/i);
+        let footer = messageID ? `Submitted-As: ${midUrlPrefix}${messageID[1]}` : "";
+        if (inReplyTo) {
+            inReplyTo.map((id) => {
+                footer += "\nIn-Reply-To: " + midUrlPrefix + id;
+            });
+        }
+        // Subjects can contain continuation lines; simply strip out the new
+        // line and keep only the space
+        return match[2].replace(/\n */g, " ") + `\n\n${match[3]}${footer ? `\n\n${footer}` : ""}`;
+    }
+    static insertLinks(tagMessage, url, tagName, basedOn) {
+        if (!url) {
+            return tagMessage;
+        }
+        let match = url.match(/^https?(:\/\/github\.com\/.*)/);
+        if (match) {
+            url = "https" + match[1];
+        }
+        else {
+            match = url.match(/^(git@)?github\.com(:.*)/);
+            if (match) {
+                url = "https://github.com/" + match[1];
+            }
+            else {
+                return tagMessage;
+            }
+        }
+        let insert = `Published-As: ${url}/releases/tag/${tagName}\nFetch-It-Via: git fetch ${url} ${tagName}\n`;
+        if (basedOn) {
+            insert =
+                `Based-On: ${basedOn} at ${url}\nFetch-Base-Via: git fetch ${url} ${basedOn}\n${insert}`;
+        }
+        if (!tagMessage.match(/\n[-A-Za-z]+: [^\n]*\n$/)) {
+            insert = "\n" + insert;
+        }
+        return tagMessage + insert;
+    }
+    static insertFooters(mail, isCoverLetter, footers) {
+        const regex = isCoverLetter ?
+            /^([^]*?\n)(-- \n[^]*)$/ :
+            /^([^]*?\n---\n(?:\n[A-Za-z:]+ [^]*?\n\n)?)([^]*)$/;
+        const match = mail.match(regex);
+        if (!match) {
+            throw new Error("Failed to find range-diff insertion "
+                + "point for\n\n" + mail);
+        }
+        const n = isCoverLetter ? "" : "\n";
+        return `${match[1]}${n}${footers.join("\n")}\n${n}${match[2]}`;
+    }
+    static adjustDateHeaders(mails, forceDate) {
+        let count = 0;
+        const time = forceDate.getTime();
+        for (let i = 0, j = mails.length - 1; i < mails.length; i++, j--) {
+            const mail = mails[i];
+            /* Look for the date header */
+            let dateOffset;
+            if (mail.startsWith("Date: ")) {
+                dateOffset = 6;
+            }
+            else {
+                dateOffset = mail.indexOf("\nDate: ");
+                if (dateOffset < 0) {
+                    continue;
+                }
+                const endOfHeader = mail.indexOf("\n\n");
+                if (dateOffset > endOfHeader) {
+                    continue;
+                }
+                dateOffset += 7;
+            }
+            const endOfLine = mail.indexOf("\n", dateOffset);
+            mails[i] = mail.substr(0, dateOffset) +
+                new Date(time - j * 1000).toUTCString().replace(/GMT$/, "+0000")
+                + mail.substr(endOfLine);
+            count++;
+        }
+        return count;
+    }
+    static generateSingletonHeaders() {
+        const results = [];
+        for (const key of singletonHeaders) {
+            if (key.values.length) {
+                results.push(`--add-header=${key.key}: ${key.values[0]}`);
+            }
+        }
+        return results;
+    }
+    subjectPrefix() {
+        return `${this.options.noUpdate ? "PREVIEW" : "PATCH"}${this.options.rfc ?
+            "/RFC" : ""}${this.metadata.iteration > 1 ?
+            ` v${this.metadata.iteration}` : ""}`;
+    }
+    generateAndSend(logger, send, publishTagsAndNotesToRemote, pullRequestURL, forceDate) {
+        return __awaiter(this, void 0, void 0, function* () {
+            let globalOptions;
+            if (this.options.dryRun) {
+                logger.log(`Dry-run ${this.project.branchName} v${this.metadata.iteration}`);
+            }
+            else {
+                logger.log(`Submitting ${this.project.branchName} v${this.metadata.iteration}`);
+                globalOptions = yield this.notes.get("");
+            }
+            logger.log("Generating mbox");
+            const mbox = yield this.generateMBox();
+            const mails = PatchSeries.splitMails(mbox);
+            PatchSeries.removeDuplicateHeaders(mails);
+            const ident = yield (0, git_1.git)(["var", "GIT_AUTHOR_IDENT"], {
+                workDir: this.project.workDir,
+            });
+            const match = ident.match(/.*>/);
+            const thisAuthor = match && match[0];
+            if (!thisAuthor) {
+                throw new Error("Could not determine author ident from " + ident);
+            }
+            logger.log("Adding Cc: and explicit From: lines for other authors, if needed");
+            this.insertCcAndFromLines(mails, thisAuthor, this.senderName);
+            if (mails.length > 1) {
+                if (this.coverLetter) {
+                    const match2 = mails[0].match(/^([^]*?\n\*\*\* BLURB HERE \*\*\*\n\n)([^]*)/);
+                    if (!match2) {
+                        throw new Error(`Could not find blurb in ${mails[0]}`);
+                    }
+                    mails[0] = `${match2[1]}${this.coverLetter}\n\n${match2[2]}`;
+                }
+                logger.log("Fixing Subject: line of the cover letter");
+                mails[0] = PatchSeries.adjustCoverLetter(mails[0]);
+            }
+            const midMatch = mails[0].match(/\nMessage-ID: <(.*)>/i);
+            let coverMid = midMatch ? midMatch[1] : undefined;
+            if (this.metadata.pullRequestURL) {
+                if (!coverMid) {
+                    throw new Error("Could not extract cover letter Message-ID");
+                }
+                const mid = coverMid;
+                const tsMatch = coverMid.match(/cover\.([0-9]+)\./);
+                const timeStamp = tsMatch ? tsMatch[1] : `${Date.now()}`;
+                const emailMatch = thisAuthor.match(/<(.*)>/);
+                if (!emailMatch) {
+                    throw new Error(`Could not parse email of '${thisAuthor}`);
+                }
+                const email = emailMatch[1];
+                const prMatch = this.metadata.pullRequestURL.match(/\/([^/]+)\/([^/]+)\/pull\/(\d+)$/);
+                if (prMatch) {
+                    const infix = this.metadata.iteration > 1 ? `.v${this.metadata.iteration}` : "";
+                    const repoInfix = prMatch[1] === this.config.repo.owner ?
+                        prMatch[2] : `${prMatch[1]}.${prMatch[2]}`;
+                    const newCoverMid = `pull.${prMatch[3]}${infix}.${repoInfix}.${timeStamp}.${email}`;
+                    mails.map((value, index) => {
+                        // cheap replace-all
+                        mails[index] = value.split(mid).join(newCoverMid);
+                    });
+                    coverMid = newCoverMid;
+                }
+            }
+            this.metadata.coverLetterMessageId = coverMid;
+            logger.log("Generating tag message");
+            let tagMessage = PatchSeries.generateTagMessage(mails[0], mails.length > 1, this.project.midUrlPrefix, this.metadata.referencesMessageIds);
+            let tagName;
+            if (!this.metadata.pullRequestURL) {
+                tagName = `${this.project.branchName}-v${this.metadata.iteration}`;
+            }
+            else {
+                const prKey = (0, pullRequestKey_1.getPullRequestKeyFromURL)(this.metadata.pullRequestURL);
+                const branch = this.metadata.headLabel.replace(/:/g, "/");
+                const tagPrefix = prKey.owner === this.config.repo.owner ? "pr-" : `pr-${prKey.owner}-`;
+                tagName = `${tagPrefix}${prKey.pull_number}/${branch}-v${this.metadata.iteration}`;
+            }
+            this.metadata.latestTag = tagName;
+            if (this.project.publishToRemote) {
+                const url = yield (0, git_1.gitConfig)(`remote.${this.project.publishToRemote}.url`, this.project.workDir);
+                if (!url) {
+                    throw new Error(`remote ${this.project.publishToRemote} lacks URL`);
+                }
+                logger.log("Inserting links");
+                tagMessage = PatchSeries.insertLinks(tagMessage, url, tagName, this.project.basedOn);
+            }
+            if (this.options.noUpdate) {
+                logger.log(`Would generate tag ${tagName} with message:\n\n ${tagMessage.split("\n").map((line) => {
+                    return "    " + line;
+                }).join("\n")}`);
+            }
+            else {
+                logger.log("Generating tag object");
+                yield this.generateTagObject(tagName, tagMessage);
+            }
+            const footers = [];
+            if (pullRequestURL) {
+                const prefix = `https://github.com/${this.config.repo.owner}/${this.config.repo.name}`;
+                const tagName2 = encodeURIComponent(tagName);
+                footers.push(`Published-As: ${prefix}/releases/tag/${tagName2}`);
+                footers.push(`Fetch-It-Via: git fetch ${prefix} ${tagName}`);
+                footers.push(`Pull-Request: ${pullRequestURL}`);
+            }
+            if (this.rangeDiff) {
+                if (footers.length > 0) {
+                    footers.push(""); // empty line
+                }
+                // split the range-diff and prefix with a space
+                footers.push(`Range-diff vs v${this.metadata.iteration - 1}:\n\n${this.rangeDiff.replace(/(^|\n(?!$))/g, "$1 ")}\n`);
+            }
+            logger.log("Inserting footers");
+            if (footers.length > 0) {
+                mails[0] = PatchSeries.insertFooters(mails[0], mails.length > 1, footers);
+            }
+            /*
+             * Finally, *after* inserting the range-diff and the footers (if any),
+             * insert the cover letter into single-patch submissions.
+             */
+            if (mails.length === 1 && this.coverLetter) {
+                if (this.patchCount !== 1) {
+                    throw new Error(`Patch count mismatch: ${mails.length} vs ${this.patchCount}`);
+                }
+                // Need to insert it into the first mail
+                const splitAtTripleDash = mails[0].match(/([^]*?\n---\n)([^]*)$/);
+                if (!splitAtTripleDash) {
+                    throw new Error(`No \`---\` found in\n${mails[0]}`);
+                }
+                console.log(`Insert cover letter into\n${mails[0]}\nwith match:`);
+                console.log(splitAtTripleDash);
+                mails[0] = splitAtTripleDash[1] +
+                    this.coverLetter + "\n" + splitAtTripleDash[2];
+                console.log(mails[0]);
+            }
+            logger.log("Adjusting Date headers");
+            if (forceDate) {
+                PatchSeries.adjustDateHeaders(mails, forceDate);
+            }
+            if (this.options.dryRun) {
+                logger.log(`Would send this mbox:\n\n${mbox.split("\n").map((line) => {
+                    return "    " + line;
+                }).join("\n")}`);
+            }
+            else if (send) {
+                for (const mail of mails) {
+                    yield send(mail);
+                }
+            }
+            else {
+                logger.log("Calling the `send-mbox` alias");
+                yield this.sendMBox(mails.join("\n"));
+            }
+            if (this.options.noUpdate)
+                return this.metadata;
+            logger.log("Updating the mail metadata");
+            let isCoverLetter = mails.length > 1;
+            for (const mail of mails) {
+                const messageID = mail.match(/\nMessage-ID: <(.*?)>\n/i);
+                if (messageID) {
+                    let originalCommit;
+                    if (isCoverLetter) {
+                        isCoverLetter = false;
+                    }
+                    else {
+                        const commitMatch = mail.match(/^From ([0-9a-f]{40}) /);
+                        if (commitMatch) {
+                            originalCommit = commitMatch[1];
+                        }
+                    }
+                    const mid = messageID[1];
+                    const mailMeta = {
+                        messageID: mid,
+                        originalCommit,
+                        pullRequestURL: this.metadata.pullRequestURL,
+                    };
+                    yield this.notes.set(mid, mailMeta, true);
+                    if (globalOptions && originalCommit &&
+                        this.metadata.pullRequestURL) {
+                        if (!globalOptions.activeMessageIDs) {
+                            globalOptions.activeMessageIDs = {};
+                        }
+                        globalOptions.activeMessageIDs[mid] = originalCommit;
+                    }
+                    if (originalCommit &&
+                        (yield (0, git_1.commitExists)(originalCommit, this.project.workDir))) {
+                        yield this.notes.appendCommitNote(originalCommit, mid);
+                    }
+                }
+            }
+            if (globalOptions && this.metadata.pullRequestURL) {
+                if (!globalOptions.openPRs) {
+                    globalOptions.openPRs = {};
+                }
+                globalOptions.openPRs[this.metadata.pullRequestURL] =
+                    coverMid || "";
+                yield this.notes.set("", globalOptions, true);
+            }
+            logger.log("Publishing branch and tag");
+            yield this.publishBranch(tagName);
+            if (!this.options.dryRun) {
+                const key = this.metadata.pullRequestURL || this.project.branchName;
+                yield this.notes.set(key, this.metadata, true);
+            }
+            if (publishTagsAndNotesToRemote) {
+                yield (0, git_1.git)(["push", publishTagsAndNotesToRemote, this.notes.notesRef,
+                    `refs/tags/${tagName}`], { workDir: this.notes.workDir });
+            }
+            return this.metadata;
+        });
+    }
+    generateMBox() {
+        return __awaiter(this, void 0, void 0, function* () {
+            const mergeBase = yield (0, git_1.git)(["merge-base", this.project.baseCommit,
+                this.project.branchName], { workDir: this.project.workDir });
+            const args = [
+                "format-patch", "--thread", "--stdout", `--signature=${this.config.repo.owner}`,
+                "--add-header=Fcc: Sent",
+                "--base", mergeBase, this.project.to,
+            ].concat(PatchSeries.generateSingletonHeaders());
+            this.project.cc.map((email) => {
+                args.push("--cc=" + PatchSeries.encodeSender(email));
+            });
+            if (this.metadata.referencesMessageIds) {
+                this.metadata.referencesMessageIds.map((email) => {
+                    args.push("--in-reply-to=" + email);
+                });
+            }
+            const subjectPrefix = this.subjectPrefix();
+            if (subjectPrefix) {
+                args.push("--subject-prefix=" + subjectPrefix);
+            }
+            if (this.patchCount > 1) {
+                if (!this.coverLetter) {
+                    throw new Error(`Branch ${this.project.branchName} needs a description`);
+                }
+                args.push("--cover-letter");
+            }
+            if (this.options.patience) {
+                args.push("--patience");
+            }
+            args.push(`${this.project.baseCommit}..${this.project.branchName}`);
+            return yield (0, git_1.git)(args, { workDir: this.project.workDir });
+        });
+    }
+    generateTagObject(tagName, tagMessage) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const args = ["tag", "-F", "-", "-a"];
+            if (this.options.redo) {
+                args.push("-f");
+            }
+            args.push(tagName);
+            args.push(this.metadata.headCommit);
+            yield (0, git_1.git)(args, { stdin: tagMessage, workDir: this.project.workDir });
+        });
+    }
+    sendMBox(mbox) {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield (0, git_1.git)(["send-mbox"], {
+                stdin: mbox,
+                workDir: this.project.workDir,
+            });
+        });
+    }
+    publishBranch(tagName) {
+        return __awaiter(this, void 0, void 0, function* () {
+            if (!this.project.publishToRemote || this.options.noUpdate) {
+                return;
+            }
+            if (this.options.redo) {
+                tagName = "+" + tagName;
+            }
+            yield (0, git_1.git)(["push", this.project.publishToRemote,
+                `+${this.project.branchName}`, tagName], { workDir: this.project.workDir });
+        });
+    }
+}
+exports.PatchSeries = PatchSeries;
+
+
+/***/ }),
+
+/***/ 5520:
+/***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
+
+"use strict";
+
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.setConfig = exports.loadConfig = exports.getConfig = void 0;
+const fs = __importStar(__nccwpck_require__(7147));
+const path_1 = __importDefault(__nccwpck_require__(1017));
+;
+let config; // singleton
+/**
+ * Query to get the current configuration.
+ *
+ * @returns IConfig interface
+ */
+function getConfig() {
+    if (config === undefined) {
+        throw new Error("project-config not set");
+    }
+    return config;
+}
+exports.getConfig = getConfig;
+/**
+ * Load a config.  The config may be a javascript file (plain or generated
+ * from typescript) or a json file (with a .json extension).
+ *
+ * @param file fully qualified filename and path
+ * @returns IConfig interface
+ */
+function loadConfig(file) {
+    return __awaiter(this, void 0, void 0, function* () {
+        let loadedConfig;
+        if (path_1.default.extname(file) === ".js") {
+            const { default: newConfig } = (yield Promise.resolve().then(() => __importStar(require(file))));
+            loadedConfig = newConfig;
+        }
+        else {
+            const fileText = fs.readFileSync(file, { encoding: "utf-8" });
+            loadedConfig = JSON.parse(fileText);
+        }
+        if (loadedConfig === undefined) {
+            throw new Error("project-config not set");
+        }
+        return loadedConfig;
+    });
+}
+exports.loadConfig = loadConfig;
+/**
+ * Set/update the configuration.
+ *
+ * @param newConfig configuration to be set
+ * @returns current IConfig interface
+ */
+function setConfig(newConfig) {
+    config = newConfig;
+    return config;
+}
+exports.setConfig = setConfig;
+
+
+/***/ }),
+
+/***/ 7849:
+/***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
+
+"use strict";
+
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.ProjectOptions = void 0;
+const git_1 = __nccwpck_require__(888);
+const project_config_1 = __nccwpck_require__(5520);
+// For now, only the Git, Cygwin and BusyBox projects are supported
+class ProjectOptions {
+    constructor(branchName, upstreamBranch, basedOn, publishToRemote, to, cc, midUrlPrefix, workDir, baseCommit) {
+        this.branchName = branchName;
+        this.upstreamBranch = upstreamBranch;
+        this.baseCommit = baseCommit || upstreamBranch;
+        this.basedOn = basedOn;
+        this.publishToRemote = publishToRemote;
+        this.workDir = workDir;
+        this.to = to;
+        this.cc = cc;
+        this.midUrlPrefix = midUrlPrefix;
+    }
+    static getBranchName(workDir) {
+        return __awaiter(this, void 0, void 0, function* () {
+            // Get the current branch name
+            const ref = yield (0, git_1.git)(["rev-parse", "--symbolic-full-name", "HEAD"], { workDir });
+            const match = ref.match(/^refs\/heads\/(.*)/);
+            if (!match) {
+                throw new Error("Not on a branch (" + ref + ")?");
+            }
+            return match[1];
+        });
+    }
+    static getLocal(workDir = ".") {
+        return __awaiter(this, void 0, void 0, function* () {
+            const branchName = yield ProjectOptions.getBranchName(workDir);
+            const cc = yield ProjectOptions.getCc(branchName, workDir);
+            const publishToRemote = yield (0, git_1.gitConfig)("mail.publishtoremote", workDir);
+            const baseBranch = yield ProjectOptions.determineBaseBranch(workDir, branchName, publishToRemote);
+            return yield ProjectOptions.get(workDir, branchName, cc, baseBranch, publishToRemote);
+        });
+    }
+    static get(workDir, branchName, cc, basedOn, publishToRemote, baseCommit) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const config = (0, project_config_1.getConfig)();
+            let upstreamBranch;
+            let to;
+            let midUrlPrefix = " Message-ID: ";
+            if (config.hasOwnProperty("project")) {
+                const project = config.project;
+                to = `--to=${project.to}`;
+                upstreamBranch = project.branch;
+                midUrlPrefix = project.urlPrefix;
+                for (const user of project.cc) {
+                    cc.push(user);
+                }
+            }
+            else if ((yield (0, git_1.commitExists)("cb07fc2a29c86d1bc11", workDir)) &&
+                (yield (0, git_1.revParse)(`${baseCommit}:git-gui.sh`, workDir)) !== undefined) {
+                // Git GUI
+                to = "--to=git@vger.kernel.org";
+                cc.push("Pratyush Yadav <me@yadavpratyush.com>");
+                upstreamBranch = "git-gui/master";
+            }
+            else if (yield (0, git_1.commitExists)("e83c5163316f89bfbde", workDir)) {
+                // Git
+                to = "--to=git@vger.kernel.org";
+                // Do *not* Cc: Junio Hamano by default
+                upstreamBranch = "upstream/seen";
+                if (yield (0, git_1.git)(["rev-list", branchName + ".." + upstreamBranch], { workDir })) {
+                    upstreamBranch = "upstream/next";
+                }
+                if (yield (0, git_1.git)(["rev-list", branchName + ".." + upstreamBranch], { workDir })) {
+                    upstreamBranch = "upstream/master";
+                }
+                midUrlPrefix = "https://lore.kernel.org/git/";
+            }
+            else if (yield (0, git_1.commitExists)("a3acbf46947e52ff596", workDir)) {
+                // Cygwin
+                to = "--to=cygwin-patches@cygwin.com";
+                upstreamBranch = "cygwin/master";
+                midUrlPrefix = "https://www.mail-archive.com/search?l=cygwin-patches@cygwin.com&q=";
+            }
+            else if (yield (0, git_1.commitExists)("cc8ed39b240180b5881", workDir)) {
+                // BusyBox
+                to = "--to=busybox@busybox.net";
+                upstreamBranch = "busybox/master";
+                midUrlPrefix = "https://www.mail-archive.com/search?l=busybox@busybox.net&q=";
+            }
+            else if (yield (0, git_1.commitExists)("7ccd18012de2e6c47e5", workDir)) {
+                // We're running in the test suite!
+                to = "--to=reviewer@example.com";
+                upstreamBranch = "master";
+                midUrlPrefix = "https://dummy.com/?mid=";
+            }
+            else {
+                throw new Error("Unrecognized project");
+            }
+            if (basedOn) {
+                upstreamBranch = basedOn;
+            }
+            if (!baseCommit &&
+                (yield (0, git_1.git)(["rev-list", branchName + ".." + upstreamBranch], { workDir }))) {
+                throw new Error(`Branch ${branchName} is not rebased to ${upstreamBranch}`);
+            }
+            return new ProjectOptions(branchName, upstreamBranch, basedOn, publishToRemote, to, cc, midUrlPrefix, workDir, baseCommit);
+        });
+    }
+    static determineBaseBranch(workDir, branchName, publishToRemote) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const basedOn = yield (0, git_1.gitConfig)(`branch.${branchName}.basedon`, workDir);
+            if (!basedOn || !(yield (0, git_1.commitExists)(basedOn, workDir))) {
+                return undefined;
+            }
+            if (!publishToRemote) {
+                throw new Error("Need a remote to publish to");
+            }
+            const remoteRef = `refs/remotes/${publishToRemote}/${basedOn}`;
+            if (!(yield (0, git_1.commitExists)(remoteRef, workDir))) {
+                throw new Error(`${basedOn} not pushed to ${publishToRemote}`);
+            }
+            const commit = yield (0, git_1.git)(["rev-parse", "-q", "--verify", remoteRef], { workDir });
+            if ((yield (0, git_1.git)(["rev-parse", basedOn])) !== commit) {
+                throw new Error(`${basedOn} on ${publishToRemote} disagrees with local branch`);
+            }
+            return basedOn;
+        });
+    }
+    static getCc(branchName, workDir) {
+        return __awaiter(this, void 0, void 0, function* () {
+            // Cc: from config
+            const cc = [];
+            const forEach = (email) => {
+                if (email) {
+                    cc.push(email);
+                }
+            };
+            yield (0, git_1.gitConfigForEach)(`branch.${branchName}.cc`, forEach, workDir);
+            return cc;
+        });
+    }
+}
+exports.ProjectOptions = ProjectOptions;
+
+
+/***/ }),
+
+/***/ 4988:
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.getPullRequestKeyFromURL = exports.getPullRequestKey = void 0;
+function getPullRequestKey(pullRequest) {
+    return typeof (pullRequest) === "string" ? getPullRequestKeyFromURL(pullRequest) : pullRequest;
+}
+exports.getPullRequestKey = getPullRequestKey;
+function getPullRequestKeyFromURL(pullRequestURL) {
+    const match = pullRequestURL.match(/^https:\/\/github.com\/(.*)\/(.*)\/pull\/(\d+)$/);
+    if (!match) {
+        throw new Error(`Unrecognized PR URL: "${pullRequestURL}`);
+    }
+    return { owner: match[1], repo: match[2], pull_number: parseInt(match[3], 10) };
+}
+exports.getPullRequestKeyFromURL = getPullRequestKeyFromURL;
+
+
+/***/ }),
+
+/***/ 7025:
+/***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
+
+"use strict";
+
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.sendMail = exports.parseMBoxMessageIDAndReferences = exports.parseMBox = exports.parseHeadersAndSendMail = void 0;
+const mailparser_1 = __nccwpck_require__(469);
+const nodemailer_1 = __nccwpck_require__(4289);
+const rfc2047_1 = __nccwpck_require__(9829);
+function parseHeadersAndSendMail(mbox, smtpOptions) {
+    return __awaiter(this, void 0, void 0, function* () {
+        return yield sendMail(yield parseMBox(mbox), smtpOptions);
+    });
+}
+exports.parseHeadersAndSendMail = parseHeadersAndSendMail;
+/**
+ * Parses a mail in mbox format, in preparation for sending it.
+ *
+ * Note: this function does *not* validate the input. For example, it does not
+ * error out if, say, duplicate `Date:` headers were provided.
+ *
+ * @param {string} mbox The mail, in mbox format
+ * @returns {IParsedMBox} the parsed headers/body
+ */
+function parseMBox(mbox, gentle) {
+    return __awaiter(this, void 0, void 0, function* () {
+        let cc;
+        let date;
+        let from;
+        const headers = new Array();
+        let messageId;
+        let subject;
+        let to;
+        const options = {
+            skipHtmlToText: true,
+            skipTextLinks: true,
+            skipTextToHtml: true
+        };
+        const parsed = yield (0, mailparser_1.simpleParser)(mbox, options);
+        for (const entry of parsed.headerLines) {
+            const valueSet = entry.line.match(/(.*): *([^]*)$/);
+            if (!valueSet) {
+                if (entry.line[entry.line.length - 1] === ":") {
+                    continue;
+                }
+                throw new Error(`Failed to parse header line '${entry.line}'`);
+            }
+            const key = valueSet[1];
+            const value = valueSet[2];
+            switch (entry.key) {
+                case "cc":
+                    cc = (cc || []).concat(value.replace(/\r?\n/g, " ").split(", ").map(item => item.trim()));
+                    break;
+                case "date":
+                    date = value;
+                    break;
+                case "fcc": break;
+                case "from":
+                    from = (0, rfc2047_1.decode)(value.trim());
+                    break;
+                case "message-id":
+                    messageId = value;
+                    break;
+                case "subject":
+                    subject = value;
+                    break;
+                case "to":
+                    to = value;
+                    break;
+                default:
+                    headers.push({ key, value });
+            }
+        }
+        if (!gentle && (!to || !subject || !from)) {
+            throw new Error(`Missing To, Subject and/or From header:\n${mbox}`);
+        }
+        return {
+            body: parsed.text || "",
+            cc,
+            date,
+            from,
+            headers,
+            messageId,
+            raw: mbox,
+            subject,
+            to,
+        };
+    });
+}
+exports.parseMBox = parseMBox;
+function parseMBoxMessageIDAndReferences(parsed) {
+    var _a;
+    const references = [];
+    const seen = new Set();
+    /*
+     * This regular expression parses whitespace-separated lists of the form
+     * <MESSAGE-ID> [(COMMENT ["QUOTED"])], i.e. lists of message IDs that are
+     * enclosed in pointy brackets, possibly followed by a comment that is
+     * enclosed in parentheses which possibly contains one quoted string.
+     *
+     * This is in no way a complete parser for RFC2822 (which is not possible
+     * using regular expressions due to its recursive nature) but seems to be
+     * good enough for the Git mailing list.
+     */
+    const msgIdRegex = /^\s*<([^>]+)>(\s*|,)(\([^")]*("[^"]*")?\)\s*|\([^)]*\)$)?(<.*)?$/;
+    for (const header of (_a = parsed.headers) !== null && _a !== void 0 ? _a : []) {
+        if (header.key === "In-Reply-To" || header.key === "References") {
+            let value = header.value.replace(/[\r\n]/g, " ");
+            while (value) {
+                const match = value.match(msgIdRegex);
+                if (!match) {
+                    if (value !== undefined && !value.match(/^\s*$/)) {
+                        throw new Error(`Error parsing Message-ID '${value}'`);
+                    }
+                    break;
+                }
+                if (!seen.has(match[1])) {
+                    references.push(match[1]);
+                    seen.add(match[1]);
+                }
+                value = match[5];
+            }
+        }
+    }
+    if (!parsed.messageId) {
+        throw new Error(`No Message-ID found in ${parsed.raw}`);
+    }
+    const messageID = parsed.messageId.match(/^<(.*)>$/);
+    if (!messageID) {
+        throw new Error(`Unexpected Message-ID format: ${parsed.messageId}`);
+    }
+    return { messageID: messageID[1], references };
+}
+exports.parseMBoxMessageIDAndReferences = parseMBoxMessageIDAndReferences;
+function sendMail(mail, smtpOptions) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const transportOpts = {
+            auth: {
+                pass: smtpOptions.smtpPass,
+                user: smtpOptions.smtpUser,
+            },
+            host: smtpOptions.smtpHost,
+            secure: true,
+        };
+        if (smtpOptions.smtpOpts) {
+            // Add quoting for JSON.parse
+            const smtpOpts = smtpOptions.smtpOpts
+                .replace(/([ {])([a-zA-Z0-9.]+?) *?:/g, "$1\"$2\":");
+            Object.assign(transportOpts, JSON.parse(smtpOpts));
+        }
+        return new Promise((resolve, reject) => {
+            const transporter = (0, nodemailer_1.createTransport)(transportOpts);
+            // setup email data with unicode symbols
+            const mailOptions = {
+                envelope: {
+                    cc: mail.cc ? mail.cc.join(", ") : undefined,
+                    from: mail.from,
+                    to: mail.to,
+                },
+                raw: mail.raw,
+            };
+            transporter.sendMail(mailOptions, (error, info) => {
+                if (error) {
+                    reject(error);
+                }
+                else {
+                    resolve(info.messageId);
+                }
+            });
+        });
+    });
+}
+exports.sendMail = sendMail;
+
+
+/***/ }),
+
+/***/ 7368:
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+/*
+ * This class is designed to parse the "What's cooking" mails sent to
+ * the Git mailing list about twice a week by the Git maintainer.
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.SousChef = void 0;
+class SousChef {
+    constructor(mbox) {
+        this.branches = new Map();
+        this.mbox = mbox;
+        const sections = mbox.split(/^-{10,}\n\[([^\]]+)\]\n/mg);
+        for (let i = 1; i < sections.length; i += 2) {
+            const sectionName = sections[i];
+            const branches = sections[i + 1].split(/\n\* ([a-z][^]+?)\n\n/m);
+            for (let j = 1; j < branches.length; j += 2) {
+                const match = branches[j]
+                    .match(/([^ ]+).*\n *(\(merged to [^)]+\))?/m);
+                if (!match) {
+                    continue;
+                }
+                const branchName = match[1];
+                const merged = match[2];
+                const text = branches[j + 1]
+                    .replace(/^ /mg, "").replace(/\s*$/, "");
+                this.branches.set(branchName, { merged, sectionName, text });
+            }
+        }
+        const messageIDMatch = `\n${sections[0]}`.match(/\nMessage-ID: <([^>]+)>/i);
+        this.messageID = messageIDMatch === null || messageIDMatch === void 0 ? void 0 : messageIDMatch[1];
+        const subjectMatch = `\n${sections[0]}`.match(/\nSubject: (.*)/i);
+        this.subject = subjectMatch === null || subjectMatch === void 0 ? void 0 : subjectMatch[1];
+    }
+}
+exports.SousChef = SousChef;
+
+
+/***/ }),
+
+/***/ 399:
+/***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
+
+"use strict";
+
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+const core = __importStar(__nccwpck_require__(2186));
+const path_1 = __nccwpck_require__(1017);
+const util_1 = __nccwpck_require__(3837);
+const gitgitgadget_helper_1 = __nccwpck_require__(9027);
+const find_git_exec_1 = __importDefault(__nccwpck_require__(1664));
+function run() {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            const inputs = {
+                token: core.getInput("token"),
+                reactionToken: core.getInput("reaction-token"),
+                reactions: core.getInput("reactions"),
+                permission: core.getInput("permission"),
+                repositoryDir: core.getInput("repository-dir"),
+                configRepositoryDir: core.getInput("config-repository-dir"),
+                configurationFile: core.getInput("configuration-file"),
+                config: core.getInput("config"),
+                configFromFile: core.getInput("config-from-file"),
+                repoOwner: core.getInput("repo-owner"),
+                repoName: core.getInput("repo-name"),
+                repoBaseowner: core.getInput("repo-baseowner"),
+                pullRequestNumber: core.getInput("pull-request-number"),
+                commentId: core.getInput("comment-id"),
+                action: core.getInput("action"),
+                skipUpdate: core.getInput("skip-update"),
+            };
+            core.debug(`Inputs: ${(0, util_1.inspect)(inputs)}`);
+            // Check required inputs
+            if (!inputs.token) {
+                throw new Error(`Missing required input 'token'.`);
+            }
+            yield setupGitEnvironment();
+            /*
+            if (gitInfo === null) {
+              throw new Error('External Git was not found on the host system.');
+            }
+            */
+            yield (0, gitgitgadget_helper_1.processWork)(Object.assign({}, inputs));
+        }
+        catch (err) {
+            const error = err;
+            core.debug((0, util_1.inspect)(error));
+            const message = error.message;
+            // Handle validation errors from workflow dispatch
+            if (message.startsWith("Unexpected inputs provided") ||
+                (message.startsWith("Required input") && message.endsWith("not provided")) ||
+                message.startsWith("No ref found for:") ||
+                message === `Workflow does not have 'workflow_dispatch' trigger`) {
+                core.setOutput("error-message", message);
+                core.warning(message);
+            }
+            else {
+                core.setFailed(error.message);
+            }
+        }
+    });
+}
+void run();
+function setupGitEnvironment() {
+    return __awaiter(this, void 0, void 0, function* () {
+        const gitInfo = yield (0, find_git_exec_1.default)();
+        if (gitInfo.path && gitInfo.execPath) {
+            // Set the environment variables to be able to use an external Git.
+            process.env.GIT_EXEC_PATH = gitInfo.execPath;
+            process.env.LOCAL_GIT_DIRECTORY = (0, path_1.dirname)((0, path_1.dirname)(gitInfo.path));
+        }
+        return gitInfo;
+    });
+}
+
+
+/***/ }),
+
 /***/ 2877:
 /***/ ((module) => {
 
@@ -50271,25 +54686,6 @@ module.exports = eval("require")("encoding");
 
 module.exports = eval("require")("iconv");
 
-
-/***/ }),
-
-/***/ 6302:
-/***/ ((module) => {
-
-function webpackEmptyAsyncContext(req) {
-	// Here Promise.resolve().then() is used instead of new Promise() to prevent
-	// uncaught exception popping up in devtools
-	return Promise.resolve().then(() => {
-		var e = new Error("Cannot find module '" + req + "'");
-		e.code = 'MODULE_NOT_FOUND';
-		throw e;
-	});
-}
-webpackEmptyAsyncContext.keys = () => ([]);
-webpackEmptyAsyncContext.resolve = webpackEmptyAsyncContext;
-webpackEmptyAsyncContext.id = 6302;
-module.exports = webpackEmptyAsyncContext;
 
 /***/ }),
 
@@ -50577,6 +54973,3053 @@ function amap(items, mapper) {
 }
 
 exports.hp2Builder = hp2Builder;
+
+
+/***/ }),
+
+/***/ 5741:
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+/**
+ * marked - a markdown parser
+ * Copyright (c) 2011-2022, Christopher Jeffrey. (MIT Licensed)
+ * https://github.com/markedjs/marked
+ */
+
+/**
+ * DO NOT EDIT THIS FILE
+ * The code in this file is generated from files in ./src/
+ */
+
+
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+
+function _defineProperties(target, props) {
+  for (var i = 0; i < props.length; i++) {
+    var descriptor = props[i];
+    descriptor.enumerable = descriptor.enumerable || false;
+    descriptor.configurable = true;
+    if ("value" in descriptor) descriptor.writable = true;
+    Object.defineProperty(target, descriptor.key, descriptor);
+  }
+}
+
+function _createClass(Constructor, protoProps, staticProps) {
+  if (protoProps) _defineProperties(Constructor.prototype, protoProps);
+  if (staticProps) _defineProperties(Constructor, staticProps);
+  Object.defineProperty(Constructor, "prototype", {
+    writable: false
+  });
+  return Constructor;
+}
+
+function _unsupportedIterableToArray(o, minLen) {
+  if (!o) return;
+  if (typeof o === "string") return _arrayLikeToArray(o, minLen);
+  var n = Object.prototype.toString.call(o).slice(8, -1);
+  if (n === "Object" && o.constructor) n = o.constructor.name;
+  if (n === "Map" || n === "Set") return Array.from(o);
+  if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
+}
+
+function _arrayLikeToArray(arr, len) {
+  if (len == null || len > arr.length) len = arr.length;
+
+  for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i];
+
+  return arr2;
+}
+
+function _createForOfIteratorHelperLoose(o, allowArrayLike) {
+  var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"];
+  if (it) return (it = it.call(o)).next.bind(it);
+
+  if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") {
+    if (it) o = it;
+    var i = 0;
+    return function () {
+      if (i >= o.length) return {
+        done: true
+      };
+      return {
+        done: false,
+        value: o[i++]
+      };
+    };
+  }
+
+  throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+}
+
+function getDefaults() {
+  return {
+    baseUrl: null,
+    breaks: false,
+    extensions: null,
+    gfm: true,
+    headerIds: true,
+    headerPrefix: '',
+    highlight: null,
+    langPrefix: 'language-',
+    mangle: true,
+    pedantic: false,
+    renderer: null,
+    sanitize: false,
+    sanitizer: null,
+    silent: false,
+    smartLists: false,
+    smartypants: false,
+    tokenizer: null,
+    walkTokens: null,
+    xhtml: false
+  };
+}
+exports.defaults = getDefaults();
+function changeDefaults(newDefaults) {
+  exports.defaults = newDefaults;
+}
+
+/**
+ * Helpers
+ */
+var escapeTest = /[&<>"']/;
+var escapeReplace = /[&<>"']/g;
+var escapeTestNoEncode = /[<>"']|&(?!#?\w+;)/;
+var escapeReplaceNoEncode = /[<>"']|&(?!#?\w+;)/g;
+var escapeReplacements = {
+  '&': '&amp;',
+  '<': '&lt;',
+  '>': '&gt;',
+  '"': '&quot;',
+  "'": '&#39;'
+};
+
+var getEscapeReplacement = function getEscapeReplacement(ch) {
+  return escapeReplacements[ch];
+};
+
+function escape(html, encode) {
+  if (encode) {
+    if (escapeTest.test(html)) {
+      return html.replace(escapeReplace, getEscapeReplacement);
+    }
+  } else {
+    if (escapeTestNoEncode.test(html)) {
+      return html.replace(escapeReplaceNoEncode, getEscapeReplacement);
+    }
+  }
+
+  return html;
+}
+var unescapeTest = /&(#(?:\d+)|(?:#x[0-9A-Fa-f]+)|(?:\w+));?/ig;
+/**
+ * @param {string} html
+ */
+
+function unescape(html) {
+  // explicitly match decimal, hex, and named HTML entities
+  return html.replace(unescapeTest, function (_, n) {
+    n = n.toLowerCase();
+    if (n === 'colon') return ':';
+
+    if (n.charAt(0) === '#') {
+      return n.charAt(1) === 'x' ? String.fromCharCode(parseInt(n.substring(2), 16)) : String.fromCharCode(+n.substring(1));
+    }
+
+    return '';
+  });
+}
+var caret = /(^|[^\[])\^/g;
+/**
+ * @param {string | RegExp} regex
+ * @param {string} opt
+ */
+
+function edit(regex, opt) {
+  regex = typeof regex === 'string' ? regex : regex.source;
+  opt = opt || '';
+  var obj = {
+    replace: function replace(name, val) {
+      val = val.source || val;
+      val = val.replace(caret, '$1');
+      regex = regex.replace(name, val);
+      return obj;
+    },
+    getRegex: function getRegex() {
+      return new RegExp(regex, opt);
+    }
+  };
+  return obj;
+}
+var nonWordAndColonTest = /[^\w:]/g;
+var originIndependentUrl = /^$|^[a-z][a-z0-9+.-]*:|^[?#]/i;
+/**
+ * @param {boolean} sanitize
+ * @param {string} base
+ * @param {string} href
+ */
+
+function cleanUrl(sanitize, base, href) {
+  if (sanitize) {
+    var prot;
+
+    try {
+      prot = decodeURIComponent(unescape(href)).replace(nonWordAndColonTest, '').toLowerCase();
+    } catch (e) {
+      return null;
+    }
+
+    if (prot.indexOf('javascript:') === 0 || prot.indexOf('vbscript:') === 0 || prot.indexOf('data:') === 0) {
+      return null;
+    }
+  }
+
+  if (base && !originIndependentUrl.test(href)) {
+    href = resolveUrl(base, href);
+  }
+
+  try {
+    href = encodeURI(href).replace(/%25/g, '%');
+  } catch (e) {
+    return null;
+  }
+
+  return href;
+}
+var baseUrls = {};
+var justDomain = /^[^:]+:\/*[^/]*$/;
+var protocol = /^([^:]+:)[\s\S]*$/;
+var domain = /^([^:]+:\/*[^/]*)[\s\S]*$/;
+/**
+ * @param {string} base
+ * @param {string} href
+ */
+
+function resolveUrl(base, href) {
+  if (!baseUrls[' ' + base]) {
+    // we can ignore everything in base after the last slash of its path component,
+    // but we might need to add _that_
+    // https://tools.ietf.org/html/rfc3986#section-3
+    if (justDomain.test(base)) {
+      baseUrls[' ' + base] = base + '/';
+    } else {
+      baseUrls[' ' + base] = rtrim(base, '/', true);
+    }
+  }
+
+  base = baseUrls[' ' + base];
+  var relativeBase = base.indexOf(':') === -1;
+
+  if (href.substring(0, 2) === '//') {
+    if (relativeBase) {
+      return href;
+    }
+
+    return base.replace(protocol, '$1') + href;
+  } else if (href.charAt(0) === '/') {
+    if (relativeBase) {
+      return href;
+    }
+
+    return base.replace(domain, '$1') + href;
+  } else {
+    return base + href;
+  }
+}
+var noopTest = {
+  exec: function noopTest() {}
+};
+function merge(obj) {
+  var i = 1,
+      target,
+      key;
+
+  for (; i < arguments.length; i++) {
+    target = arguments[i];
+
+    for (key in target) {
+      if (Object.prototype.hasOwnProperty.call(target, key)) {
+        obj[key] = target[key];
+      }
+    }
+  }
+
+  return obj;
+}
+function splitCells(tableRow, count) {
+  // ensure that every cell-delimiting pipe has a space
+  // before it to distinguish it from an escaped pipe
+  var row = tableRow.replace(/\|/g, function (match, offset, str) {
+    var escaped = false,
+        curr = offset;
+
+    while (--curr >= 0 && str[curr] === '\\') {
+      escaped = !escaped;
+    }
+
+    if (escaped) {
+      // odd number of slashes means | is escaped
+      // so we leave it alone
+      return '|';
+    } else {
+      // add space before unescaped |
+      return ' |';
+    }
+  }),
+      cells = row.split(/ \|/);
+  var i = 0; // First/last cell in a row cannot be empty if it has no leading/trailing pipe
+
+  if (!cells[0].trim()) {
+    cells.shift();
+  }
+
+  if (cells.length > 0 && !cells[cells.length - 1].trim()) {
+    cells.pop();
+  }
+
+  if (cells.length > count) {
+    cells.splice(count);
+  } else {
+    while (cells.length < count) {
+      cells.push('');
+    }
+  }
+
+  for (; i < cells.length; i++) {
+    // leading or trailing whitespace is ignored per the gfm spec
+    cells[i] = cells[i].trim().replace(/\\\|/g, '|');
+  }
+
+  return cells;
+}
+/**
+ * Remove trailing 'c's. Equivalent to str.replace(/c*$/, '').
+ * /c*$/ is vulnerable to REDOS.
+ *
+ * @param {string} str
+ * @param {string} c
+ * @param {boolean} invert Remove suffix of non-c chars instead. Default falsey.
+ */
+
+function rtrim(str, c, invert) {
+  var l = str.length;
+
+  if (l === 0) {
+    return '';
+  } // Length of suffix matching the invert condition.
+
+
+  var suffLen = 0; // Step left until we fail to match the invert condition.
+
+  while (suffLen < l) {
+    var currChar = str.charAt(l - suffLen - 1);
+
+    if (currChar === c && !invert) {
+      suffLen++;
+    } else if (currChar !== c && invert) {
+      suffLen++;
+    } else {
+      break;
+    }
+  }
+
+  return str.slice(0, l - suffLen);
+}
+function findClosingBracket(str, b) {
+  if (str.indexOf(b[1]) === -1) {
+    return -1;
+  }
+
+  var l = str.length;
+  var level = 0,
+      i = 0;
+
+  for (; i < l; i++) {
+    if (str[i] === '\\') {
+      i++;
+    } else if (str[i] === b[0]) {
+      level++;
+    } else if (str[i] === b[1]) {
+      level--;
+
+      if (level < 0) {
+        return i;
+      }
+    }
+  }
+
+  return -1;
+}
+function checkSanitizeDeprecation(opt) {
+  if (opt && opt.sanitize && !opt.silent) {
+    console.warn('marked(): sanitize and sanitizer parameters are deprecated since version 0.7.0, should not be used and will be removed in the future. Read more here: https://marked.js.org/#/USING_ADVANCED.md#options');
+  }
+} // copied from https://stackoverflow.com/a/5450113/806777
+
+/**
+ * @param {string} pattern
+ * @param {number} count
+ */
+
+function repeatString(pattern, count) {
+  if (count < 1) {
+    return '';
+  }
+
+  var result = '';
+
+  while (count > 1) {
+    if (count & 1) {
+      result += pattern;
+    }
+
+    count >>= 1;
+    pattern += pattern;
+  }
+
+  return result + pattern;
+}
+
+function outputLink(cap, link, raw, lexer) {
+  var href = link.href;
+  var title = link.title ? escape(link.title) : null;
+  var text = cap[1].replace(/\\([\[\]])/g, '$1');
+
+  if (cap[0].charAt(0) !== '!') {
+    lexer.state.inLink = true;
+    var token = {
+      type: 'link',
+      raw: raw,
+      href: href,
+      title: title,
+      text: text,
+      tokens: lexer.inlineTokens(text, [])
+    };
+    lexer.state.inLink = false;
+    return token;
+  }
+
+  return {
+    type: 'image',
+    raw: raw,
+    href: href,
+    title: title,
+    text: escape(text)
+  };
+}
+
+function indentCodeCompensation(raw, text) {
+  var matchIndentToCode = raw.match(/^(\s+)(?:```)/);
+
+  if (matchIndentToCode === null) {
+    return text;
+  }
+
+  var indentToCode = matchIndentToCode[1];
+  return text.split('\n').map(function (node) {
+    var matchIndentInNode = node.match(/^\s+/);
+
+    if (matchIndentInNode === null) {
+      return node;
+    }
+
+    var indentInNode = matchIndentInNode[0];
+
+    if (indentInNode.length >= indentToCode.length) {
+      return node.slice(indentToCode.length);
+    }
+
+    return node;
+  }).join('\n');
+}
+/**
+ * Tokenizer
+ */
+
+
+var Tokenizer = /*#__PURE__*/function () {
+  function Tokenizer(options) {
+    this.options = options || exports.defaults;
+  }
+
+  var _proto = Tokenizer.prototype;
+
+  _proto.space = function space(src) {
+    var cap = this.rules.block.newline.exec(src);
+
+    if (cap && cap[0].length > 0) {
+      return {
+        type: 'space',
+        raw: cap[0]
+      };
+    }
+  };
+
+  _proto.code = function code(src) {
+    var cap = this.rules.block.code.exec(src);
+
+    if (cap) {
+      var text = cap[0].replace(/^ {1,4}/gm, '');
+      return {
+        type: 'code',
+        raw: cap[0],
+        codeBlockStyle: 'indented',
+        text: !this.options.pedantic ? rtrim(text, '\n') : text
+      };
+    }
+  };
+
+  _proto.fences = function fences(src) {
+    var cap = this.rules.block.fences.exec(src);
+
+    if (cap) {
+      var raw = cap[0];
+      var text = indentCodeCompensation(raw, cap[3] || '');
+      return {
+        type: 'code',
+        raw: raw,
+        lang: cap[2] ? cap[2].trim() : cap[2],
+        text: text
+      };
+    }
+  };
+
+  _proto.heading = function heading(src) {
+    var cap = this.rules.block.heading.exec(src);
+
+    if (cap) {
+      var text = cap[2].trim(); // remove trailing #s
+
+      if (/#$/.test(text)) {
+        var trimmed = rtrim(text, '#');
+
+        if (this.options.pedantic) {
+          text = trimmed.trim();
+        } else if (!trimmed || / $/.test(trimmed)) {
+          // CommonMark requires space before trailing #s
+          text = trimmed.trim();
+        }
+      }
+
+      var token = {
+        type: 'heading',
+        raw: cap[0],
+        depth: cap[1].length,
+        text: text,
+        tokens: []
+      };
+      this.lexer.inline(token.text, token.tokens);
+      return token;
+    }
+  };
+
+  _proto.hr = function hr(src) {
+    var cap = this.rules.block.hr.exec(src);
+
+    if (cap) {
+      return {
+        type: 'hr',
+        raw: cap[0]
+      };
+    }
+  };
+
+  _proto.blockquote = function blockquote(src) {
+    var cap = this.rules.block.blockquote.exec(src);
+
+    if (cap) {
+      var text = cap[0].replace(/^ *>[ \t]?/gm, '');
+      return {
+        type: 'blockquote',
+        raw: cap[0],
+        tokens: this.lexer.blockTokens(text, []),
+        text: text
+      };
+    }
+  };
+
+  _proto.list = function list(src) {
+    var cap = this.rules.block.list.exec(src);
+
+    if (cap) {
+      var raw, istask, ischecked, indent, i, blankLine, endsWithBlankLine, line, nextLine, rawLine, itemContents, endEarly;
+      var bull = cap[1].trim();
+      var isordered = bull.length > 1;
+      var list = {
+        type: 'list',
+        raw: '',
+        ordered: isordered,
+        start: isordered ? +bull.slice(0, -1) : '',
+        loose: false,
+        items: []
+      };
+      bull = isordered ? "\\d{1,9}\\" + bull.slice(-1) : "\\" + bull;
+
+      if (this.options.pedantic) {
+        bull = isordered ? bull : '[*+-]';
+      } // Get next list item
+
+
+      var itemRegex = new RegExp("^( {0,3}" + bull + ")((?:[\t ][^\\n]*)?(?:\\n|$))"); // Check if current bullet point can start a new List Item
+
+      while (src) {
+        endEarly = false;
+
+        if (!(cap = itemRegex.exec(src))) {
+          break;
+        }
+
+        if (this.rules.block.hr.test(src)) {
+          // End list if bullet was actually HR (possibly move into itemRegex?)
+          break;
+        }
+
+        raw = cap[0];
+        src = src.substring(raw.length);
+        line = cap[2].split('\n', 1)[0];
+        nextLine = src.split('\n', 1)[0];
+
+        if (this.options.pedantic) {
+          indent = 2;
+          itemContents = line.trimLeft();
+        } else {
+          indent = cap[2].search(/[^ ]/); // Find first non-space char
+
+          indent = indent > 4 ? 1 : indent; // Treat indented code blocks (> 4 spaces) as having only 1 indent
+
+          itemContents = line.slice(indent);
+          indent += cap[1].length;
+        }
+
+        blankLine = false;
+
+        if (!line && /^ *$/.test(nextLine)) {
+          // Items begin with at most one blank line
+          raw += nextLine + '\n';
+          src = src.substring(nextLine.length + 1);
+          endEarly = true;
+        }
+
+        if (!endEarly) {
+          var nextBulletRegex = new RegExp("^ {0," + Math.min(3, indent - 1) + "}(?:[*+-]|\\d{1,9}[.)])((?: [^\\n]*)?(?:\\n|$))");
+          var hrRegex = new RegExp("^ {0," + Math.min(3, indent - 1) + "}((?:- *){3,}|(?:_ *){3,}|(?:\\* *){3,})(?:\\n+|$)"); // Check if following lines should be included in List Item
+
+          while (src) {
+            rawLine = src.split('\n', 1)[0];
+            line = rawLine; // Re-align to follow commonmark nesting rules
+
+            if (this.options.pedantic) {
+              line = line.replace(/^ {1,4}(?=( {4})*[^ ])/g, '  ');
+            } // End list item if found start of new bullet
+
+
+            if (nextBulletRegex.test(line)) {
+              break;
+            } // Horizontal rule found
+
+
+            if (hrRegex.test(src)) {
+              break;
+            }
+
+            if (line.search(/[^ ]/) >= indent || !line.trim()) {
+              // Dedent if possible
+              itemContents += '\n' + line.slice(indent);
+            } else if (!blankLine) {
+              // Until blank line, item doesn't need indentation
+              itemContents += '\n' + line;
+            } else {
+              // Otherwise, improper indentation ends this item
+              break;
+            }
+
+            if (!blankLine && !line.trim()) {
+              // Check if current line is blank
+              blankLine = true;
+            }
+
+            raw += rawLine + '\n';
+            src = src.substring(rawLine.length + 1);
+          }
+        }
+
+        if (!list.loose) {
+          // If the previous item ended with a blank line, the list is loose
+          if (endsWithBlankLine) {
+            list.loose = true;
+          } else if (/\n *\n *$/.test(raw)) {
+            endsWithBlankLine = true;
+          }
+        } // Check for task list items
+
+
+        if (this.options.gfm) {
+          istask = /^\[[ xX]\] /.exec(itemContents);
+
+          if (istask) {
+            ischecked = istask[0] !== '[ ] ';
+            itemContents = itemContents.replace(/^\[[ xX]\] +/, '');
+          }
+        }
+
+        list.items.push({
+          type: 'list_item',
+          raw: raw,
+          task: !!istask,
+          checked: ischecked,
+          loose: false,
+          text: itemContents
+        });
+        list.raw += raw;
+      } // Do not consume newlines at end of final item. Alternatively, make itemRegex *start* with any newlines to simplify/speed up endsWithBlankLine logic
+
+
+      list.items[list.items.length - 1].raw = raw.trimRight();
+      list.items[list.items.length - 1].text = itemContents.trimRight();
+      list.raw = list.raw.trimRight();
+      var l = list.items.length; // Item child tokens handled here at end because we needed to have the final item to trim it first
+
+      for (i = 0; i < l; i++) {
+        this.lexer.state.top = false;
+        list.items[i].tokens = this.lexer.blockTokens(list.items[i].text, []);
+        var spacers = list.items[i].tokens.filter(function (t) {
+          return t.type === 'space';
+        });
+        var hasMultipleLineBreaks = spacers.every(function (t) {
+          var chars = t.raw.split('');
+          var lineBreaks = 0;
+
+          for (var _iterator = _createForOfIteratorHelperLoose(chars), _step; !(_step = _iterator()).done;) {
+            var _char = _step.value;
+
+            if (_char === '\n') {
+              lineBreaks += 1;
+            }
+
+            if (lineBreaks > 1) {
+              return true;
+            }
+          }
+
+          return false;
+        });
+
+        if (!list.loose && spacers.length && hasMultipleLineBreaks) {
+          // Having a single line break doesn't mean a list is loose. A single line break is terminating the last list item
+          list.loose = true;
+          list.items[i].loose = true;
+        }
+      }
+
+      return list;
+    }
+  };
+
+  _proto.html = function html(src) {
+    var cap = this.rules.block.html.exec(src);
+
+    if (cap) {
+      var token = {
+        type: 'html',
+        raw: cap[0],
+        pre: !this.options.sanitizer && (cap[1] === 'pre' || cap[1] === 'script' || cap[1] === 'style'),
+        text: cap[0]
+      };
+
+      if (this.options.sanitize) {
+        token.type = 'paragraph';
+        token.text = this.options.sanitizer ? this.options.sanitizer(cap[0]) : escape(cap[0]);
+        token.tokens = [];
+        this.lexer.inline(token.text, token.tokens);
+      }
+
+      return token;
+    }
+  };
+
+  _proto.def = function def(src) {
+    var cap = this.rules.block.def.exec(src);
+
+    if (cap) {
+      if (cap[3]) cap[3] = cap[3].substring(1, cap[3].length - 1);
+      var tag = cap[1].toLowerCase().replace(/\s+/g, ' ');
+      return {
+        type: 'def',
+        tag: tag,
+        raw: cap[0],
+        href: cap[2],
+        title: cap[3]
+      };
+    }
+  };
+
+  _proto.table = function table(src) {
+    var cap = this.rules.block.table.exec(src);
+
+    if (cap) {
+      var item = {
+        type: 'table',
+        header: splitCells(cap[1]).map(function (c) {
+          return {
+            text: c
+          };
+        }),
+        align: cap[2].replace(/^ *|\| *$/g, '').split(/ *\| */),
+        rows: cap[3] && cap[3].trim() ? cap[3].replace(/\n[ \t]*$/, '').split('\n') : []
+      };
+
+      if (item.header.length === item.align.length) {
+        item.raw = cap[0];
+        var l = item.align.length;
+        var i, j, k, row;
+
+        for (i = 0; i < l; i++) {
+          if (/^ *-+: *$/.test(item.align[i])) {
+            item.align[i] = 'right';
+          } else if (/^ *:-+: *$/.test(item.align[i])) {
+            item.align[i] = 'center';
+          } else if (/^ *:-+ *$/.test(item.align[i])) {
+            item.align[i] = 'left';
+          } else {
+            item.align[i] = null;
+          }
+        }
+
+        l = item.rows.length;
+
+        for (i = 0; i < l; i++) {
+          item.rows[i] = splitCells(item.rows[i], item.header.length).map(function (c) {
+            return {
+              text: c
+            };
+          });
+        } // parse child tokens inside headers and cells
+        // header child tokens
+
+
+        l = item.header.length;
+
+        for (j = 0; j < l; j++) {
+          item.header[j].tokens = [];
+          this.lexer.inline(item.header[j].text, item.header[j].tokens);
+        } // cell child tokens
+
+
+        l = item.rows.length;
+
+        for (j = 0; j < l; j++) {
+          row = item.rows[j];
+
+          for (k = 0; k < row.length; k++) {
+            row[k].tokens = [];
+            this.lexer.inline(row[k].text, row[k].tokens);
+          }
+        }
+
+        return item;
+      }
+    }
+  };
+
+  _proto.lheading = function lheading(src) {
+    var cap = this.rules.block.lheading.exec(src);
+
+    if (cap) {
+      var token = {
+        type: 'heading',
+        raw: cap[0],
+        depth: cap[2].charAt(0) === '=' ? 1 : 2,
+        text: cap[1],
+        tokens: []
+      };
+      this.lexer.inline(token.text, token.tokens);
+      return token;
+    }
+  };
+
+  _proto.paragraph = function paragraph(src) {
+    var cap = this.rules.block.paragraph.exec(src);
+
+    if (cap) {
+      var token = {
+        type: 'paragraph',
+        raw: cap[0],
+        text: cap[1].charAt(cap[1].length - 1) === '\n' ? cap[1].slice(0, -1) : cap[1],
+        tokens: []
+      };
+      this.lexer.inline(token.text, token.tokens);
+      return token;
+    }
+  };
+
+  _proto.text = function text(src) {
+    var cap = this.rules.block.text.exec(src);
+
+    if (cap) {
+      var token = {
+        type: 'text',
+        raw: cap[0],
+        text: cap[0],
+        tokens: []
+      };
+      this.lexer.inline(token.text, token.tokens);
+      return token;
+    }
+  };
+
+  _proto.escape = function escape$1(src) {
+    var cap = this.rules.inline.escape.exec(src);
+
+    if (cap) {
+      return {
+        type: 'escape',
+        raw: cap[0],
+        text: escape(cap[1])
+      };
+    }
+  };
+
+  _proto.tag = function tag(src) {
+    var cap = this.rules.inline.tag.exec(src);
+
+    if (cap) {
+      if (!this.lexer.state.inLink && /^<a /i.test(cap[0])) {
+        this.lexer.state.inLink = true;
+      } else if (this.lexer.state.inLink && /^<\/a>/i.test(cap[0])) {
+        this.lexer.state.inLink = false;
+      }
+
+      if (!this.lexer.state.inRawBlock && /^<(pre|code|kbd|script)(\s|>)/i.test(cap[0])) {
+        this.lexer.state.inRawBlock = true;
+      } else if (this.lexer.state.inRawBlock && /^<\/(pre|code|kbd|script)(\s|>)/i.test(cap[0])) {
+        this.lexer.state.inRawBlock = false;
+      }
+
+      return {
+        type: this.options.sanitize ? 'text' : 'html',
+        raw: cap[0],
+        inLink: this.lexer.state.inLink,
+        inRawBlock: this.lexer.state.inRawBlock,
+        text: this.options.sanitize ? this.options.sanitizer ? this.options.sanitizer(cap[0]) : escape(cap[0]) : cap[0]
+      };
+    }
+  };
+
+  _proto.link = function link(src) {
+    var cap = this.rules.inline.link.exec(src);
+
+    if (cap) {
+      var trimmedUrl = cap[2].trim();
+
+      if (!this.options.pedantic && /^</.test(trimmedUrl)) {
+        // commonmark requires matching angle brackets
+        if (!/>$/.test(trimmedUrl)) {
+          return;
+        } // ending angle bracket cannot be escaped
+
+
+        var rtrimSlash = rtrim(trimmedUrl.slice(0, -1), '\\');
+
+        if ((trimmedUrl.length - rtrimSlash.length) % 2 === 0) {
+          return;
+        }
+      } else {
+        // find closing parenthesis
+        var lastParenIndex = findClosingBracket(cap[2], '()');
+
+        if (lastParenIndex > -1) {
+          var start = cap[0].indexOf('!') === 0 ? 5 : 4;
+          var linkLen = start + cap[1].length + lastParenIndex;
+          cap[2] = cap[2].substring(0, lastParenIndex);
+          cap[0] = cap[0].substring(0, linkLen).trim();
+          cap[3] = '';
+        }
+      }
+
+      var href = cap[2];
+      var title = '';
+
+      if (this.options.pedantic) {
+        // split pedantic href and title
+        var link = /^([^'"]*[^\s])\s+(['"])(.*)\2/.exec(href);
+
+        if (link) {
+          href = link[1];
+          title = link[3];
+        }
+      } else {
+        title = cap[3] ? cap[3].slice(1, -1) : '';
+      }
+
+      href = href.trim();
+
+      if (/^</.test(href)) {
+        if (this.options.pedantic && !/>$/.test(trimmedUrl)) {
+          // pedantic allows starting angle bracket without ending angle bracket
+          href = href.slice(1);
+        } else {
+          href = href.slice(1, -1);
+        }
+      }
+
+      return outputLink(cap, {
+        href: href ? href.replace(this.rules.inline._escapes, '$1') : href,
+        title: title ? title.replace(this.rules.inline._escapes, '$1') : title
+      }, cap[0], this.lexer);
+    }
+  };
+
+  _proto.reflink = function reflink(src, links) {
+    var cap;
+
+    if ((cap = this.rules.inline.reflink.exec(src)) || (cap = this.rules.inline.nolink.exec(src))) {
+      var link = (cap[2] || cap[1]).replace(/\s+/g, ' ');
+      link = links[link.toLowerCase()];
+
+      if (!link || !link.href) {
+        var text = cap[0].charAt(0);
+        return {
+          type: 'text',
+          raw: text,
+          text: text
+        };
+      }
+
+      return outputLink(cap, link, cap[0], this.lexer);
+    }
+  };
+
+  _proto.emStrong = function emStrong(src, maskedSrc, prevChar) {
+    if (prevChar === void 0) {
+      prevChar = '';
+    }
+
+    var match = this.rules.inline.emStrong.lDelim.exec(src);
+    if (!match) return; // _ can't be between two alphanumerics. \p{L}\p{N} includes non-english alphabet/numbers as well
+
+    if (match[3] && prevChar.match(/(?:[0-9A-Za-z\xAA\xB2\xB3\xB5\xB9\xBA\xBC-\xBE\xC0-\xD6\xD8-\xF6\xF8-\u02C1\u02C6-\u02D1\u02E0-\u02E4\u02EC\u02EE\u0370-\u0374\u0376\u0377\u037A-\u037D\u037F\u0386\u0388-\u038A\u038C\u038E-\u03A1\u03A3-\u03F5\u03F7-\u0481\u048A-\u052F\u0531-\u0556\u0559\u0560-\u0588\u05D0-\u05EA\u05EF-\u05F2\u0620-\u064A\u0660-\u0669\u066E\u066F\u0671-\u06D3\u06D5\u06E5\u06E6\u06EE-\u06FC\u06FF\u0710\u0712-\u072F\u074D-\u07A5\u07B1\u07C0-\u07EA\u07F4\u07F5\u07FA\u0800-\u0815\u081A\u0824\u0828\u0840-\u0858\u0860-\u086A\u0870-\u0887\u0889-\u088E\u08A0-\u08C9\u0904-\u0939\u093D\u0950\u0958-\u0961\u0966-\u096F\u0971-\u0980\u0985-\u098C\u098F\u0990\u0993-\u09A8\u09AA-\u09B0\u09B2\u09B6-\u09B9\u09BD\u09CE\u09DC\u09DD\u09DF-\u09E1\u09E6-\u09F1\u09F4-\u09F9\u09FC\u0A05-\u0A0A\u0A0F\u0A10\u0A13-\u0A28\u0A2A-\u0A30\u0A32\u0A33\u0A35\u0A36\u0A38\u0A39\u0A59-\u0A5C\u0A5E\u0A66-\u0A6F\u0A72-\u0A74\u0A85-\u0A8D\u0A8F-\u0A91\u0A93-\u0AA8\u0AAA-\u0AB0\u0AB2\u0AB3\u0AB5-\u0AB9\u0ABD\u0AD0\u0AE0\u0AE1\u0AE6-\u0AEF\u0AF9\u0B05-\u0B0C\u0B0F\u0B10\u0B13-\u0B28\u0B2A-\u0B30\u0B32\u0B33\u0B35-\u0B39\u0B3D\u0B5C\u0B5D\u0B5F-\u0B61\u0B66-\u0B6F\u0B71-\u0B77\u0B83\u0B85-\u0B8A\u0B8E-\u0B90\u0B92-\u0B95\u0B99\u0B9A\u0B9C\u0B9E\u0B9F\u0BA3\u0BA4\u0BA8-\u0BAA\u0BAE-\u0BB9\u0BD0\u0BE6-\u0BF2\u0C05-\u0C0C\u0C0E-\u0C10\u0C12-\u0C28\u0C2A-\u0C39\u0C3D\u0C58-\u0C5A\u0C5D\u0C60\u0C61\u0C66-\u0C6F\u0C78-\u0C7E\u0C80\u0C85-\u0C8C\u0C8E-\u0C90\u0C92-\u0CA8\u0CAA-\u0CB3\u0CB5-\u0CB9\u0CBD\u0CDD\u0CDE\u0CE0\u0CE1\u0CE6-\u0CEF\u0CF1\u0CF2\u0D04-\u0D0C\u0D0E-\u0D10\u0D12-\u0D3A\u0D3D\u0D4E\u0D54-\u0D56\u0D58-\u0D61\u0D66-\u0D78\u0D7A-\u0D7F\u0D85-\u0D96\u0D9A-\u0DB1\u0DB3-\u0DBB\u0DBD\u0DC0-\u0DC6\u0DE6-\u0DEF\u0E01-\u0E30\u0E32\u0E33\u0E40-\u0E46\u0E50-\u0E59\u0E81\u0E82\u0E84\u0E86-\u0E8A\u0E8C-\u0EA3\u0EA5\u0EA7-\u0EB0\u0EB2\u0EB3\u0EBD\u0EC0-\u0EC4\u0EC6\u0ED0-\u0ED9\u0EDC-\u0EDF\u0F00\u0F20-\u0F33\u0F40-\u0F47\u0F49-\u0F6C\u0F88-\u0F8C\u1000-\u102A\u103F-\u1049\u1050-\u1055\u105A-\u105D\u1061\u1065\u1066\u106E-\u1070\u1075-\u1081\u108E\u1090-\u1099\u10A0-\u10C5\u10C7\u10CD\u10D0-\u10FA\u10FC-\u1248\u124A-\u124D\u1250-\u1256\u1258\u125A-\u125D\u1260-\u1288\u128A-\u128D\u1290-\u12B0\u12B2-\u12B5\u12B8-\u12BE\u12C0\u12C2-\u12C5\u12C8-\u12D6\u12D8-\u1310\u1312-\u1315\u1318-\u135A\u1369-\u137C\u1380-\u138F\u13A0-\u13F5\u13F8-\u13FD\u1401-\u166C\u166F-\u167F\u1681-\u169A\u16A0-\u16EA\u16EE-\u16F8\u1700-\u1711\u171F-\u1731\u1740-\u1751\u1760-\u176C\u176E-\u1770\u1780-\u17B3\u17D7\u17DC\u17E0-\u17E9\u17F0-\u17F9\u1810-\u1819\u1820-\u1878\u1880-\u1884\u1887-\u18A8\u18AA\u18B0-\u18F5\u1900-\u191E\u1946-\u196D\u1970-\u1974\u1980-\u19AB\u19B0-\u19C9\u19D0-\u19DA\u1A00-\u1A16\u1A20-\u1A54\u1A80-\u1A89\u1A90-\u1A99\u1AA7\u1B05-\u1B33\u1B45-\u1B4C\u1B50-\u1B59\u1B83-\u1BA0\u1BAE-\u1BE5\u1C00-\u1C23\u1C40-\u1C49\u1C4D-\u1C7D\u1C80-\u1C88\u1C90-\u1CBA\u1CBD-\u1CBF\u1CE9-\u1CEC\u1CEE-\u1CF3\u1CF5\u1CF6\u1CFA\u1D00-\u1DBF\u1E00-\u1F15\u1F18-\u1F1D\u1F20-\u1F45\u1F48-\u1F4D\u1F50-\u1F57\u1F59\u1F5B\u1F5D\u1F5F-\u1F7D\u1F80-\u1FB4\u1FB6-\u1FBC\u1FBE\u1FC2-\u1FC4\u1FC6-\u1FCC\u1FD0-\u1FD3\u1FD6-\u1FDB\u1FE0-\u1FEC\u1FF2-\u1FF4\u1FF6-\u1FFC\u2070\u2071\u2074-\u2079\u207F-\u2089\u2090-\u209C\u2102\u2107\u210A-\u2113\u2115\u2119-\u211D\u2124\u2126\u2128\u212A-\u212D\u212F-\u2139\u213C-\u213F\u2145-\u2149\u214E\u2150-\u2189\u2460-\u249B\u24EA-\u24FF\u2776-\u2793\u2C00-\u2CE4\u2CEB-\u2CEE\u2CF2\u2CF3\u2CFD\u2D00-\u2D25\u2D27\u2D2D\u2D30-\u2D67\u2D6F\u2D80-\u2D96\u2DA0-\u2DA6\u2DA8-\u2DAE\u2DB0-\u2DB6\u2DB8-\u2DBE\u2DC0-\u2DC6\u2DC8-\u2DCE\u2DD0-\u2DD6\u2DD8-\u2DDE\u2E2F\u3005-\u3007\u3021-\u3029\u3031-\u3035\u3038-\u303C\u3041-\u3096\u309D-\u309F\u30A1-\u30FA\u30FC-\u30FF\u3105-\u312F\u3131-\u318E\u3192-\u3195\u31A0-\u31BF\u31F0-\u31FF\u3220-\u3229\u3248-\u324F\u3251-\u325F\u3280-\u3289\u32B1-\u32BF\u3400-\u4DBF\u4E00-\uA48C\uA4D0-\uA4FD\uA500-\uA60C\uA610-\uA62B\uA640-\uA66E\uA67F-\uA69D\uA6A0-\uA6EF\uA717-\uA71F\uA722-\uA788\uA78B-\uA7CA\uA7D0\uA7D1\uA7D3\uA7D5-\uA7D9\uA7F2-\uA801\uA803-\uA805\uA807-\uA80A\uA80C-\uA822\uA830-\uA835\uA840-\uA873\uA882-\uA8B3\uA8D0-\uA8D9\uA8F2-\uA8F7\uA8FB\uA8FD\uA8FE\uA900-\uA925\uA930-\uA946\uA960-\uA97C\uA984-\uA9B2\uA9CF-\uA9D9\uA9E0-\uA9E4\uA9E6-\uA9FE\uAA00-\uAA28\uAA40-\uAA42\uAA44-\uAA4B\uAA50-\uAA59\uAA60-\uAA76\uAA7A\uAA7E-\uAAAF\uAAB1\uAAB5\uAAB6\uAAB9-\uAABD\uAAC0\uAAC2\uAADB-\uAADD\uAAE0-\uAAEA\uAAF2-\uAAF4\uAB01-\uAB06\uAB09-\uAB0E\uAB11-\uAB16\uAB20-\uAB26\uAB28-\uAB2E\uAB30-\uAB5A\uAB5C-\uAB69\uAB70-\uABE2\uABF0-\uABF9\uAC00-\uD7A3\uD7B0-\uD7C6\uD7CB-\uD7FB\uF900-\uFA6D\uFA70-\uFAD9\uFB00-\uFB06\uFB13-\uFB17\uFB1D\uFB1F-\uFB28\uFB2A-\uFB36\uFB38-\uFB3C\uFB3E\uFB40\uFB41\uFB43\uFB44\uFB46-\uFBB1\uFBD3-\uFD3D\uFD50-\uFD8F\uFD92-\uFDC7\uFDF0-\uFDFB\uFE70-\uFE74\uFE76-\uFEFC\uFF10-\uFF19\uFF21-\uFF3A\uFF41-\uFF5A\uFF66-\uFFBE\uFFC2-\uFFC7\uFFCA-\uFFCF\uFFD2-\uFFD7\uFFDA-\uFFDC]|\uD800[\uDC00-\uDC0B\uDC0D-\uDC26\uDC28-\uDC3A\uDC3C\uDC3D\uDC3F-\uDC4D\uDC50-\uDC5D\uDC80-\uDCFA\uDD07-\uDD33\uDD40-\uDD78\uDD8A\uDD8B\uDE80-\uDE9C\uDEA0-\uDED0\uDEE1-\uDEFB\uDF00-\uDF23\uDF2D-\uDF4A\uDF50-\uDF75\uDF80-\uDF9D\uDFA0-\uDFC3\uDFC8-\uDFCF\uDFD1-\uDFD5]|\uD801[\uDC00-\uDC9D\uDCA0-\uDCA9\uDCB0-\uDCD3\uDCD8-\uDCFB\uDD00-\uDD27\uDD30-\uDD63\uDD70-\uDD7A\uDD7C-\uDD8A\uDD8C-\uDD92\uDD94\uDD95\uDD97-\uDDA1\uDDA3-\uDDB1\uDDB3-\uDDB9\uDDBB\uDDBC\uDE00-\uDF36\uDF40-\uDF55\uDF60-\uDF67\uDF80-\uDF85\uDF87-\uDFB0\uDFB2-\uDFBA]|\uD802[\uDC00-\uDC05\uDC08\uDC0A-\uDC35\uDC37\uDC38\uDC3C\uDC3F-\uDC55\uDC58-\uDC76\uDC79-\uDC9E\uDCA7-\uDCAF\uDCE0-\uDCF2\uDCF4\uDCF5\uDCFB-\uDD1B\uDD20-\uDD39\uDD80-\uDDB7\uDDBC-\uDDCF\uDDD2-\uDE00\uDE10-\uDE13\uDE15-\uDE17\uDE19-\uDE35\uDE40-\uDE48\uDE60-\uDE7E\uDE80-\uDE9F\uDEC0-\uDEC7\uDEC9-\uDEE4\uDEEB-\uDEEF\uDF00-\uDF35\uDF40-\uDF55\uDF58-\uDF72\uDF78-\uDF91\uDFA9-\uDFAF]|\uD803[\uDC00-\uDC48\uDC80-\uDCB2\uDCC0-\uDCF2\uDCFA-\uDD23\uDD30-\uDD39\uDE60-\uDE7E\uDE80-\uDEA9\uDEB0\uDEB1\uDF00-\uDF27\uDF30-\uDF45\uDF51-\uDF54\uDF70-\uDF81\uDFB0-\uDFCB\uDFE0-\uDFF6]|\uD804[\uDC03-\uDC37\uDC52-\uDC6F\uDC71\uDC72\uDC75\uDC83-\uDCAF\uDCD0-\uDCE8\uDCF0-\uDCF9\uDD03-\uDD26\uDD36-\uDD3F\uDD44\uDD47\uDD50-\uDD72\uDD76\uDD83-\uDDB2\uDDC1-\uDDC4\uDDD0-\uDDDA\uDDDC\uDDE1-\uDDF4\uDE00-\uDE11\uDE13-\uDE2B\uDE80-\uDE86\uDE88\uDE8A-\uDE8D\uDE8F-\uDE9D\uDE9F-\uDEA8\uDEB0-\uDEDE\uDEF0-\uDEF9\uDF05-\uDF0C\uDF0F\uDF10\uDF13-\uDF28\uDF2A-\uDF30\uDF32\uDF33\uDF35-\uDF39\uDF3D\uDF50\uDF5D-\uDF61]|\uD805[\uDC00-\uDC34\uDC47-\uDC4A\uDC50-\uDC59\uDC5F-\uDC61\uDC80-\uDCAF\uDCC4\uDCC5\uDCC7\uDCD0-\uDCD9\uDD80-\uDDAE\uDDD8-\uDDDB\uDE00-\uDE2F\uDE44\uDE50-\uDE59\uDE80-\uDEAA\uDEB8\uDEC0-\uDEC9\uDF00-\uDF1A\uDF30-\uDF3B\uDF40-\uDF46]|\uD806[\uDC00-\uDC2B\uDCA0-\uDCF2\uDCFF-\uDD06\uDD09\uDD0C-\uDD13\uDD15\uDD16\uDD18-\uDD2F\uDD3F\uDD41\uDD50-\uDD59\uDDA0-\uDDA7\uDDAA-\uDDD0\uDDE1\uDDE3\uDE00\uDE0B-\uDE32\uDE3A\uDE50\uDE5C-\uDE89\uDE9D\uDEB0-\uDEF8]|\uD807[\uDC00-\uDC08\uDC0A-\uDC2E\uDC40\uDC50-\uDC6C\uDC72-\uDC8F\uDD00-\uDD06\uDD08\uDD09\uDD0B-\uDD30\uDD46\uDD50-\uDD59\uDD60-\uDD65\uDD67\uDD68\uDD6A-\uDD89\uDD98\uDDA0-\uDDA9\uDEE0-\uDEF2\uDFB0\uDFC0-\uDFD4]|\uD808[\uDC00-\uDF99]|\uD809[\uDC00-\uDC6E\uDC80-\uDD43]|\uD80B[\uDF90-\uDFF0]|[\uD80C\uD81C-\uD820\uD822\uD840-\uD868\uD86A-\uD86C\uD86F-\uD872\uD874-\uD879\uD880-\uD883][\uDC00-\uDFFF]|\uD80D[\uDC00-\uDC2E]|\uD811[\uDC00-\uDE46]|\uD81A[\uDC00-\uDE38\uDE40-\uDE5E\uDE60-\uDE69\uDE70-\uDEBE\uDEC0-\uDEC9\uDED0-\uDEED\uDF00-\uDF2F\uDF40-\uDF43\uDF50-\uDF59\uDF5B-\uDF61\uDF63-\uDF77\uDF7D-\uDF8F]|\uD81B[\uDE40-\uDE96\uDF00-\uDF4A\uDF50\uDF93-\uDF9F\uDFE0\uDFE1\uDFE3]|\uD821[\uDC00-\uDFF7]|\uD823[\uDC00-\uDCD5\uDD00-\uDD08]|\uD82B[\uDFF0-\uDFF3\uDFF5-\uDFFB\uDFFD\uDFFE]|\uD82C[\uDC00-\uDD22\uDD50-\uDD52\uDD64-\uDD67\uDD70-\uDEFB]|\uD82F[\uDC00-\uDC6A\uDC70-\uDC7C\uDC80-\uDC88\uDC90-\uDC99]|\uD834[\uDEE0-\uDEF3\uDF60-\uDF78]|\uD835[\uDC00-\uDC54\uDC56-\uDC9C\uDC9E\uDC9F\uDCA2\uDCA5\uDCA6\uDCA9-\uDCAC\uDCAE-\uDCB9\uDCBB\uDCBD-\uDCC3\uDCC5-\uDD05\uDD07-\uDD0A\uDD0D-\uDD14\uDD16-\uDD1C\uDD1E-\uDD39\uDD3B-\uDD3E\uDD40-\uDD44\uDD46\uDD4A-\uDD50\uDD52-\uDEA5\uDEA8-\uDEC0\uDEC2-\uDEDA\uDEDC-\uDEFA\uDEFC-\uDF14\uDF16-\uDF34\uDF36-\uDF4E\uDF50-\uDF6E\uDF70-\uDF88\uDF8A-\uDFA8\uDFAA-\uDFC2\uDFC4-\uDFCB\uDFCE-\uDFFF]|\uD837[\uDF00-\uDF1E]|\uD838[\uDD00-\uDD2C\uDD37-\uDD3D\uDD40-\uDD49\uDD4E\uDE90-\uDEAD\uDEC0-\uDEEB\uDEF0-\uDEF9]|\uD839[\uDFE0-\uDFE6\uDFE8-\uDFEB\uDFED\uDFEE\uDFF0-\uDFFE]|\uD83A[\uDC00-\uDCC4\uDCC7-\uDCCF\uDD00-\uDD43\uDD4B\uDD50-\uDD59]|\uD83B[\uDC71-\uDCAB\uDCAD-\uDCAF\uDCB1-\uDCB4\uDD01-\uDD2D\uDD2F-\uDD3D\uDE00-\uDE03\uDE05-\uDE1F\uDE21\uDE22\uDE24\uDE27\uDE29-\uDE32\uDE34-\uDE37\uDE39\uDE3B\uDE42\uDE47\uDE49\uDE4B\uDE4D-\uDE4F\uDE51\uDE52\uDE54\uDE57\uDE59\uDE5B\uDE5D\uDE5F\uDE61\uDE62\uDE64\uDE67-\uDE6A\uDE6C-\uDE72\uDE74-\uDE77\uDE79-\uDE7C\uDE7E\uDE80-\uDE89\uDE8B-\uDE9B\uDEA1-\uDEA3\uDEA5-\uDEA9\uDEAB-\uDEBB]|\uD83C[\uDD00-\uDD0C]|\uD83E[\uDFF0-\uDFF9]|\uD869[\uDC00-\uDEDF\uDF00-\uDFFF]|\uD86D[\uDC00-\uDF38\uDF40-\uDFFF]|\uD86E[\uDC00-\uDC1D\uDC20-\uDFFF]|\uD873[\uDC00-\uDEA1\uDEB0-\uDFFF]|\uD87A[\uDC00-\uDFE0]|\uD87E[\uDC00-\uDE1D]|\uD884[\uDC00-\uDF4A])/)) return;
+    var nextChar = match[1] || match[2] || '';
+
+    if (!nextChar || nextChar && (prevChar === '' || this.rules.inline.punctuation.exec(prevChar))) {
+      var lLength = match[0].length - 1;
+      var rDelim,
+          rLength,
+          delimTotal = lLength,
+          midDelimTotal = 0;
+      var endReg = match[0][0] === '*' ? this.rules.inline.emStrong.rDelimAst : this.rules.inline.emStrong.rDelimUnd;
+      endReg.lastIndex = 0; // Clip maskedSrc to same section of string as src (move to lexer?)
+
+      maskedSrc = maskedSrc.slice(-1 * src.length + lLength);
+
+      while ((match = endReg.exec(maskedSrc)) != null) {
+        rDelim = match[1] || match[2] || match[3] || match[4] || match[5] || match[6];
+        if (!rDelim) continue; // skip single * in __abc*abc__
+
+        rLength = rDelim.length;
+
+        if (match[3] || match[4]) {
+          // found another Left Delim
+          delimTotal += rLength;
+          continue;
+        } else if (match[5] || match[6]) {
+          // either Left or Right Delim
+          if (lLength % 3 && !((lLength + rLength) % 3)) {
+            midDelimTotal += rLength;
+            continue; // CommonMark Emphasis Rules 9-10
+          }
+        }
+
+        delimTotal -= rLength;
+        if (delimTotal > 0) continue; // Haven't found enough closing delimiters
+        // Remove extra characters. *a*** -> *a*
+
+        rLength = Math.min(rLength, rLength + delimTotal + midDelimTotal); // Create `em` if smallest delimiter has odd char count. *a***
+
+        if (Math.min(lLength, rLength) % 2) {
+          var _text = src.slice(1, lLength + match.index + rLength);
+
+          return {
+            type: 'em',
+            raw: src.slice(0, lLength + match.index + rLength + 1),
+            text: _text,
+            tokens: this.lexer.inlineTokens(_text, [])
+          };
+        } // Create 'strong' if smallest delimiter has even char count. **a***
+
+
+        var text = src.slice(2, lLength + match.index + rLength - 1);
+        return {
+          type: 'strong',
+          raw: src.slice(0, lLength + match.index + rLength + 1),
+          text: text,
+          tokens: this.lexer.inlineTokens(text, [])
+        };
+      }
+    }
+  };
+
+  _proto.codespan = function codespan(src) {
+    var cap = this.rules.inline.code.exec(src);
+
+    if (cap) {
+      var text = cap[2].replace(/\n/g, ' ');
+      var hasNonSpaceChars = /[^ ]/.test(text);
+      var hasSpaceCharsOnBothEnds = /^ /.test(text) && / $/.test(text);
+
+      if (hasNonSpaceChars && hasSpaceCharsOnBothEnds) {
+        text = text.substring(1, text.length - 1);
+      }
+
+      text = escape(text, true);
+      return {
+        type: 'codespan',
+        raw: cap[0],
+        text: text
+      };
+    }
+  };
+
+  _proto.br = function br(src) {
+    var cap = this.rules.inline.br.exec(src);
+
+    if (cap) {
+      return {
+        type: 'br',
+        raw: cap[0]
+      };
+    }
+  };
+
+  _proto.del = function del(src) {
+    var cap = this.rules.inline.del.exec(src);
+
+    if (cap) {
+      return {
+        type: 'del',
+        raw: cap[0],
+        text: cap[2],
+        tokens: this.lexer.inlineTokens(cap[2], [])
+      };
+    }
+  };
+
+  _proto.autolink = function autolink(src, mangle) {
+    var cap = this.rules.inline.autolink.exec(src);
+
+    if (cap) {
+      var text, href;
+
+      if (cap[2] === '@') {
+        text = escape(this.options.mangle ? mangle(cap[1]) : cap[1]);
+        href = 'mailto:' + text;
+      } else {
+        text = escape(cap[1]);
+        href = text;
+      }
+
+      return {
+        type: 'link',
+        raw: cap[0],
+        text: text,
+        href: href,
+        tokens: [{
+          type: 'text',
+          raw: text,
+          text: text
+        }]
+      };
+    }
+  };
+
+  _proto.url = function url(src, mangle) {
+    var cap;
+
+    if (cap = this.rules.inline.url.exec(src)) {
+      var text, href;
+
+      if (cap[2] === '@') {
+        text = escape(this.options.mangle ? mangle(cap[0]) : cap[0]);
+        href = 'mailto:' + text;
+      } else {
+        // do extended autolink path validation
+        var prevCapZero;
+
+        do {
+          prevCapZero = cap[0];
+          cap[0] = this.rules.inline._backpedal.exec(cap[0])[0];
+        } while (prevCapZero !== cap[0]);
+
+        text = escape(cap[0]);
+
+        if (cap[1] === 'www.') {
+          href = 'http://' + text;
+        } else {
+          href = text;
+        }
+      }
+
+      return {
+        type: 'link',
+        raw: cap[0],
+        text: text,
+        href: href,
+        tokens: [{
+          type: 'text',
+          raw: text,
+          text: text
+        }]
+      };
+    }
+  };
+
+  _proto.inlineText = function inlineText(src, smartypants) {
+    var cap = this.rules.inline.text.exec(src);
+
+    if (cap) {
+      var text;
+
+      if (this.lexer.state.inRawBlock) {
+        text = this.options.sanitize ? this.options.sanitizer ? this.options.sanitizer(cap[0]) : escape(cap[0]) : cap[0];
+      } else {
+        text = escape(this.options.smartypants ? smartypants(cap[0]) : cap[0]);
+      }
+
+      return {
+        type: 'text',
+        raw: cap[0],
+        text: text
+      };
+    }
+  };
+
+  return Tokenizer;
+}();
+
+/**
+ * Block-Level Grammar
+ */
+
+var block = {
+  newline: /^(?: *(?:\n|$))+/,
+  code: /^( {4}[^\n]+(?:\n(?: *(?:\n|$))*)?)+/,
+  fences: /^ {0,3}(`{3,}(?=[^`\n]*\n)|~{3,})([^\n]*)\n(?:|([\s\S]*?)\n)(?: {0,3}\1[~`]* *(?=\n|$)|$)/,
+  hr: /^ {0,3}((?:-[\t ]*){3,}|(?:_[ \t]*){3,}|(?:\*[ \t]*){3,})(?:\n+|$)/,
+  heading: /^ {0,3}(#{1,6})(?=\s|$)(.*)(?:\n+|$)/,
+  blockquote: /^( {0,3}> ?(paragraph|[^\n]*)(?:\n|$))+/,
+  list: /^( {0,3}bull)([ \t][^\n]+?)?(?:\n|$)/,
+  html: '^ {0,3}(?:' // optional indentation
+  + '<(script|pre|style|textarea)[\\s>][\\s\\S]*?(?:</\\1>[^\\n]*\\n+|$)' // (1)
+  + '|comment[^\\n]*(\\n+|$)' // (2)
+  + '|<\\?[\\s\\S]*?(?:\\?>\\n*|$)' // (3)
+  + '|<![A-Z][\\s\\S]*?(?:>\\n*|$)' // (4)
+  + '|<!\\[CDATA\\[[\\s\\S]*?(?:\\]\\]>\\n*|$)' // (5)
+  + '|</?(tag)(?: +|\\n|/?>)[\\s\\S]*?(?:(?:\\n *)+\\n|$)' // (6)
+  + '|<(?!script|pre|style|textarea)([a-z][\\w-]*)(?:attribute)*? */?>(?=[ \\t]*(?:\\n|$))[\\s\\S]*?(?:(?:\\n *)+\\n|$)' // (7) open tag
+  + '|</(?!script|pre|style|textarea)[a-z][\\w-]*\\s*>(?=[ \\t]*(?:\\n|$))[\\s\\S]*?(?:(?:\\n *)+\\n|$)' // (7) closing tag
+  + ')',
+  def: /^ {0,3}\[(label)\]: *(?:\n *)?<?([^\s>]+)>?(?:(?: +(?:\n *)?| *\n *)(title))? *(?:\n+|$)/,
+  table: noopTest,
+  lheading: /^([^\n]+)\n {0,3}(=+|-+) *(?:\n+|$)/,
+  // regex template, placeholders will be replaced according to different paragraph
+  // interruption rules of commonmark and the original markdown spec:
+  _paragraph: /^([^\n]+(?:\n(?!hr|heading|lheading|blockquote|fences|list|html|table| +\n)[^\n]+)*)/,
+  text: /^[^\n]+/
+};
+block._label = /(?!\s*\])(?:\\.|[^\[\]\\])+/;
+block._title = /(?:"(?:\\"?|[^"\\])*"|'[^'\n]*(?:\n[^'\n]+)*\n?'|\([^()]*\))/;
+block.def = edit(block.def).replace('label', block._label).replace('title', block._title).getRegex();
+block.bullet = /(?:[*+-]|\d{1,9}[.)])/;
+block.listItemStart = edit(/^( *)(bull) */).replace('bull', block.bullet).getRegex();
+block.list = edit(block.list).replace(/bull/g, block.bullet).replace('hr', '\\n+(?=\\1?(?:(?:- *){3,}|(?:_ *){3,}|(?:\\* *){3,})(?:\\n+|$))').replace('def', '\\n+(?=' + block.def.source + ')').getRegex();
+block._tag = 'address|article|aside|base|basefont|blockquote|body|caption' + '|center|col|colgroup|dd|details|dialog|dir|div|dl|dt|fieldset|figcaption' + '|figure|footer|form|frame|frameset|h[1-6]|head|header|hr|html|iframe' + '|legend|li|link|main|menu|menuitem|meta|nav|noframes|ol|optgroup|option' + '|p|param|section|source|summary|table|tbody|td|tfoot|th|thead|title|tr' + '|track|ul';
+block._comment = /<!--(?!-?>)[\s\S]*?(?:-->|$)/;
+block.html = edit(block.html, 'i').replace('comment', block._comment).replace('tag', block._tag).replace('attribute', / +[a-zA-Z:_][\w.:-]*(?: *= *"[^"\n]*"| *= *'[^'\n]*'| *= *[^\s"'=<>`]+)?/).getRegex();
+block.paragraph = edit(block._paragraph).replace('hr', block.hr).replace('heading', ' {0,3}#{1,6} ').replace('|lheading', '') // setex headings don't interrupt commonmark paragraphs
+.replace('|table', '').replace('blockquote', ' {0,3}>').replace('fences', ' {0,3}(?:`{3,}(?=[^`\\n]*\\n)|~{3,})[^\\n]*\\n').replace('list', ' {0,3}(?:[*+-]|1[.)]) ') // only lists starting from 1 can interrupt
+.replace('html', '</?(?:tag)(?: +|\\n|/?>)|<(?:script|pre|style|textarea|!--)').replace('tag', block._tag) // pars can be interrupted by type (6) html blocks
+.getRegex();
+block.blockquote = edit(block.blockquote).replace('paragraph', block.paragraph).getRegex();
+/**
+ * Normal Block Grammar
+ */
+
+block.normal = merge({}, block);
+/**
+ * GFM Block Grammar
+ */
+
+block.gfm = merge({}, block.normal, {
+  table: '^ *([^\\n ].*\\|.*)\\n' // Header
+  + ' {0,3}(?:\\| *)?(:?-+:? *(?:\\| *:?-+:? *)*)(?:\\| *)?' // Align
+  + '(?:\\n((?:(?! *\\n|hr|heading|blockquote|code|fences|list|html).*(?:\\n|$))*)\\n*|$)' // Cells
+
+});
+block.gfm.table = edit(block.gfm.table).replace('hr', block.hr).replace('heading', ' {0,3}#{1,6} ').replace('blockquote', ' {0,3}>').replace('code', ' {4}[^\\n]').replace('fences', ' {0,3}(?:`{3,}(?=[^`\\n]*\\n)|~{3,})[^\\n]*\\n').replace('list', ' {0,3}(?:[*+-]|1[.)]) ') // only lists starting from 1 can interrupt
+.replace('html', '</?(?:tag)(?: +|\\n|/?>)|<(?:script|pre|style|textarea|!--)').replace('tag', block._tag) // tables can be interrupted by type (6) html blocks
+.getRegex();
+block.gfm.paragraph = edit(block._paragraph).replace('hr', block.hr).replace('heading', ' {0,3}#{1,6} ').replace('|lheading', '') // setex headings don't interrupt commonmark paragraphs
+.replace('table', block.gfm.table) // interrupt paragraphs with table
+.replace('blockquote', ' {0,3}>').replace('fences', ' {0,3}(?:`{3,}(?=[^`\\n]*\\n)|~{3,})[^\\n]*\\n').replace('list', ' {0,3}(?:[*+-]|1[.)]) ') // only lists starting from 1 can interrupt
+.replace('html', '</?(?:tag)(?: +|\\n|/?>)|<(?:script|pre|style|textarea|!--)').replace('tag', block._tag) // pars can be interrupted by type (6) html blocks
+.getRegex();
+/**
+ * Pedantic grammar (original John Gruber's loose markdown specification)
+ */
+
+block.pedantic = merge({}, block.normal, {
+  html: edit('^ *(?:comment *(?:\\n|\\s*$)' + '|<(tag)[\\s\\S]+?</\\1> *(?:\\n{2,}|\\s*$)' // closed tag
+  + '|<tag(?:"[^"]*"|\'[^\']*\'|\\s[^\'"/>\\s]*)*?/?> *(?:\\n{2,}|\\s*$))').replace('comment', block._comment).replace(/tag/g, '(?!(?:' + 'a|em|strong|small|s|cite|q|dfn|abbr|data|time|code|var|samp|kbd|sub' + '|sup|i|b|u|mark|ruby|rt|rp|bdi|bdo|span|br|wbr|ins|del|img)' + '\\b)\\w+(?!:|[^\\w\\s@]*@)\\b').getRegex(),
+  def: /^ *\[([^\]]+)\]: *<?([^\s>]+)>?(?: +(["(][^\n]+[")]))? *(?:\n+|$)/,
+  heading: /^(#{1,6})(.*)(?:\n+|$)/,
+  fences: noopTest,
+  // fences not supported
+  paragraph: edit(block.normal._paragraph).replace('hr', block.hr).replace('heading', ' *#{1,6} *[^\n]').replace('lheading', block.lheading).replace('blockquote', ' {0,3}>').replace('|fences', '').replace('|list', '').replace('|html', '').getRegex()
+});
+/**
+ * Inline-Level Grammar
+ */
+
+var inline = {
+  escape: /^\\([!"#$%&'()*+,\-./:;<=>?@\[\]\\^_`{|}~])/,
+  autolink: /^<(scheme:[^\s\x00-\x1f<>]*|email)>/,
+  url: noopTest,
+  tag: '^comment' + '|^</[a-zA-Z][\\w:-]*\\s*>' // self-closing tag
+  + '|^<[a-zA-Z][\\w-]*(?:attribute)*?\\s*/?>' // open tag
+  + '|^<\\?[\\s\\S]*?\\?>' // processing instruction, e.g. <?php ?>
+  + '|^<![a-zA-Z]+\\s[\\s\\S]*?>' // declaration, e.g. <!DOCTYPE html>
+  + '|^<!\\[CDATA\\[[\\s\\S]*?\\]\\]>',
+  // CDATA section
+  link: /^!?\[(label)\]\(\s*(href)(?:\s+(title))?\s*\)/,
+  reflink: /^!?\[(label)\]\[(ref)\]/,
+  nolink: /^!?\[(ref)\](?:\[\])?/,
+  reflinkSearch: 'reflink|nolink(?!\\()',
+  emStrong: {
+    lDelim: /^(?:\*+(?:([punct_])|[^\s*]))|^_+(?:([punct*])|([^\s_]))/,
+    //        (1) and (2) can only be a Right Delimiter. (3) and (4) can only be Left.  (5) and (6) can be either Left or Right.
+    //          () Skip orphan inside strong  () Consume to delim (1) #***                (2) a***#, a***                   (3) #***a, ***a                 (4) ***#              (5) #***#                 (6) a***a
+    rDelimAst: /^[^_*]*?\_\_[^_*]*?\*[^_*]*?(?=\_\_)|[^*]+(?=[^*])|[punct_](\*+)(?=[\s]|$)|[^punct*_\s](\*+)(?=[punct_\s]|$)|[punct_\s](\*+)(?=[^punct*_\s])|[\s](\*+)(?=[punct_])|[punct_](\*+)(?=[punct_])|[^punct*_\s](\*+)(?=[^punct*_\s])/,
+    rDelimUnd: /^[^_*]*?\*\*[^_*]*?\_[^_*]*?(?=\*\*)|[^_]+(?=[^_])|[punct*](\_+)(?=[\s]|$)|[^punct*_\s](\_+)(?=[punct*\s]|$)|[punct*\s](\_+)(?=[^punct*_\s])|[\s](\_+)(?=[punct*])|[punct*](\_+)(?=[punct*])/ // ^- Not allowed for _
+
+  },
+  code: /^(`+)([^`]|[^`][\s\S]*?[^`])\1(?!`)/,
+  br: /^( {2,}|\\)\n(?!\s*$)/,
+  del: noopTest,
+  text: /^(`+|[^`])(?:(?= {2,}\n)|[\s\S]*?(?:(?=[\\<!\[`*_]|\b_|$)|[^ ](?= {2,}\n)))/,
+  punctuation: /^([\spunctuation])/
+}; // list of punctuation marks from CommonMark spec
+// without * and _ to handle the different emphasis markers * and _
+
+inline._punctuation = '!"#$%&\'()+\\-.,/:;<=>?@\\[\\]`^{|}~';
+inline.punctuation = edit(inline.punctuation).replace(/punctuation/g, inline._punctuation).getRegex(); // sequences em should skip over [title](link), `code`, <html>
+
+inline.blockSkip = /\[[^\]]*?\]\([^\)]*?\)|`[^`]*?`|<[^>]*?>/g;
+inline.escapedEmSt = /\\\*|\\_/g;
+inline._comment = edit(block._comment).replace('(?:-->|$)', '-->').getRegex();
+inline.emStrong.lDelim = edit(inline.emStrong.lDelim).replace(/punct/g, inline._punctuation).getRegex();
+inline.emStrong.rDelimAst = edit(inline.emStrong.rDelimAst, 'g').replace(/punct/g, inline._punctuation).getRegex();
+inline.emStrong.rDelimUnd = edit(inline.emStrong.rDelimUnd, 'g').replace(/punct/g, inline._punctuation).getRegex();
+inline._escapes = /\\([!"#$%&'()*+,\-./:;<=>?@\[\]\\^_`{|}~])/g;
+inline._scheme = /[a-zA-Z][a-zA-Z0-9+.-]{1,31}/;
+inline._email = /[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+(@)[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)+(?![-_])/;
+inline.autolink = edit(inline.autolink).replace('scheme', inline._scheme).replace('email', inline._email).getRegex();
+inline._attribute = /\s+[a-zA-Z:_][\w.:-]*(?:\s*=\s*"[^"]*"|\s*=\s*'[^']*'|\s*=\s*[^\s"'=<>`]+)?/;
+inline.tag = edit(inline.tag).replace('comment', inline._comment).replace('attribute', inline._attribute).getRegex();
+inline._label = /(?:\[(?:\\.|[^\[\]\\])*\]|\\.|`[^`]*`|[^\[\]\\`])*?/;
+inline._href = /<(?:\\.|[^\n<>\\])+>|[^\s\x00-\x1f]*/;
+inline._title = /"(?:\\"?|[^"\\])*"|'(?:\\'?|[^'\\])*'|\((?:\\\)?|[^)\\])*\)/;
+inline.link = edit(inline.link).replace('label', inline._label).replace('href', inline._href).replace('title', inline._title).getRegex();
+inline.reflink = edit(inline.reflink).replace('label', inline._label).replace('ref', block._label).getRegex();
+inline.nolink = edit(inline.nolink).replace('ref', block._label).getRegex();
+inline.reflinkSearch = edit(inline.reflinkSearch, 'g').replace('reflink', inline.reflink).replace('nolink', inline.nolink).getRegex();
+/**
+ * Normal Inline Grammar
+ */
+
+inline.normal = merge({}, inline);
+/**
+ * Pedantic Inline Grammar
+ */
+
+inline.pedantic = merge({}, inline.normal, {
+  strong: {
+    start: /^__|\*\*/,
+    middle: /^__(?=\S)([\s\S]*?\S)__(?!_)|^\*\*(?=\S)([\s\S]*?\S)\*\*(?!\*)/,
+    endAst: /\*\*(?!\*)/g,
+    endUnd: /__(?!_)/g
+  },
+  em: {
+    start: /^_|\*/,
+    middle: /^()\*(?=\S)([\s\S]*?\S)\*(?!\*)|^_(?=\S)([\s\S]*?\S)_(?!_)/,
+    endAst: /\*(?!\*)/g,
+    endUnd: /_(?!_)/g
+  },
+  link: edit(/^!?\[(label)\]\((.*?)\)/).replace('label', inline._label).getRegex(),
+  reflink: edit(/^!?\[(label)\]\s*\[([^\]]*)\]/).replace('label', inline._label).getRegex()
+});
+/**
+ * GFM Inline Grammar
+ */
+
+inline.gfm = merge({}, inline.normal, {
+  escape: edit(inline.escape).replace('])', '~|])').getRegex(),
+  _extended_email: /[A-Za-z0-9._+-]+(@)[a-zA-Z0-9-_]+(?:\.[a-zA-Z0-9-_]*[a-zA-Z0-9])+(?![-_])/,
+  url: /^((?:ftp|https?):\/\/|www\.)(?:[a-zA-Z0-9\-]+\.?)+[^\s<]*|^email/,
+  _backpedal: /(?:[^?!.,:;*_~()&]+|\([^)]*\)|&(?![a-zA-Z0-9]+;$)|[?!.,:;*_~)]+(?!$))+/,
+  del: /^(~~?)(?=[^\s~])([\s\S]*?[^\s~])\1(?=[^~]|$)/,
+  text: /^([`~]+|[^`~])(?:(?= {2,}\n)|(?=[a-zA-Z0-9.!#$%&'*+\/=?_`{\|}~-]+@)|[\s\S]*?(?:(?=[\\<!\[`*~_]|\b_|https?:\/\/|ftp:\/\/|www\.|$)|[^ ](?= {2,}\n)|[^a-zA-Z0-9.!#$%&'*+\/=?_`{\|}~-](?=[a-zA-Z0-9.!#$%&'*+\/=?_`{\|}~-]+@)))/
+});
+inline.gfm.url = edit(inline.gfm.url, 'i').replace('email', inline.gfm._extended_email).getRegex();
+/**
+ * GFM + Line Breaks Inline Grammar
+ */
+
+inline.breaks = merge({}, inline.gfm, {
+  br: edit(inline.br).replace('{2,}', '*').getRegex(),
+  text: edit(inline.gfm.text).replace('\\b_', '\\b_| {2,}\\n').replace(/\{2,\}/g, '*').getRegex()
+});
+
+/**
+ * smartypants text replacement
+ * @param {string} text
+ */
+
+function smartypants(text) {
+  return text // em-dashes
+  .replace(/---/g, "\u2014") // en-dashes
+  .replace(/--/g, "\u2013") // opening singles
+  .replace(/(^|[-\u2014/(\[{"\s])'/g, "$1\u2018") // closing singles & apostrophes
+  .replace(/'/g, "\u2019") // opening doubles
+  .replace(/(^|[-\u2014/(\[{\u2018\s])"/g, "$1\u201C") // closing doubles
+  .replace(/"/g, "\u201D") // ellipses
+  .replace(/\.{3}/g, "\u2026");
+}
+/**
+ * mangle email addresses
+ * @param {string} text
+ */
+
+
+function mangle(text) {
+  var out = '',
+      i,
+      ch;
+  var l = text.length;
+
+  for (i = 0; i < l; i++) {
+    ch = text.charCodeAt(i);
+
+    if (Math.random() > 0.5) {
+      ch = 'x' + ch.toString(16);
+    }
+
+    out += '&#' + ch + ';';
+  }
+
+  return out;
+}
+/**
+ * Block Lexer
+ */
+
+
+var Lexer = /*#__PURE__*/function () {
+  function Lexer(options) {
+    this.tokens = [];
+    this.tokens.links = Object.create(null);
+    this.options = options || exports.defaults;
+    this.options.tokenizer = this.options.tokenizer || new Tokenizer();
+    this.tokenizer = this.options.tokenizer;
+    this.tokenizer.options = this.options;
+    this.tokenizer.lexer = this;
+    this.inlineQueue = [];
+    this.state = {
+      inLink: false,
+      inRawBlock: false,
+      top: true
+    };
+    var rules = {
+      block: block.normal,
+      inline: inline.normal
+    };
+
+    if (this.options.pedantic) {
+      rules.block = block.pedantic;
+      rules.inline = inline.pedantic;
+    } else if (this.options.gfm) {
+      rules.block = block.gfm;
+
+      if (this.options.breaks) {
+        rules.inline = inline.breaks;
+      } else {
+        rules.inline = inline.gfm;
+      }
+    }
+
+    this.tokenizer.rules = rules;
+  }
+  /**
+   * Expose Rules
+   */
+
+
+  /**
+   * Static Lex Method
+   */
+  Lexer.lex = function lex(src, options) {
+    var lexer = new Lexer(options);
+    return lexer.lex(src);
+  }
+  /**
+   * Static Lex Inline Method
+   */
+  ;
+
+  Lexer.lexInline = function lexInline(src, options) {
+    var lexer = new Lexer(options);
+    return lexer.inlineTokens(src);
+  }
+  /**
+   * Preprocessing
+   */
+  ;
+
+  var _proto = Lexer.prototype;
+
+  _proto.lex = function lex(src) {
+    src = src.replace(/\r\n|\r/g, '\n');
+    this.blockTokens(src, this.tokens);
+    var next;
+
+    while (next = this.inlineQueue.shift()) {
+      this.inlineTokens(next.src, next.tokens);
+    }
+
+    return this.tokens;
+  }
+  /**
+   * Lexing
+   */
+  ;
+
+  _proto.blockTokens = function blockTokens(src, tokens) {
+    var _this = this;
+
+    if (tokens === void 0) {
+      tokens = [];
+    }
+
+    if (this.options.pedantic) {
+      src = src.replace(/\t/g, '    ').replace(/^ +$/gm, '');
+    } else {
+      src = src.replace(/^( *)(\t+)/gm, function (_, leading, tabs) {
+        return leading + '    '.repeat(tabs.length);
+      });
+    }
+
+    var token, lastToken, cutSrc, lastParagraphClipped;
+
+    while (src) {
+      if (this.options.extensions && this.options.extensions.block && this.options.extensions.block.some(function (extTokenizer) {
+        if (token = extTokenizer.call({
+          lexer: _this
+        }, src, tokens)) {
+          src = src.substring(token.raw.length);
+          tokens.push(token);
+          return true;
+        }
+
+        return false;
+      })) {
+        continue;
+      } // newline
+
+
+      if (token = this.tokenizer.space(src)) {
+        src = src.substring(token.raw.length);
+
+        if (token.raw.length === 1 && tokens.length > 0) {
+          // if there's a single \n as a spacer, it's terminating the last line,
+          // so move it there so that we don't get unecessary paragraph tags
+          tokens[tokens.length - 1].raw += '\n';
+        } else {
+          tokens.push(token);
+        }
+
+        continue;
+      } // code
+
+
+      if (token = this.tokenizer.code(src)) {
+        src = src.substring(token.raw.length);
+        lastToken = tokens[tokens.length - 1]; // An indented code block cannot interrupt a paragraph.
+
+        if (lastToken && (lastToken.type === 'paragraph' || lastToken.type === 'text')) {
+          lastToken.raw += '\n' + token.raw;
+          lastToken.text += '\n' + token.text;
+          this.inlineQueue[this.inlineQueue.length - 1].src = lastToken.text;
+        } else {
+          tokens.push(token);
+        }
+
+        continue;
+      } // fences
+
+
+      if (token = this.tokenizer.fences(src)) {
+        src = src.substring(token.raw.length);
+        tokens.push(token);
+        continue;
+      } // heading
+
+
+      if (token = this.tokenizer.heading(src)) {
+        src = src.substring(token.raw.length);
+        tokens.push(token);
+        continue;
+      } // hr
+
+
+      if (token = this.tokenizer.hr(src)) {
+        src = src.substring(token.raw.length);
+        tokens.push(token);
+        continue;
+      } // blockquote
+
+
+      if (token = this.tokenizer.blockquote(src)) {
+        src = src.substring(token.raw.length);
+        tokens.push(token);
+        continue;
+      } // list
+
+
+      if (token = this.tokenizer.list(src)) {
+        src = src.substring(token.raw.length);
+        tokens.push(token);
+        continue;
+      } // html
+
+
+      if (token = this.tokenizer.html(src)) {
+        src = src.substring(token.raw.length);
+        tokens.push(token);
+        continue;
+      } // def
+
+
+      if (token = this.tokenizer.def(src)) {
+        src = src.substring(token.raw.length);
+        lastToken = tokens[tokens.length - 1];
+
+        if (lastToken && (lastToken.type === 'paragraph' || lastToken.type === 'text')) {
+          lastToken.raw += '\n' + token.raw;
+          lastToken.text += '\n' + token.raw;
+          this.inlineQueue[this.inlineQueue.length - 1].src = lastToken.text;
+        } else if (!this.tokens.links[token.tag]) {
+          this.tokens.links[token.tag] = {
+            href: token.href,
+            title: token.title
+          };
+        }
+
+        continue;
+      } // table (gfm)
+
+
+      if (token = this.tokenizer.table(src)) {
+        src = src.substring(token.raw.length);
+        tokens.push(token);
+        continue;
+      } // lheading
+
+
+      if (token = this.tokenizer.lheading(src)) {
+        src = src.substring(token.raw.length);
+        tokens.push(token);
+        continue;
+      } // top-level paragraph
+      // prevent paragraph consuming extensions by clipping 'src' to extension start
+
+
+      cutSrc = src;
+
+      if (this.options.extensions && this.options.extensions.startBlock) {
+        (function () {
+          var startIndex = Infinity;
+          var tempSrc = src.slice(1);
+          var tempStart = void 0;
+
+          _this.options.extensions.startBlock.forEach(function (getStartIndex) {
+            tempStart = getStartIndex.call({
+              lexer: this
+            }, tempSrc);
+
+            if (typeof tempStart === 'number' && tempStart >= 0) {
+              startIndex = Math.min(startIndex, tempStart);
+            }
+          });
+
+          if (startIndex < Infinity && startIndex >= 0) {
+            cutSrc = src.substring(0, startIndex + 1);
+          }
+        })();
+      }
+
+      if (this.state.top && (token = this.tokenizer.paragraph(cutSrc))) {
+        lastToken = tokens[tokens.length - 1];
+
+        if (lastParagraphClipped && lastToken.type === 'paragraph') {
+          lastToken.raw += '\n' + token.raw;
+          lastToken.text += '\n' + token.text;
+          this.inlineQueue.pop();
+          this.inlineQueue[this.inlineQueue.length - 1].src = lastToken.text;
+        } else {
+          tokens.push(token);
+        }
+
+        lastParagraphClipped = cutSrc.length !== src.length;
+        src = src.substring(token.raw.length);
+        continue;
+      } // text
+
+
+      if (token = this.tokenizer.text(src)) {
+        src = src.substring(token.raw.length);
+        lastToken = tokens[tokens.length - 1];
+
+        if (lastToken && lastToken.type === 'text') {
+          lastToken.raw += '\n' + token.raw;
+          lastToken.text += '\n' + token.text;
+          this.inlineQueue.pop();
+          this.inlineQueue[this.inlineQueue.length - 1].src = lastToken.text;
+        } else {
+          tokens.push(token);
+        }
+
+        continue;
+      }
+
+      if (src) {
+        var errMsg = 'Infinite loop on byte: ' + src.charCodeAt(0);
+
+        if (this.options.silent) {
+          console.error(errMsg);
+          break;
+        } else {
+          throw new Error(errMsg);
+        }
+      }
+    }
+
+    this.state.top = true;
+    return tokens;
+  };
+
+  _proto.inline = function inline(src, tokens) {
+    this.inlineQueue.push({
+      src: src,
+      tokens: tokens
+    });
+  }
+  /**
+   * Lexing/Compiling
+   */
+  ;
+
+  _proto.inlineTokens = function inlineTokens(src, tokens) {
+    var _this2 = this;
+
+    if (tokens === void 0) {
+      tokens = [];
+    }
+
+    var token, lastToken, cutSrc; // String with links masked to avoid interference with em and strong
+
+    var maskedSrc = src;
+    var match;
+    var keepPrevChar, prevChar; // Mask out reflinks
+
+    if (this.tokens.links) {
+      var links = Object.keys(this.tokens.links);
+
+      if (links.length > 0) {
+        while ((match = this.tokenizer.rules.inline.reflinkSearch.exec(maskedSrc)) != null) {
+          if (links.includes(match[0].slice(match[0].lastIndexOf('[') + 1, -1))) {
+            maskedSrc = maskedSrc.slice(0, match.index) + '[' + repeatString('a', match[0].length - 2) + ']' + maskedSrc.slice(this.tokenizer.rules.inline.reflinkSearch.lastIndex);
+          }
+        }
+      }
+    } // Mask out other blocks
+
+
+    while ((match = this.tokenizer.rules.inline.blockSkip.exec(maskedSrc)) != null) {
+      maskedSrc = maskedSrc.slice(0, match.index) + '[' + repeatString('a', match[0].length - 2) + ']' + maskedSrc.slice(this.tokenizer.rules.inline.blockSkip.lastIndex);
+    } // Mask out escaped em & strong delimiters
+
+
+    while ((match = this.tokenizer.rules.inline.escapedEmSt.exec(maskedSrc)) != null) {
+      maskedSrc = maskedSrc.slice(0, match.index) + '++' + maskedSrc.slice(this.tokenizer.rules.inline.escapedEmSt.lastIndex);
+    }
+
+    while (src) {
+      if (!keepPrevChar) {
+        prevChar = '';
+      }
+
+      keepPrevChar = false; // extensions
+
+      if (this.options.extensions && this.options.extensions.inline && this.options.extensions.inline.some(function (extTokenizer) {
+        if (token = extTokenizer.call({
+          lexer: _this2
+        }, src, tokens)) {
+          src = src.substring(token.raw.length);
+          tokens.push(token);
+          return true;
+        }
+
+        return false;
+      })) {
+        continue;
+      } // escape
+
+
+      if (token = this.tokenizer.escape(src)) {
+        src = src.substring(token.raw.length);
+        tokens.push(token);
+        continue;
+      } // tag
+
+
+      if (token = this.tokenizer.tag(src)) {
+        src = src.substring(token.raw.length);
+        lastToken = tokens[tokens.length - 1];
+
+        if (lastToken && token.type === 'text' && lastToken.type === 'text') {
+          lastToken.raw += token.raw;
+          lastToken.text += token.text;
+        } else {
+          tokens.push(token);
+        }
+
+        continue;
+      } // link
+
+
+      if (token = this.tokenizer.link(src)) {
+        src = src.substring(token.raw.length);
+        tokens.push(token);
+        continue;
+      } // reflink, nolink
+
+
+      if (token = this.tokenizer.reflink(src, this.tokens.links)) {
+        src = src.substring(token.raw.length);
+        lastToken = tokens[tokens.length - 1];
+
+        if (lastToken && token.type === 'text' && lastToken.type === 'text') {
+          lastToken.raw += token.raw;
+          lastToken.text += token.text;
+        } else {
+          tokens.push(token);
+        }
+
+        continue;
+      } // em & strong
+
+
+      if (token = this.tokenizer.emStrong(src, maskedSrc, prevChar)) {
+        src = src.substring(token.raw.length);
+        tokens.push(token);
+        continue;
+      } // code
+
+
+      if (token = this.tokenizer.codespan(src)) {
+        src = src.substring(token.raw.length);
+        tokens.push(token);
+        continue;
+      } // br
+
+
+      if (token = this.tokenizer.br(src)) {
+        src = src.substring(token.raw.length);
+        tokens.push(token);
+        continue;
+      } // del (gfm)
+
+
+      if (token = this.tokenizer.del(src)) {
+        src = src.substring(token.raw.length);
+        tokens.push(token);
+        continue;
+      } // autolink
+
+
+      if (token = this.tokenizer.autolink(src, mangle)) {
+        src = src.substring(token.raw.length);
+        tokens.push(token);
+        continue;
+      } // url (gfm)
+
+
+      if (!this.state.inLink && (token = this.tokenizer.url(src, mangle))) {
+        src = src.substring(token.raw.length);
+        tokens.push(token);
+        continue;
+      } // text
+      // prevent inlineText consuming extensions by clipping 'src' to extension start
+
+
+      cutSrc = src;
+
+      if (this.options.extensions && this.options.extensions.startInline) {
+        (function () {
+          var startIndex = Infinity;
+          var tempSrc = src.slice(1);
+          var tempStart = void 0;
+
+          _this2.options.extensions.startInline.forEach(function (getStartIndex) {
+            tempStart = getStartIndex.call({
+              lexer: this
+            }, tempSrc);
+
+            if (typeof tempStart === 'number' && tempStart >= 0) {
+              startIndex = Math.min(startIndex, tempStart);
+            }
+          });
+
+          if (startIndex < Infinity && startIndex >= 0) {
+            cutSrc = src.substring(0, startIndex + 1);
+          }
+        })();
+      }
+
+      if (token = this.tokenizer.inlineText(cutSrc, smartypants)) {
+        src = src.substring(token.raw.length);
+
+        if (token.raw.slice(-1) !== '_') {
+          // Track prevChar before string of ____ started
+          prevChar = token.raw.slice(-1);
+        }
+
+        keepPrevChar = true;
+        lastToken = tokens[tokens.length - 1];
+
+        if (lastToken && lastToken.type === 'text') {
+          lastToken.raw += token.raw;
+          lastToken.text += token.text;
+        } else {
+          tokens.push(token);
+        }
+
+        continue;
+      }
+
+      if (src) {
+        var errMsg = 'Infinite loop on byte: ' + src.charCodeAt(0);
+
+        if (this.options.silent) {
+          console.error(errMsg);
+          break;
+        } else {
+          throw new Error(errMsg);
+        }
+      }
+    }
+
+    return tokens;
+  };
+
+  _createClass(Lexer, null, [{
+    key: "rules",
+    get: function get() {
+      return {
+        block: block,
+        inline: inline
+      };
+    }
+  }]);
+
+  return Lexer;
+}();
+
+/**
+ * Renderer
+ */
+
+var Renderer = /*#__PURE__*/function () {
+  function Renderer(options) {
+    this.options = options || exports.defaults;
+  }
+
+  var _proto = Renderer.prototype;
+
+  _proto.code = function code(_code, infostring, escaped) {
+    var lang = (infostring || '').match(/\S*/)[0];
+
+    if (this.options.highlight) {
+      var out = this.options.highlight(_code, lang);
+
+      if (out != null && out !== _code) {
+        escaped = true;
+        _code = out;
+      }
+    }
+
+    _code = _code.replace(/\n$/, '') + '\n';
+
+    if (!lang) {
+      return '<pre><code>' + (escaped ? _code : escape(_code, true)) + '</code></pre>\n';
+    }
+
+    return '<pre><code class="' + this.options.langPrefix + escape(lang, true) + '">' + (escaped ? _code : escape(_code, true)) + '</code></pre>\n';
+  }
+  /**
+   * @param {string} quote
+   */
+  ;
+
+  _proto.blockquote = function blockquote(quote) {
+    return "<blockquote>\n" + quote + "</blockquote>\n";
+  };
+
+  _proto.html = function html(_html) {
+    return _html;
+  }
+  /**
+   * @param {string} text
+   * @param {string} level
+   * @param {string} raw
+   * @param {any} slugger
+   */
+  ;
+
+  _proto.heading = function heading(text, level, raw, slugger) {
+    if (this.options.headerIds) {
+      var id = this.options.headerPrefix + slugger.slug(raw);
+      return "<h" + level + " id=\"" + id + "\">" + text + "</h" + level + ">\n";
+    } // ignore IDs
+
+
+    return "<h" + level + ">" + text + "</h" + level + ">\n";
+  };
+
+  _proto.hr = function hr() {
+    return this.options.xhtml ? '<hr/>\n' : '<hr>\n';
+  };
+
+  _proto.list = function list(body, ordered, start) {
+    var type = ordered ? 'ol' : 'ul',
+        startatt = ordered && start !== 1 ? ' start="' + start + '"' : '';
+    return '<' + type + startatt + '>\n' + body + '</' + type + '>\n';
+  }
+  /**
+   * @param {string} text
+   */
+  ;
+
+  _proto.listitem = function listitem(text) {
+    return "<li>" + text + "</li>\n";
+  };
+
+  _proto.checkbox = function checkbox(checked) {
+    return '<input ' + (checked ? 'checked="" ' : '') + 'disabled="" type="checkbox"' + (this.options.xhtml ? ' /' : '') + '> ';
+  }
+  /**
+   * @param {string} text
+   */
+  ;
+
+  _proto.paragraph = function paragraph(text) {
+    return "<p>" + text + "</p>\n";
+  }
+  /**
+   * @param {string} header
+   * @param {string} body
+   */
+  ;
+
+  _proto.table = function table(header, body) {
+    if (body) body = "<tbody>" + body + "</tbody>";
+    return '<table>\n' + '<thead>\n' + header + '</thead>\n' + body + '</table>\n';
+  }
+  /**
+   * @param {string} content
+   */
+  ;
+
+  _proto.tablerow = function tablerow(content) {
+    return "<tr>\n" + content + "</tr>\n";
+  };
+
+  _proto.tablecell = function tablecell(content, flags) {
+    var type = flags.header ? 'th' : 'td';
+    var tag = flags.align ? "<" + type + " align=\"" + flags.align + "\">" : "<" + type + ">";
+    return tag + content + ("</" + type + ">\n");
+  }
+  /**
+   * span level renderer
+   * @param {string} text
+   */
+  ;
+
+  _proto.strong = function strong(text) {
+    return "<strong>" + text + "</strong>";
+  }
+  /**
+   * @param {string} text
+   */
+  ;
+
+  _proto.em = function em(text) {
+    return "<em>" + text + "</em>";
+  }
+  /**
+   * @param {string} text
+   */
+  ;
+
+  _proto.codespan = function codespan(text) {
+    return "<code>" + text + "</code>";
+  };
+
+  _proto.br = function br() {
+    return this.options.xhtml ? '<br/>' : '<br>';
+  }
+  /**
+   * @param {string} text
+   */
+  ;
+
+  _proto.del = function del(text) {
+    return "<del>" + text + "</del>";
+  }
+  /**
+   * @param {string} href
+   * @param {string} title
+   * @param {string} text
+   */
+  ;
+
+  _proto.link = function link(href, title, text) {
+    href = cleanUrl(this.options.sanitize, this.options.baseUrl, href);
+
+    if (href === null) {
+      return text;
+    }
+
+    var out = '<a href="' + escape(href) + '"';
+
+    if (title) {
+      out += ' title="' + title + '"';
+    }
+
+    out += '>' + text + '</a>';
+    return out;
+  }
+  /**
+   * @param {string} href
+   * @param {string} title
+   * @param {string} text
+   */
+  ;
+
+  _proto.image = function image(href, title, text) {
+    href = cleanUrl(this.options.sanitize, this.options.baseUrl, href);
+
+    if (href === null) {
+      return text;
+    }
+
+    var out = "<img src=\"" + href + "\" alt=\"" + text + "\"";
+
+    if (title) {
+      out += " title=\"" + title + "\"";
+    }
+
+    out += this.options.xhtml ? '/>' : '>';
+    return out;
+  };
+
+  _proto.text = function text(_text) {
+    return _text;
+  };
+
+  return Renderer;
+}();
+
+/**
+ * TextRenderer
+ * returns only the textual part of the token
+ */
+var TextRenderer = /*#__PURE__*/function () {
+  function TextRenderer() {}
+
+  var _proto = TextRenderer.prototype;
+
+  // no need for block level renderers
+  _proto.strong = function strong(text) {
+    return text;
+  };
+
+  _proto.em = function em(text) {
+    return text;
+  };
+
+  _proto.codespan = function codespan(text) {
+    return text;
+  };
+
+  _proto.del = function del(text) {
+    return text;
+  };
+
+  _proto.html = function html(text) {
+    return text;
+  };
+
+  _proto.text = function text(_text) {
+    return _text;
+  };
+
+  _proto.link = function link(href, title, text) {
+    return '' + text;
+  };
+
+  _proto.image = function image(href, title, text) {
+    return '' + text;
+  };
+
+  _proto.br = function br() {
+    return '';
+  };
+
+  return TextRenderer;
+}();
+
+/**
+ * Slugger generates header id
+ */
+var Slugger = /*#__PURE__*/function () {
+  function Slugger() {
+    this.seen = {};
+  }
+  /**
+   * @param {string} value
+   */
+
+
+  var _proto = Slugger.prototype;
+
+  _proto.serialize = function serialize(value) {
+    return value.toLowerCase().trim() // remove html tags
+    .replace(/<[!\/a-z].*?>/ig, '') // remove unwanted chars
+    .replace(/[\u2000-\u206F\u2E00-\u2E7F\\'!"#$%&()*+,./:;<=>?@[\]^`{|}~]/g, '').replace(/\s/g, '-');
+  }
+  /**
+   * Finds the next safe (unique) slug to use
+   * @param {string} originalSlug
+   * @param {boolean} isDryRun
+   */
+  ;
+
+  _proto.getNextSafeSlug = function getNextSafeSlug(originalSlug, isDryRun) {
+    var slug = originalSlug;
+    var occurenceAccumulator = 0;
+
+    if (this.seen.hasOwnProperty(slug)) {
+      occurenceAccumulator = this.seen[originalSlug];
+
+      do {
+        occurenceAccumulator++;
+        slug = originalSlug + '-' + occurenceAccumulator;
+      } while (this.seen.hasOwnProperty(slug));
+    }
+
+    if (!isDryRun) {
+      this.seen[originalSlug] = occurenceAccumulator;
+      this.seen[slug] = 0;
+    }
+
+    return slug;
+  }
+  /**
+   * Convert string to unique id
+   * @param {object} [options]
+   * @param {boolean} [options.dryrun] Generates the next unique slug without
+   * updating the internal accumulator.
+   */
+  ;
+
+  _proto.slug = function slug(value, options) {
+    if (options === void 0) {
+      options = {};
+    }
+
+    var slug = this.serialize(value);
+    return this.getNextSafeSlug(slug, options.dryrun);
+  };
+
+  return Slugger;
+}();
+
+/**
+ * Parsing & Compiling
+ */
+
+var Parser = /*#__PURE__*/function () {
+  function Parser(options) {
+    this.options = options || exports.defaults;
+    this.options.renderer = this.options.renderer || new Renderer();
+    this.renderer = this.options.renderer;
+    this.renderer.options = this.options;
+    this.textRenderer = new TextRenderer();
+    this.slugger = new Slugger();
+  }
+  /**
+   * Static Parse Method
+   */
+
+
+  Parser.parse = function parse(tokens, options) {
+    var parser = new Parser(options);
+    return parser.parse(tokens);
+  }
+  /**
+   * Static Parse Inline Method
+   */
+  ;
+
+  Parser.parseInline = function parseInline(tokens, options) {
+    var parser = new Parser(options);
+    return parser.parseInline(tokens);
+  }
+  /**
+   * Parse Loop
+   */
+  ;
+
+  var _proto = Parser.prototype;
+
+  _proto.parse = function parse(tokens, top) {
+    if (top === void 0) {
+      top = true;
+    }
+
+    var out = '',
+        i,
+        j,
+        k,
+        l2,
+        l3,
+        row,
+        cell,
+        header,
+        body,
+        token,
+        ordered,
+        start,
+        loose,
+        itemBody,
+        item,
+        checked,
+        task,
+        checkbox,
+        ret;
+    var l = tokens.length;
+
+    for (i = 0; i < l; i++) {
+      token = tokens[i]; // Run any renderer extensions
+
+      if (this.options.extensions && this.options.extensions.renderers && this.options.extensions.renderers[token.type]) {
+        ret = this.options.extensions.renderers[token.type].call({
+          parser: this
+        }, token);
+
+        if (ret !== false || !['space', 'hr', 'heading', 'code', 'table', 'blockquote', 'list', 'html', 'paragraph', 'text'].includes(token.type)) {
+          out += ret || '';
+          continue;
+        }
+      }
+
+      switch (token.type) {
+        case 'space':
+          {
+            continue;
+          }
+
+        case 'hr':
+          {
+            out += this.renderer.hr();
+            continue;
+          }
+
+        case 'heading':
+          {
+            out += this.renderer.heading(this.parseInline(token.tokens), token.depth, unescape(this.parseInline(token.tokens, this.textRenderer)), this.slugger);
+            continue;
+          }
+
+        case 'code':
+          {
+            out += this.renderer.code(token.text, token.lang, token.escaped);
+            continue;
+          }
+
+        case 'table':
+          {
+            header = ''; // header
+
+            cell = '';
+            l2 = token.header.length;
+
+            for (j = 0; j < l2; j++) {
+              cell += this.renderer.tablecell(this.parseInline(token.header[j].tokens), {
+                header: true,
+                align: token.align[j]
+              });
+            }
+
+            header += this.renderer.tablerow(cell);
+            body = '';
+            l2 = token.rows.length;
+
+            for (j = 0; j < l2; j++) {
+              row = token.rows[j];
+              cell = '';
+              l3 = row.length;
+
+              for (k = 0; k < l3; k++) {
+                cell += this.renderer.tablecell(this.parseInline(row[k].tokens), {
+                  header: false,
+                  align: token.align[k]
+                });
+              }
+
+              body += this.renderer.tablerow(cell);
+            }
+
+            out += this.renderer.table(header, body);
+            continue;
+          }
+
+        case 'blockquote':
+          {
+            body = this.parse(token.tokens);
+            out += this.renderer.blockquote(body);
+            continue;
+          }
+
+        case 'list':
+          {
+            ordered = token.ordered;
+            start = token.start;
+            loose = token.loose;
+            l2 = token.items.length;
+            body = '';
+
+            for (j = 0; j < l2; j++) {
+              item = token.items[j];
+              checked = item.checked;
+              task = item.task;
+              itemBody = '';
+
+              if (item.task) {
+                checkbox = this.renderer.checkbox(checked);
+
+                if (loose) {
+                  if (item.tokens.length > 0 && item.tokens[0].type === 'paragraph') {
+                    item.tokens[0].text = checkbox + ' ' + item.tokens[0].text;
+
+                    if (item.tokens[0].tokens && item.tokens[0].tokens.length > 0 && item.tokens[0].tokens[0].type === 'text') {
+                      item.tokens[0].tokens[0].text = checkbox + ' ' + item.tokens[0].tokens[0].text;
+                    }
+                  } else {
+                    item.tokens.unshift({
+                      type: 'text',
+                      text: checkbox
+                    });
+                  }
+                } else {
+                  itemBody += checkbox;
+                }
+              }
+
+              itemBody += this.parse(item.tokens, loose);
+              body += this.renderer.listitem(itemBody, task, checked);
+            }
+
+            out += this.renderer.list(body, ordered, start);
+            continue;
+          }
+
+        case 'html':
+          {
+            // TODO parse inline content if parameter markdown=1
+            out += this.renderer.html(token.text);
+            continue;
+          }
+
+        case 'paragraph':
+          {
+            out += this.renderer.paragraph(this.parseInline(token.tokens));
+            continue;
+          }
+
+        case 'text':
+          {
+            body = token.tokens ? this.parseInline(token.tokens) : token.text;
+
+            while (i + 1 < l && tokens[i + 1].type === 'text') {
+              token = tokens[++i];
+              body += '\n' + (token.tokens ? this.parseInline(token.tokens) : token.text);
+            }
+
+            out += top ? this.renderer.paragraph(body) : body;
+            continue;
+          }
+
+        default:
+          {
+            var errMsg = 'Token with "' + token.type + '" type was not found.';
+
+            if (this.options.silent) {
+              console.error(errMsg);
+              return;
+            } else {
+              throw new Error(errMsg);
+            }
+          }
+      }
+    }
+
+    return out;
+  }
+  /**
+   * Parse Inline Tokens
+   */
+  ;
+
+  _proto.parseInline = function parseInline(tokens, renderer) {
+    renderer = renderer || this.renderer;
+    var out = '',
+        i,
+        token,
+        ret;
+    var l = tokens.length;
+
+    for (i = 0; i < l; i++) {
+      token = tokens[i]; // Run any renderer extensions
+
+      if (this.options.extensions && this.options.extensions.renderers && this.options.extensions.renderers[token.type]) {
+        ret = this.options.extensions.renderers[token.type].call({
+          parser: this
+        }, token);
+
+        if (ret !== false || !['escape', 'html', 'link', 'image', 'strong', 'em', 'codespan', 'br', 'del', 'text'].includes(token.type)) {
+          out += ret || '';
+          continue;
+        }
+      }
+
+      switch (token.type) {
+        case 'escape':
+          {
+            out += renderer.text(token.text);
+            break;
+          }
+
+        case 'html':
+          {
+            out += renderer.html(token.text);
+            break;
+          }
+
+        case 'link':
+          {
+            out += renderer.link(token.href, token.title, this.parseInline(token.tokens, renderer));
+            break;
+          }
+
+        case 'image':
+          {
+            out += renderer.image(token.href, token.title, token.text);
+            break;
+          }
+
+        case 'strong':
+          {
+            out += renderer.strong(this.parseInline(token.tokens, renderer));
+            break;
+          }
+
+        case 'em':
+          {
+            out += renderer.em(this.parseInline(token.tokens, renderer));
+            break;
+          }
+
+        case 'codespan':
+          {
+            out += renderer.codespan(token.text);
+            break;
+          }
+
+        case 'br':
+          {
+            out += renderer.br();
+            break;
+          }
+
+        case 'del':
+          {
+            out += renderer.del(this.parseInline(token.tokens, renderer));
+            break;
+          }
+
+        case 'text':
+          {
+            out += renderer.text(token.text);
+            break;
+          }
+
+        default:
+          {
+            var errMsg = 'Token with "' + token.type + '" type was not found.';
+
+            if (this.options.silent) {
+              console.error(errMsg);
+              return;
+            } else {
+              throw new Error(errMsg);
+            }
+          }
+      }
+    }
+
+    return out;
+  };
+
+  return Parser;
+}();
+
+/**
+ * Marked
+ */
+
+function marked(src, opt, callback) {
+  // throw error in case of non string input
+  if (typeof src === 'undefined' || src === null) {
+    throw new Error('marked(): input parameter is undefined or null');
+  }
+
+  if (typeof src !== 'string') {
+    throw new Error('marked(): input parameter is of type ' + Object.prototype.toString.call(src) + ', string expected');
+  }
+
+  if (typeof opt === 'function') {
+    callback = opt;
+    opt = null;
+  }
+
+  opt = merge({}, marked.defaults, opt || {});
+  checkSanitizeDeprecation(opt);
+
+  if (callback) {
+    var highlight = opt.highlight;
+    var tokens;
+
+    try {
+      tokens = Lexer.lex(src, opt);
+    } catch (e) {
+      return callback(e);
+    }
+
+    var done = function done(err) {
+      var out;
+
+      if (!err) {
+        try {
+          if (opt.walkTokens) {
+            marked.walkTokens(tokens, opt.walkTokens);
+          }
+
+          out = Parser.parse(tokens, opt);
+        } catch (e) {
+          err = e;
+        }
+      }
+
+      opt.highlight = highlight;
+      return err ? callback(err) : callback(null, out);
+    };
+
+    if (!highlight || highlight.length < 3) {
+      return done();
+    }
+
+    delete opt.highlight;
+    if (!tokens.length) return done();
+    var pending = 0;
+    marked.walkTokens(tokens, function (token) {
+      if (token.type === 'code') {
+        pending++;
+        setTimeout(function () {
+          highlight(token.text, token.lang, function (err, code) {
+            if (err) {
+              return done(err);
+            }
+
+            if (code != null && code !== token.text) {
+              token.text = code;
+              token.escaped = true;
+            }
+
+            pending--;
+
+            if (pending === 0) {
+              done();
+            }
+          });
+        }, 0);
+      }
+    });
+
+    if (pending === 0) {
+      done();
+    }
+
+    return;
+  }
+
+  try {
+    var _tokens = Lexer.lex(src, opt);
+
+    if (opt.walkTokens) {
+      marked.walkTokens(_tokens, opt.walkTokens);
+    }
+
+    return Parser.parse(_tokens, opt);
+  } catch (e) {
+    e.message += '\nPlease report this to https://github.com/markedjs/marked.';
+
+    if (opt.silent) {
+      return '<p>An error occurred:</p><pre>' + escape(e.message + '', true) + '</pre>';
+    }
+
+    throw e;
+  }
+}
+/**
+ * Options
+ */
+
+marked.options = marked.setOptions = function (opt) {
+  merge(marked.defaults, opt);
+  changeDefaults(marked.defaults);
+  return marked;
+};
+
+marked.getDefaults = getDefaults;
+marked.defaults = exports.defaults;
+/**
+ * Use Extension
+ */
+
+marked.use = function () {
+  for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+    args[_key] = arguments[_key];
+  }
+
+  var opts = merge.apply(void 0, [{}].concat(args));
+  var extensions = marked.defaults.extensions || {
+    renderers: {},
+    childTokens: {}
+  };
+  var hasExtensions;
+  args.forEach(function (pack) {
+    // ==-- Parse "addon" extensions --== //
+    if (pack.extensions) {
+      hasExtensions = true;
+      pack.extensions.forEach(function (ext) {
+        if (!ext.name) {
+          throw new Error('extension name required');
+        }
+
+        if (ext.renderer) {
+          // Renderer extensions
+          var prevRenderer = extensions.renderers ? extensions.renderers[ext.name] : null;
+
+          if (prevRenderer) {
+            // Replace extension with func to run new extension but fall back if false
+            extensions.renderers[ext.name] = function () {
+              for (var _len2 = arguments.length, args = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+                args[_key2] = arguments[_key2];
+              }
+
+              var ret = ext.renderer.apply(this, args);
+
+              if (ret === false) {
+                ret = prevRenderer.apply(this, args);
+              }
+
+              return ret;
+            };
+          } else {
+            extensions.renderers[ext.name] = ext.renderer;
+          }
+        }
+
+        if (ext.tokenizer) {
+          // Tokenizer Extensions
+          if (!ext.level || ext.level !== 'block' && ext.level !== 'inline') {
+            throw new Error("extension level must be 'block' or 'inline'");
+          }
+
+          if (extensions[ext.level]) {
+            extensions[ext.level].unshift(ext.tokenizer);
+          } else {
+            extensions[ext.level] = [ext.tokenizer];
+          }
+
+          if (ext.start) {
+            // Function to check for start of token
+            if (ext.level === 'block') {
+              if (extensions.startBlock) {
+                extensions.startBlock.push(ext.start);
+              } else {
+                extensions.startBlock = [ext.start];
+              }
+            } else if (ext.level === 'inline') {
+              if (extensions.startInline) {
+                extensions.startInline.push(ext.start);
+              } else {
+                extensions.startInline = [ext.start];
+              }
+            }
+          }
+        }
+
+        if (ext.childTokens) {
+          // Child tokens to be visited by walkTokens
+          extensions.childTokens[ext.name] = ext.childTokens;
+        }
+      });
+    } // ==-- Parse "overwrite" extensions --== //
+
+
+    if (pack.renderer) {
+      (function () {
+        var renderer = marked.defaults.renderer || new Renderer();
+
+        var _loop = function _loop(prop) {
+          var prevRenderer = renderer[prop]; // Replace renderer with func to run extension, but fall back if false
+
+          renderer[prop] = function () {
+            for (var _len3 = arguments.length, args = new Array(_len3), _key3 = 0; _key3 < _len3; _key3++) {
+              args[_key3] = arguments[_key3];
+            }
+
+            var ret = pack.renderer[prop].apply(renderer, args);
+
+            if (ret === false) {
+              ret = prevRenderer.apply(renderer, args);
+            }
+
+            return ret;
+          };
+        };
+
+        for (var prop in pack.renderer) {
+          _loop(prop);
+        }
+
+        opts.renderer = renderer;
+      })();
+    }
+
+    if (pack.tokenizer) {
+      (function () {
+        var tokenizer = marked.defaults.tokenizer || new Tokenizer();
+
+        var _loop2 = function _loop2(prop) {
+          var prevTokenizer = tokenizer[prop]; // Replace tokenizer with func to run extension, but fall back if false
+
+          tokenizer[prop] = function () {
+            for (var _len4 = arguments.length, args = new Array(_len4), _key4 = 0; _key4 < _len4; _key4++) {
+              args[_key4] = arguments[_key4];
+            }
+
+            var ret = pack.tokenizer[prop].apply(tokenizer, args);
+
+            if (ret === false) {
+              ret = prevTokenizer.apply(tokenizer, args);
+            }
+
+            return ret;
+          };
+        };
+
+        for (var prop in pack.tokenizer) {
+          _loop2(prop);
+        }
+
+        opts.tokenizer = tokenizer;
+      })();
+    } // ==-- Parse WalkTokens extensions --== //
+
+
+    if (pack.walkTokens) {
+      var _walkTokens = marked.defaults.walkTokens;
+
+      opts.walkTokens = function (token) {
+        pack.walkTokens.call(this, token);
+
+        if (_walkTokens) {
+          _walkTokens.call(this, token);
+        }
+      };
+    }
+
+    if (hasExtensions) {
+      opts.extensions = extensions;
+    }
+
+    marked.setOptions(opts);
+  });
+};
+/**
+ * Run callback for every token
+ */
+
+
+marked.walkTokens = function (tokens, callback) {
+  var _loop3 = function _loop3() {
+    var token = _step.value;
+    callback.call(marked, token);
+
+    switch (token.type) {
+      case 'table':
+        {
+          for (var _iterator2 = _createForOfIteratorHelperLoose(token.header), _step2; !(_step2 = _iterator2()).done;) {
+            var cell = _step2.value;
+            marked.walkTokens(cell.tokens, callback);
+          }
+
+          for (var _iterator3 = _createForOfIteratorHelperLoose(token.rows), _step3; !(_step3 = _iterator3()).done;) {
+            var row = _step3.value;
+
+            for (var _iterator4 = _createForOfIteratorHelperLoose(row), _step4; !(_step4 = _iterator4()).done;) {
+              var _cell = _step4.value;
+              marked.walkTokens(_cell.tokens, callback);
+            }
+          }
+
+          break;
+        }
+
+      case 'list':
+        {
+          marked.walkTokens(token.items, callback);
+          break;
+        }
+
+      default:
+        {
+          if (marked.defaults.extensions && marked.defaults.extensions.childTokens && marked.defaults.extensions.childTokens[token.type]) {
+            // Walk any extensions
+            marked.defaults.extensions.childTokens[token.type].forEach(function (childTokens) {
+              marked.walkTokens(token[childTokens], callback);
+            });
+          } else if (token.tokens) {
+            marked.walkTokens(token.tokens, callback);
+          }
+        }
+    }
+  };
+
+  for (var _iterator = _createForOfIteratorHelperLoose(tokens), _step; !(_step = _iterator()).done;) {
+    _loop3();
+  }
+};
+/**
+ * Parse Inline
+ * @param {string} src
+ */
+
+
+marked.parseInline = function (src, opt) {
+  // throw error in case of non string input
+  if (typeof src === 'undefined' || src === null) {
+    throw new Error('marked.parseInline(): input parameter is undefined or null');
+  }
+
+  if (typeof src !== 'string') {
+    throw new Error('marked.parseInline(): input parameter is of type ' + Object.prototype.toString.call(src) + ', string expected');
+  }
+
+  opt = merge({}, marked.defaults, opt || {});
+  checkSanitizeDeprecation(opt);
+
+  try {
+    var tokens = Lexer.lexInline(src, opt);
+
+    if (opt.walkTokens) {
+      marked.walkTokens(tokens, opt.walkTokens);
+    }
+
+    return Parser.parseInline(tokens, opt);
+  } catch (e) {
+    e.message += '\nPlease report this to https://github.com/markedjs/marked.';
+
+    if (opt.silent) {
+      return '<p>An error occurred:</p><pre>' + escape(e.message + '', true) + '</pre>';
+    }
+
+    throw e;
+  }
+};
+/**
+ * Expose
+ */
+
+
+marked.Parser = Parser;
+marked.parser = Parser.parse;
+marked.Renderer = Renderer;
+marked.TextRenderer = TextRenderer;
+marked.Lexer = Lexer;
+marked.lexer = Lexer.lex;
+marked.Tokenizer = Tokenizer;
+marked.Slugger = Slugger;
+marked.parse = marked;
+var options = marked.options;
+var setOptions = marked.setOptions;
+var use = marked.use;
+var walkTokens = marked.walkTokens;
+var parseInline = marked.parseInline;
+var parse = marked;
+var parser = Parser.parse;
+var lexer = Lexer.lex;
+
+exports.Lexer = Lexer;
+exports.Parser = Parser;
+exports.Renderer = Renderer;
+exports.Slugger = Slugger;
+exports.TextRenderer = TextRenderer;
+exports.Tokenizer = Tokenizer;
+exports.getDefaults = getDefaults;
+exports.lexer = lexer;
+exports.marked = marked;
+exports.options = options;
+exports.parse = parse;
+exports.parseInline = parseInline;
+exports.parser = parser;
+exports.setOptions = setOptions;
+exports.use = use;
+exports.walkTokens = walkTokens;
 
 
 /***/ }),
@@ -51729,46 +59172,6 @@ module.exports = JSON.parse('[[[0,44],"disallowed_STD3_valid"],[[45,46],"valid"]
 /******/ 	}
 /******/ 	
 /************************************************************************/
-/******/ 	/* webpack/runtime/compat get default export */
-/******/ 	(() => {
-/******/ 		// getDefaultExport function for compatibility with non-harmony modules
-/******/ 		__nccwpck_require__.n = (module) => {
-/******/ 			var getter = module && module.__esModule ?
-/******/ 				() => (module['default']) :
-/******/ 				() => (module);
-/******/ 			__nccwpck_require__.d(getter, { a: getter });
-/******/ 			return getter;
-/******/ 		};
-/******/ 	})();
-/******/ 	
-/******/ 	/* webpack/runtime/define property getters */
-/******/ 	(() => {
-/******/ 		// define getter functions for harmony exports
-/******/ 		__nccwpck_require__.d = (exports, definition) => {
-/******/ 			for(var key in definition) {
-/******/ 				if(__nccwpck_require__.o(definition, key) && !__nccwpck_require__.o(exports, key)) {
-/******/ 					Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
-/******/ 				}
-/******/ 			}
-/******/ 		};
-/******/ 	})();
-/******/ 	
-/******/ 	/* webpack/runtime/hasOwnProperty shorthand */
-/******/ 	(() => {
-/******/ 		__nccwpck_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
-/******/ 	})();
-/******/ 	
-/******/ 	/* webpack/runtime/make namespace object */
-/******/ 	(() => {
-/******/ 		// define __esModule on exports
-/******/ 		__nccwpck_require__.r = (exports) => {
-/******/ 			if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
-/******/ 				Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
-/******/ 			}
-/******/ 			Object.defineProperty(exports, '__esModule', { value: true });
-/******/ 		};
-/******/ 	})();
-/******/ 	
 /******/ 	/* webpack/runtime/node module decorator */
 /******/ 	(() => {
 /******/ 		__nccwpck_require__.nmd = (module) => {
@@ -51783,6119 +59186,12 @@ module.exports = JSON.parse('[[[0,44],"disallowed_STD3_valid"],[[45,46],"valid"]
 /******/ 	if (typeof __nccwpck_require__ !== 'undefined') __nccwpck_require__.ab = __dirname + "/";
 /******/ 	
 /************************************************************************/
-var __webpack_exports__ = {};
-// This entry need to be wrapped in an IIFE because it need to be in strict mode.
-(() => {
-"use strict";
-// ESM COMPAT FLAG
-__nccwpck_require__.r(__webpack_exports__);
-
-// EXTERNAL MODULE: ./node_modules/@actions/core/lib/core.js
-var core = __nccwpck_require__(2186);
-// EXTERNAL MODULE: external "util"
-var external_util_ = __nccwpck_require__(3837);
-// EXTERNAL MODULE: external "fs"
-var external_fs_ = __nccwpck_require__(7147);
-// EXTERNAL MODULE: ./node_modules/nodemailer/lib/addressparser/index.js
-var addressparser = __nccwpck_require__(7382);
-var addressparser_default = /*#__PURE__*/__nccwpck_require__.n(addressparser);
-;// CONCATENATED MODULE: ./node_modules/gitgitgadget/lib/commit-lint.ts
-/*
- * Simple single use class to drive lint tests on commit messages.
- */
-class LintCommit {
-    constructor(patch, options) {
-        this.messages = [];
-        this.maxColumns = 76;
-        // Test for a minimum viable commit message.
-        // - the body of the commit message should not be empty
-        this.commitViable = () => {
-            if (this.lines.length < 3) {
-                this.block("Commit checks stopped - the message is too short");
-            }
-        };
-        // The first line should not be too long
-        this.commitMessageLength = () => {
-            if (this.lines[0].length > this.maxColumns) {
-                this.block(`First line of commit message is too long (> ${this.maxColumns} columns)`);
-            }
-        };
-        // More tests of the commit message structure.
-        // - the first line should be followed by an empty line
-        // other lines should not be too long
-        this.commitTextLength = () => {
-            if (this.lines.length > 2 && this.lines[1].length) {
-                this.block("The first line must be separated from the rest by an "
-                    + "empty line");
-            }
-            for (let i = 1; i < this.lines.length; i++) {
-                if (this.lines[i].length > this.maxColumns &&
-                    // Allow long lines if they cannot be wrapped at some
-                    // white-space character, e.g. URLs. To allow ` [1] <URL>`
-                    // lines, we skip the first 10 characters.
-                    this.lines[i].slice(10).match(/\s/)) {
-                    this.block(`Lines in the body of the commit messages ${""}should be wrapped between 60 and ${this.maxColumns} characters.`);
-                    break;
-                }
-            }
-        };
-        // Verify if the first line starts with a prefix (e.g. tests:), it continues
-        // in lower-case (except for ALL_CAPS as that is likely to be a code
-        // identifier)
-        this.lowerCaseAfterPrefix = () => {
-            const match = this.lines[0].match(/^\S+?:\s*?([A-Z][a-z ])/);
-            if (match) {
-                this.block("Prefixed commit message must be in lower case");
-            }
-        };
-        // Reject commits that appear to require rebasing
-        this.bangPrefix = () => {
-            if (this.lines[0].match(/^(squash|fixup|amend)!/)) {
-                this.block("Rebase needed to squash commit");
-            }
-        };
-        // Verify there is a Signed-off-by: line - DCO check does this
-        // already, but put out a message if it is indented
-        this.signedOffBy = () => {
-            let signedFound = false;
-            this.lines.map((line) => {
-                const match = line.match(/^(\s*)Signed-off-by:\s+(.*)/);
-                if (match) {
-                    signedFound = true;
-                    if (match[1].length) {
-                        this.block(`Leading whitespace in sign off: ${line}`);
-                    }
-                }
-            });
-            if (!signedFound) {
-                this.block("Commit not signed off");
-            }
-        };
-        // Verify the body of the commit message does not consist of a hyperlink,
-        // without any other explanation.
-        // Should all lines be checked ie is it an array of links?
-        // Low hanging fruit: check the first line.
-        // Hyperlink validation is NOT part of the test.
-        this.moreThanAHyperlink = () => {
-            const line = this.lines[2];
-            const match = line.match(/^(\w*)\s*https*:\/\/\S+\s*(\w*)/);
-            if (match) {
-                if (!match[1].length && !match[2].length &&
-                    this.lines.length === 5) {
-                    this.block("A hyperlink requires some explanation");
-                }
-            }
-        };
-        this.blocked = false;
-        this.lines = patch.message.split("\n");
-        this.patch = patch;
-        if (options !== undefined) {
-            if (options.maxColumns !== undefined) {
-                this.maxColumns = options.maxColumns;
-            }
-        }
-    }
-    /**
-     * Linter method to run checks on the commit message.
-     */
-    lint() {
-        const phase1 = [
-            this.commitViable
-        ];
-        const phase2 = [
-            this.commitMessageLength,
-            this.bangPrefix,
-            this.lowerCaseAfterPrefix,
-            this.signedOffBy
-        ];
-        const phase3 = [
-            this.commitTextLength,
-            this.moreThanAHyperlink
-        ];
-        phase1.map((linter) => { linter(); });
-        const phase1Okay = false === this.blocked;
-        phase2.map((linter) => { linter(); });
-        if (phase1Okay) {
-            phase3.map((linter) => { linter(); });
-        }
-        if (this.messages.length) {
-            this.messages.unshift(`\`${this.lines[0]}\``);
-            return { checkFailed: this.blocked,
-                message: `There ${this.messages.length > 1 ?
-                    "are issues" : "is an issue"} in commit ${this.patch.commit}:\n${this.messages.join("\n")}`,
-            };
-        }
-    }
-    addMessage(message) {
-        this.messages.push(message);
-    }
-    block(message) {
-        this.blocked = true;
-        this.addMessage(message);
-    }
-}
-
-// EXTERNAL MODULE: ./node_modules/dugite/build/lib/index.js
-var lib = __nccwpck_require__(9577);
-;// CONCATENATED MODULE: ./node_modules/gitgitgadget/lib/git.ts
-
-const emptyBlobName = "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391";
-const emptyTreeName = "4b825dc642cb6eb9a060e54bf8d69288fbee4904";
-function trimTrailingNewline(str) {
-    return str.replace(/\r?\n$/, "");
-}
-function git(args, options) {
-    const workDir = options && options.workDir || ".";
-    if (options && options.trace) {
-        process.stderr.write(`Called 'git ${args.join(" ")}' in '${workDir}':\n${new Error().stack}\n`);
-    }
-    return new Promise((resolve, reject) => {
-        if (options && options.lineHandler) {
-            const lineHandler = options.lineHandler;
-            if (options.processCallback) {
-                reject(new Error("line handler *and* process callback set"));
-                return;
-            }
-            options.processCallback = (process) => {
-                process.on("exit", (code, signal) => {
-                    if (signal) {
-                        reject(new Error(`Received signal ${signal}`));
-                    }
-                    else if (code) {
-                        reject(new Error(`Received code ${code}`));
-                    }
-                });
-                if (!process.stdout) {
-                    throw new Error(`No stdout for "git ${args.join(" ")}`);
-                }
-                let linePromise;
-                const handleLine = (line) => {
-                    try {
-                        if (!linePromise) {
-                            linePromise = lineHandler(line);
-                        }
-                        else {
-                            linePromise = linePromise.then(() => {
-                                return lineHandler(line);
-                            });
-                        }
-                        linePromise.catch((reason) => {
-                            reject(reason);
-                            process.kill();
-                        });
-                    }
-                    catch (reason) {
-                        reject(reason);
-                        process.kill();
-                        return false;
-                    }
-                    return true;
-                };
-                let buffer = "";
-                process.stdout.on("data", (chunk) => {
-                    buffer += chunk;
-                    for (;;) {
-                        const eol = buffer.indexOf("\n");
-                        if (eol < 0) {
-                            break;
-                        }
-                        if (!handleLine(buffer.substr(0, eol))) {
-                            return;
-                        }
-                        buffer = buffer.substr(eol + 1);
-                    }
-                });
-                process.stdout.on("end", () => {
-                    if (buffer.length > 0) {
-                        handleLine(buffer);
-                    }
-                    if (linePromise) {
-                        linePromise.then(() => { resolve(""); })
-                            .catch((reason) => { reject(reason); });
-                    }
-                    else {
-                        resolve("");
-                    }
-                });
-            };
-        }
-        lib/* GitProcess.exec */.nY.exec(args, workDir, options)
-            .then((result) => {
-            if (result.exitCode) {
-                reject(new Error(`git ${args.join(" ")} failed: ${result.exitCode},\n${result.stderr}`));
-                return;
-            }
-            if (options && options.trace) {
-                process.stderr.write(`Output of 'git ${args.join(" ")}':\nstderr: ${result.stderr}\nstdout: ${result.stdout}\n`);
-            }
-            resolve(!options || options.trimTrailingNewline === false ?
-                result.stdout : trimTrailingNewline(result.stdout));
-        }).catch((reason) => {
-            reject(reason);
-        });
-    });
-}
-/**
- * Call `git rev-parse --verify` to verify an object name.
- *
- * Note that it will *always* return the argument back to the user if it is
- * a hex string of length 40. This is consistent with `rev-parse`. To
- * verify objects by full SHA-1, you have to add `^{blob}` or similar.
- *
- * @param { string } argument the name referring to a Git object
- * @param { string | undefined } workDir
- *    the working directory in which to run `git rev-parse`
- * @returns { string | undefined } the full SHA-1, or undefined
- */
-async function revParse(argument, workDir) {
-    const result = await lib/* GitProcess.exec */.nY.exec(["rev-parse", "--verify", "-q",
-        argument], workDir || ".");
-    return result.exitCode ? undefined : trimTrailingNewline(result.stdout);
-}
-/**
- * Call `git rev-list --count` to count objects in a commit range.
- *
- * @param { string[] } rangeArgs the arguments to pass to `git rev-list`
- * @param { string | undefined } workDir
- *    the working directory in which to run `git rev-parse`
- * @returns number the number of commits in the commit range
- */
-async function revListCount(rangeArgs, workDir = ".") {
-    const gitArgs = ["rev-list", "--count"];
-    if (typeof (rangeArgs) === "string") {
-        gitArgs.push(rangeArgs);
-    }
-    else {
-        gitArgs.push(...rangeArgs);
-    }
-    const result = await lib/* GitProcess.exec */.nY.exec(gitArgs, workDir);
-    if (result.exitCode) {
-        throw new Error(`Could not determine count for ${rangeArgs}: ${result.stderr}`);
-    }
-    return parseInt(result.stdout, 10);
-}
-/**
- * Determine whether a certain commit exists
- *
- * @param {string} commit the name of the commit
- * @param {string} workDir the Git worktree where to look
- * @returns {boolean} whether the commit exists
- */
-async function commitExists(commit, workDir) {
-    return await revParse(`${commit}^{commit}`, workDir) !== undefined;
-}
-async function gitConfig(key, workDir) {
-    const result = await lib/* GitProcess.exec */.nY.exec(["config", key], workDir || ".");
-    if (result.exitCode !== 0) {
-        return undefined;
-    }
-    return trimTrailingNewline(result.stdout);
-}
-async function gitConfigForEach(key, callbackfn, workDir) {
-    const result = await lib/* GitProcess.exec */.nY.exec(["config", "--get-all", key], workDir || ".");
-    result.stdout.split(/\r?\n/).map(callbackfn);
-}
-async function gitCommandExists(command, workDir) {
-    const result = await lib/* GitProcess.exec */.nY.exec([command, "-h"], workDir || ".");
-    return result.exitCode === 129;
-}
-
-// EXTERNAL MODULE: ./node_modules/json-stable-stringify/index.js
-var json_stable_stringify = __nccwpck_require__(6645);
-var json_stable_stringify_default = /*#__PURE__*/__nccwpck_require__.n(json_stable_stringify);
-;// CONCATENATED MODULE: ./node_modules/gitgitgadget/lib/json-util.ts
-
-function fromJSON(input) {
-    return JSON.parse(input);
-}
-function toJSON(input) {
-    return json_stable_stringify_default()(input);
-}
-function toPrettyJSON(input) {
-    return stringify(input, { space: 4 });
-}
-
-;// CONCATENATED MODULE: ./node_modules/gitgitgadget/lib/git-notes.ts
-
-
-class GitNotes {
-    constructor(workDir, notesRef) {
-        this.workDir = workDir;
-        this.notesRef = notesRef || GitNotes.defaultNotesRef;
-    }
-    async get(key) {
-        const json = await this.getString(key);
-        if (json === undefined) {
-            return undefined;
-        }
-        return fromJSON(json);
-    }
-    async getString(key) {
-        const obj = await this.key2obj(key);
-        try {
-            return await this.notes("show", obj);
-        }
-        catch (reason) {
-            return undefined;
-        }
-    }
-    async set(key, value, force) {
-        return await this.setString(key, toJSON(value), force);
-    }
-    async setString(key, value, force) {
-        const obj = await this.key2obj(key);
-        if (obj !== emptyBlobName &&
-            !await revParse(`${obj}^{blob}`, this.workDir)) {
-            try {
-                /*
-                 * Annotate the notes ref's tip itself, just to make sure that
-                 * there is a reachable blob that has `key` as contents.
-                 */
-                await this.notes("add", "-m", key, this.notesRef);
-                // Remove the note to avoid clutter
-                await this.notes("remove", `${this.notesRef}^`);
-            }
-            catch (reason) {
-                /*
-                 * Apparently there is no notes ref yet. Initialize it, by
-                 * annotating the empty blob and immediately removing the note.
-                 */
-                await this.notes("add", "-m", key, emptyBlobName);
-                await this.notes("remove", emptyBlobName);
-            }
-        }
-        if (force) {
-            await this.notes("add", "-f", "-m", value, obj);
-        }
-        else {
-            await this.notes("add", "-m", value, obj);
-        }
-    }
-    async appendCommitNote(commit, note) {
-        return await this.notes("append", "-m", note, commit);
-    }
-    async getCommitNotes(commit) {
-        return await this.notes("show", commit);
-    }
-    async getLastCommitNote(commit) {
-        const notes = await this.getCommitNotes(commit);
-        return notes.replace(/^[^]*\n\n/, "");
-    }
-    async update(url) {
-        if (this.notesRef === "refs/notes/gitgitgadget" ||
-            this.notesRef === "refs/notes/commit-to-mail" ||
-            this.notesRef === "refs/notes/mail-to-commit") {
-            await git(["fetch", url,
-                `+${this.notesRef}:${this.notesRef}`], { workDir: this.workDir });
-        }
-        else {
-            throw new Error(`Don't know how to update ${this.notesRef}`);
-        }
-    }
-    async key2obj(key) {
-        if (!key) {
-            return emptyBlobName;
-        }
-        return await git(["hash-object", "--stdin"], {
-            stdin: `${key}\n`,
-            workDir: this.workDir,
-        });
-    }
-    async notes(...args) {
-        return await git(["notes", `--ref=${this.notesRef}`, ...args], {
-            workDir: this.workDir,
-        });
-    }
-}
-GitNotes.defaultNotesRef = "refs/notes/gitgitgadget";
-
-;// CONCATENATED MODULE: ./node_modules/gitgitgadget/lib/fs-util.ts
-
-
-const stat = external_util_.promisify(external_fs_.stat);
-/**
- * Determine whether a given path refers to an existing directory.
- *
- * @param {string} path the path to the directory
- * @returns {boolean} whether the specified path points to an existing directory
- */
-async function isDirectory(path) {
-    try {
-        if ((await stat(path)).isDirectory()) {
-            return true;
-        }
-    }
-    catch (reason) {
-        /* it's okay */
-    }
-    return false;
-}
-/**
- * Determine whether a given path refers to an existing file.
- *
- * @param {string} path the path to the file
- * @returns {boolean} whether the specified path points to an existing file
- */
-async function isFile(path) {
-    try {
-        if ((await stat(path)).isFile()) {
-            return true;
-        }
-    }
-    catch (reason) {
-        /* it's okay */
-    }
-    return false;
-}
-
-// EXTERNAL MODULE: ./node_modules/nodemailer/lib/mime-funcs/index.js
-var mime_funcs = __nccwpck_require__(994);
-var mime_funcs_default = /*#__PURE__*/__nccwpck_require__.n(mime_funcs);
-// EXTERNAL MODULE: ./node_modules/html-to-text/index.js
-var html_to_text = __nccwpck_require__(7015);
-;// CONCATENATED MODULE: ./node_modules/marked/lib/marked.esm.js
-/**
- * marked - a markdown parser
- * Copyright (c) 2011-2022, Christopher Jeffrey. (MIT Licensed)
- * https://github.com/markedjs/marked
- */
-
-/**
- * DO NOT EDIT THIS FILE
- * The code in this file is generated from files in ./src/
- */
-
-function getDefaults() {
-  return {
-    baseUrl: null,
-    breaks: false,
-    extensions: null,
-    gfm: true,
-    headerIds: true,
-    headerPrefix: '',
-    highlight: null,
-    langPrefix: 'language-',
-    mangle: true,
-    pedantic: false,
-    renderer: null,
-    sanitize: false,
-    sanitizer: null,
-    silent: false,
-    smartLists: false,
-    smartypants: false,
-    tokenizer: null,
-    walkTokens: null,
-    xhtml: false
-  };
-}
-
-let defaults = getDefaults();
-
-function changeDefaults(newDefaults) {
-  defaults = newDefaults;
-}
-
-/**
- * Helpers
- */
-const escapeTest = /[&<>"']/;
-const escapeReplace = /[&<>"']/g;
-const escapeTestNoEncode = /[<>"']|&(?!#?\w+;)/;
-const escapeReplaceNoEncode = /[<>"']|&(?!#?\w+;)/g;
-const escapeReplacements = {
-  '&': '&amp;',
-  '<': '&lt;',
-  '>': '&gt;',
-  '"': '&quot;',
-  "'": '&#39;'
-};
-const getEscapeReplacement = (ch) => escapeReplacements[ch];
-function marked_esm_escape(html, encode) {
-  if (encode) {
-    if (escapeTest.test(html)) {
-      return html.replace(escapeReplace, getEscapeReplacement);
-    }
-  } else {
-    if (escapeTestNoEncode.test(html)) {
-      return html.replace(escapeReplaceNoEncode, getEscapeReplacement);
-    }
-  }
-
-  return html;
-}
-
-const unescapeTest = /&(#(?:\d+)|(?:#x[0-9A-Fa-f]+)|(?:\w+));?/ig;
-
-/**
- * @param {string} html
- */
-function marked_esm_unescape(html) {
-  // explicitly match decimal, hex, and named HTML entities
-  return html.replace(unescapeTest, (_, n) => {
-    n = n.toLowerCase();
-    if (n === 'colon') return ':';
-    if (n.charAt(0) === '#') {
-      return n.charAt(1) === 'x'
-        ? String.fromCharCode(parseInt(n.substring(2), 16))
-        : String.fromCharCode(+n.substring(1));
-    }
-    return '';
-  });
-}
-
-const caret = /(^|[^\[])\^/g;
-
-/**
- * @param {string | RegExp} regex
- * @param {string} opt
- */
-function edit(regex, opt) {
-  regex = typeof regex === 'string' ? regex : regex.source;
-  opt = opt || '';
-  const obj = {
-    replace: (name, val) => {
-      val = val.source || val;
-      val = val.replace(caret, '$1');
-      regex = regex.replace(name, val);
-      return obj;
-    },
-    getRegex: () => {
-      return new RegExp(regex, opt);
-    }
-  };
-  return obj;
-}
-
-const nonWordAndColonTest = /[^\w:]/g;
-const originIndependentUrl = /^$|^[a-z][a-z0-9+.-]*:|^[?#]/i;
-
-/**
- * @param {boolean} sanitize
- * @param {string} base
- * @param {string} href
- */
-function cleanUrl(sanitize, base, href) {
-  if (sanitize) {
-    let prot;
-    try {
-      prot = decodeURIComponent(marked_esm_unescape(href))
-        .replace(nonWordAndColonTest, '')
-        .toLowerCase();
-    } catch (e) {
-      return null;
-    }
-    if (prot.indexOf('javascript:') === 0 || prot.indexOf('vbscript:') === 0 || prot.indexOf('data:') === 0) {
-      return null;
-    }
-  }
-  if (base && !originIndependentUrl.test(href)) {
-    href = resolveUrl(base, href);
-  }
-  try {
-    href = encodeURI(href).replace(/%25/g, '%');
-  } catch (e) {
-    return null;
-  }
-  return href;
-}
-
-const baseUrls = {};
-const justDomain = /^[^:]+:\/*[^/]*$/;
-const protocol = /^([^:]+:)[\s\S]*$/;
-const domain = /^([^:]+:\/*[^/]*)[\s\S]*$/;
-
-/**
- * @param {string} base
- * @param {string} href
- */
-function resolveUrl(base, href) {
-  if (!baseUrls[' ' + base]) {
-    // we can ignore everything in base after the last slash of its path component,
-    // but we might need to add _that_
-    // https://tools.ietf.org/html/rfc3986#section-3
-    if (justDomain.test(base)) {
-      baseUrls[' ' + base] = base + '/';
-    } else {
-      baseUrls[' ' + base] = rtrim(base, '/', true);
-    }
-  }
-  base = baseUrls[' ' + base];
-  const relativeBase = base.indexOf(':') === -1;
-
-  if (href.substring(0, 2) === '//') {
-    if (relativeBase) {
-      return href;
-    }
-    return base.replace(protocol, '$1') + href;
-  } else if (href.charAt(0) === '/') {
-    if (relativeBase) {
-      return href;
-    }
-    return base.replace(domain, '$1') + href;
-  } else {
-    return base + href;
-  }
-}
-
-const noopTest = { exec: function noopTest() {} };
-
-function merge(obj) {
-  let i = 1,
-    target,
-    key;
-
-  for (; i < arguments.length; i++) {
-    target = arguments[i];
-    for (key in target) {
-      if (Object.prototype.hasOwnProperty.call(target, key)) {
-        obj[key] = target[key];
-      }
-    }
-  }
-
-  return obj;
-}
-
-function splitCells(tableRow, count) {
-  // ensure that every cell-delimiting pipe has a space
-  // before it to distinguish it from an escaped pipe
-  const row = tableRow.replace(/\|/g, (match, offset, str) => {
-      let escaped = false,
-        curr = offset;
-      while (--curr >= 0 && str[curr] === '\\') escaped = !escaped;
-      if (escaped) {
-        // odd number of slashes means | is escaped
-        // so we leave it alone
-        return '|';
-      } else {
-        // add space before unescaped |
-        return ' |';
-      }
-    }),
-    cells = row.split(/ \|/);
-  let i = 0;
-
-  // First/last cell in a row cannot be empty if it has no leading/trailing pipe
-  if (!cells[0].trim()) { cells.shift(); }
-  if (cells.length > 0 && !cells[cells.length - 1].trim()) { cells.pop(); }
-
-  if (cells.length > count) {
-    cells.splice(count);
-  } else {
-    while (cells.length < count) cells.push('');
-  }
-
-  for (; i < cells.length; i++) {
-    // leading or trailing whitespace is ignored per the gfm spec
-    cells[i] = cells[i].trim().replace(/\\\|/g, '|');
-  }
-  return cells;
-}
-
-/**
- * Remove trailing 'c's. Equivalent to str.replace(/c*$/, '').
- * /c*$/ is vulnerable to REDOS.
- *
- * @param {string} str
- * @param {string} c
- * @param {boolean} invert Remove suffix of non-c chars instead. Default falsey.
- */
-function rtrim(str, c, invert) {
-  const l = str.length;
-  if (l === 0) {
-    return '';
-  }
-
-  // Length of suffix matching the invert condition.
-  let suffLen = 0;
-
-  // Step left until we fail to match the invert condition.
-  while (suffLen < l) {
-    const currChar = str.charAt(l - suffLen - 1);
-    if (currChar === c && !invert) {
-      suffLen++;
-    } else if (currChar !== c && invert) {
-      suffLen++;
-    } else {
-      break;
-    }
-  }
-
-  return str.slice(0, l - suffLen);
-}
-
-function findClosingBracket(str, b) {
-  if (str.indexOf(b[1]) === -1) {
-    return -1;
-  }
-  const l = str.length;
-  let level = 0,
-    i = 0;
-  for (; i < l; i++) {
-    if (str[i] === '\\') {
-      i++;
-    } else if (str[i] === b[0]) {
-      level++;
-    } else if (str[i] === b[1]) {
-      level--;
-      if (level < 0) {
-        return i;
-      }
-    }
-  }
-  return -1;
-}
-
-function checkSanitizeDeprecation(opt) {
-  if (opt && opt.sanitize && !opt.silent) {
-    console.warn('marked(): sanitize and sanitizer parameters are deprecated since version 0.7.0, should not be used and will be removed in the future. Read more here: https://marked.js.org/#/USING_ADVANCED.md#options');
-  }
-}
-
-// copied from https://stackoverflow.com/a/5450113/806777
-/**
- * @param {string} pattern
- * @param {number} count
- */
-function repeatString(pattern, count) {
-  if (count < 1) {
-    return '';
-  }
-  let result = '';
-  while (count > 1) {
-    if (count & 1) {
-      result += pattern;
-    }
-    count >>= 1;
-    pattern += pattern;
-  }
-  return result + pattern;
-}
-
-function outputLink(cap, link, raw, lexer) {
-  const href = link.href;
-  const title = link.title ? marked_esm_escape(link.title) : null;
-  const text = cap[1].replace(/\\([\[\]])/g, '$1');
-
-  if (cap[0].charAt(0) !== '!') {
-    lexer.state.inLink = true;
-    const token = {
-      type: 'link',
-      raw,
-      href,
-      title,
-      text,
-      tokens: lexer.inlineTokens(text, [])
-    };
-    lexer.state.inLink = false;
-    return token;
-  }
-  return {
-    type: 'image',
-    raw,
-    href,
-    title,
-    text: marked_esm_escape(text)
-  };
-}
-
-function indentCodeCompensation(raw, text) {
-  const matchIndentToCode = raw.match(/^(\s+)(?:```)/);
-
-  if (matchIndentToCode === null) {
-    return text;
-  }
-
-  const indentToCode = matchIndentToCode[1];
-
-  return text
-    .split('\n')
-    .map(node => {
-      const matchIndentInNode = node.match(/^\s+/);
-      if (matchIndentInNode === null) {
-        return node;
-      }
-
-      const [indentInNode] = matchIndentInNode;
-
-      if (indentInNode.length >= indentToCode.length) {
-        return node.slice(indentToCode.length);
-      }
-
-      return node;
-    })
-    .join('\n');
-}
-
-/**
- * Tokenizer
- */
-class Tokenizer {
-  constructor(options) {
-    this.options = options || defaults;
-  }
-
-  space(src) {
-    const cap = this.rules.block.newline.exec(src);
-    if (cap && cap[0].length > 0) {
-      return {
-        type: 'space',
-        raw: cap[0]
-      };
-    }
-  }
-
-  code(src) {
-    const cap = this.rules.block.code.exec(src);
-    if (cap) {
-      const text = cap[0].replace(/^ {1,4}/gm, '');
-      return {
-        type: 'code',
-        raw: cap[0],
-        codeBlockStyle: 'indented',
-        text: !this.options.pedantic
-          ? rtrim(text, '\n')
-          : text
-      };
-    }
-  }
-
-  fences(src) {
-    const cap = this.rules.block.fences.exec(src);
-    if (cap) {
-      const raw = cap[0];
-      const text = indentCodeCompensation(raw, cap[3] || '');
-
-      return {
-        type: 'code',
-        raw,
-        lang: cap[2] ? cap[2].trim() : cap[2],
-        text
-      };
-    }
-  }
-
-  heading(src) {
-    const cap = this.rules.block.heading.exec(src);
-    if (cap) {
-      let text = cap[2].trim();
-
-      // remove trailing #s
-      if (/#$/.test(text)) {
-        const trimmed = rtrim(text, '#');
-        if (this.options.pedantic) {
-          text = trimmed.trim();
-        } else if (!trimmed || / $/.test(trimmed)) {
-          // CommonMark requires space before trailing #s
-          text = trimmed.trim();
-        }
-      }
-
-      const token = {
-        type: 'heading',
-        raw: cap[0],
-        depth: cap[1].length,
-        text,
-        tokens: []
-      };
-      this.lexer.inline(token.text, token.tokens);
-      return token;
-    }
-  }
-
-  hr(src) {
-    const cap = this.rules.block.hr.exec(src);
-    if (cap) {
-      return {
-        type: 'hr',
-        raw: cap[0]
-      };
-    }
-  }
-
-  blockquote(src) {
-    const cap = this.rules.block.blockquote.exec(src);
-    if (cap) {
-      const text = cap[0].replace(/^ *>[ \t]?/gm, '');
-
-      return {
-        type: 'blockquote',
-        raw: cap[0],
-        tokens: this.lexer.blockTokens(text, []),
-        text
-      };
-    }
-  }
-
-  list(src) {
-    let cap = this.rules.block.list.exec(src);
-    if (cap) {
-      let raw, istask, ischecked, indent, i, blankLine, endsWithBlankLine,
-        line, nextLine, rawLine, itemContents, endEarly;
-
-      let bull = cap[1].trim();
-      const isordered = bull.length > 1;
-
-      const list = {
-        type: 'list',
-        raw: '',
-        ordered: isordered,
-        start: isordered ? +bull.slice(0, -1) : '',
-        loose: false,
-        items: []
-      };
-
-      bull = isordered ? `\\d{1,9}\\${bull.slice(-1)}` : `\\${bull}`;
-
-      if (this.options.pedantic) {
-        bull = isordered ? bull : '[*+-]';
-      }
-
-      // Get next list item
-      const itemRegex = new RegExp(`^( {0,3}${bull})((?:[\t ][^\\n]*)?(?:\\n|$))`);
-
-      // Check if current bullet point can start a new List Item
-      while (src) {
-        endEarly = false;
-        if (!(cap = itemRegex.exec(src))) {
-          break;
-        }
-
-        if (this.rules.block.hr.test(src)) { // End list if bullet was actually HR (possibly move into itemRegex?)
-          break;
-        }
-
-        raw = cap[0];
-        src = src.substring(raw.length);
-
-        line = cap[2].split('\n', 1)[0];
-        nextLine = src.split('\n', 1)[0];
-
-        if (this.options.pedantic) {
-          indent = 2;
-          itemContents = line.trimLeft();
-        } else {
-          indent = cap[2].search(/[^ ]/); // Find first non-space char
-          indent = indent > 4 ? 1 : indent; // Treat indented code blocks (> 4 spaces) as having only 1 indent
-          itemContents = line.slice(indent);
-          indent += cap[1].length;
-        }
-
-        blankLine = false;
-
-        if (!line && /^ *$/.test(nextLine)) { // Items begin with at most one blank line
-          raw += nextLine + '\n';
-          src = src.substring(nextLine.length + 1);
-          endEarly = true;
-        }
-
-        if (!endEarly) {
-          const nextBulletRegex = new RegExp(`^ {0,${Math.min(3, indent - 1)}}(?:[*+-]|\\d{1,9}[.)])((?: [^\\n]*)?(?:\\n|$))`);
-          const hrRegex = new RegExp(`^ {0,${Math.min(3, indent - 1)}}((?:- *){3,}|(?:_ *){3,}|(?:\\* *){3,})(?:\\n+|$)`);
-
-          // Check if following lines should be included in List Item
-          while (src) {
-            rawLine = src.split('\n', 1)[0];
-            line = rawLine;
-
-            // Re-align to follow commonmark nesting rules
-            if (this.options.pedantic) {
-              line = line.replace(/^ {1,4}(?=( {4})*[^ ])/g, '  ');
-            }
-
-            // End list item if found start of new bullet
-            if (nextBulletRegex.test(line)) {
-              break;
-            }
-
-            // Horizontal rule found
-            if (hrRegex.test(src)) {
-              break;
-            }
-
-            if (line.search(/[^ ]/) >= indent || !line.trim()) { // Dedent if possible
-              itemContents += '\n' + line.slice(indent);
-            } else if (!blankLine) { // Until blank line, item doesn't need indentation
-              itemContents += '\n' + line;
-            } else { // Otherwise, improper indentation ends this item
-              break;
-            }
-
-            if (!blankLine && !line.trim()) { // Check if current line is blank
-              blankLine = true;
-            }
-
-            raw += rawLine + '\n';
-            src = src.substring(rawLine.length + 1);
-          }
-        }
-
-        if (!list.loose) {
-          // If the previous item ended with a blank line, the list is loose
-          if (endsWithBlankLine) {
-            list.loose = true;
-          } else if (/\n *\n *$/.test(raw)) {
-            endsWithBlankLine = true;
-          }
-        }
-
-        // Check for task list items
-        if (this.options.gfm) {
-          istask = /^\[[ xX]\] /.exec(itemContents);
-          if (istask) {
-            ischecked = istask[0] !== '[ ] ';
-            itemContents = itemContents.replace(/^\[[ xX]\] +/, '');
-          }
-        }
-
-        list.items.push({
-          type: 'list_item',
-          raw,
-          task: !!istask,
-          checked: ischecked,
-          loose: false,
-          text: itemContents
-        });
-
-        list.raw += raw;
-      }
-
-      // Do not consume newlines at end of final item. Alternatively, make itemRegex *start* with any newlines to simplify/speed up endsWithBlankLine logic
-      list.items[list.items.length - 1].raw = raw.trimRight();
-      list.items[list.items.length - 1].text = itemContents.trimRight();
-      list.raw = list.raw.trimRight();
-
-      const l = list.items.length;
-
-      // Item child tokens handled here at end because we needed to have the final item to trim it first
-      for (i = 0; i < l; i++) {
-        this.lexer.state.top = false;
-        list.items[i].tokens = this.lexer.blockTokens(list.items[i].text, []);
-        const spacers = list.items[i].tokens.filter(t => t.type === 'space');
-        const hasMultipleLineBreaks = spacers.every(t => {
-          const chars = t.raw.split('');
-          let lineBreaks = 0;
-          for (const char of chars) {
-            if (char === '\n') {
-              lineBreaks += 1;
-            }
-            if (lineBreaks > 1) {
-              return true;
-            }
-          }
-
-          return false;
-        });
-
-        if (!list.loose && spacers.length && hasMultipleLineBreaks) {
-          // Having a single line break doesn't mean a list is loose. A single line break is terminating the last list item
-          list.loose = true;
-          list.items[i].loose = true;
-        }
-      }
-
-      return list;
-    }
-  }
-
-  html(src) {
-    const cap = this.rules.block.html.exec(src);
-    if (cap) {
-      const token = {
-        type: 'html',
-        raw: cap[0],
-        pre: !this.options.sanitizer
-          && (cap[1] === 'pre' || cap[1] === 'script' || cap[1] === 'style'),
-        text: cap[0]
-      };
-      if (this.options.sanitize) {
-        token.type = 'paragraph';
-        token.text = this.options.sanitizer ? this.options.sanitizer(cap[0]) : marked_esm_escape(cap[0]);
-        token.tokens = [];
-        this.lexer.inline(token.text, token.tokens);
-      }
-      return token;
-    }
-  }
-
-  def(src) {
-    const cap = this.rules.block.def.exec(src);
-    if (cap) {
-      if (cap[3]) cap[3] = cap[3].substring(1, cap[3].length - 1);
-      const tag = cap[1].toLowerCase().replace(/\s+/g, ' ');
-      return {
-        type: 'def',
-        tag,
-        raw: cap[0],
-        href: cap[2],
-        title: cap[3]
-      };
-    }
-  }
-
-  table(src) {
-    const cap = this.rules.block.table.exec(src);
-    if (cap) {
-      const item = {
-        type: 'table',
-        header: splitCells(cap[1]).map(c => { return { text: c }; }),
-        align: cap[2].replace(/^ *|\| *$/g, '').split(/ *\| */),
-        rows: cap[3] && cap[3].trim() ? cap[3].replace(/\n[ \t]*$/, '').split('\n') : []
-      };
-
-      if (item.header.length === item.align.length) {
-        item.raw = cap[0];
-
-        let l = item.align.length;
-        let i, j, k, row;
-        for (i = 0; i < l; i++) {
-          if (/^ *-+: *$/.test(item.align[i])) {
-            item.align[i] = 'right';
-          } else if (/^ *:-+: *$/.test(item.align[i])) {
-            item.align[i] = 'center';
-          } else if (/^ *:-+ *$/.test(item.align[i])) {
-            item.align[i] = 'left';
-          } else {
-            item.align[i] = null;
-          }
-        }
-
-        l = item.rows.length;
-        for (i = 0; i < l; i++) {
-          item.rows[i] = splitCells(item.rows[i], item.header.length).map(c => { return { text: c }; });
-        }
-
-        // parse child tokens inside headers and cells
-
-        // header child tokens
-        l = item.header.length;
-        for (j = 0; j < l; j++) {
-          item.header[j].tokens = [];
-          this.lexer.inline(item.header[j].text, item.header[j].tokens);
-        }
-
-        // cell child tokens
-        l = item.rows.length;
-        for (j = 0; j < l; j++) {
-          row = item.rows[j];
-          for (k = 0; k < row.length; k++) {
-            row[k].tokens = [];
-            this.lexer.inline(row[k].text, row[k].tokens);
-          }
-        }
-
-        return item;
-      }
-    }
-  }
-
-  lheading(src) {
-    const cap = this.rules.block.lheading.exec(src);
-    if (cap) {
-      const token = {
-        type: 'heading',
-        raw: cap[0],
-        depth: cap[2].charAt(0) === '=' ? 1 : 2,
-        text: cap[1],
-        tokens: []
-      };
-      this.lexer.inline(token.text, token.tokens);
-      return token;
-    }
-  }
-
-  paragraph(src) {
-    const cap = this.rules.block.paragraph.exec(src);
-    if (cap) {
-      const token = {
-        type: 'paragraph',
-        raw: cap[0],
-        text: cap[1].charAt(cap[1].length - 1) === '\n'
-          ? cap[1].slice(0, -1)
-          : cap[1],
-        tokens: []
-      };
-      this.lexer.inline(token.text, token.tokens);
-      return token;
-    }
-  }
-
-  text(src) {
-    const cap = this.rules.block.text.exec(src);
-    if (cap) {
-      const token = {
-        type: 'text',
-        raw: cap[0],
-        text: cap[0],
-        tokens: []
-      };
-      this.lexer.inline(token.text, token.tokens);
-      return token;
-    }
-  }
-
-  escape(src) {
-    const cap = this.rules.inline.escape.exec(src);
-    if (cap) {
-      return {
-        type: 'escape',
-        raw: cap[0],
-        text: marked_esm_escape(cap[1])
-      };
-    }
-  }
-
-  tag(src) {
-    const cap = this.rules.inline.tag.exec(src);
-    if (cap) {
-      if (!this.lexer.state.inLink && /^<a /i.test(cap[0])) {
-        this.lexer.state.inLink = true;
-      } else if (this.lexer.state.inLink && /^<\/a>/i.test(cap[0])) {
-        this.lexer.state.inLink = false;
-      }
-      if (!this.lexer.state.inRawBlock && /^<(pre|code|kbd|script)(\s|>)/i.test(cap[0])) {
-        this.lexer.state.inRawBlock = true;
-      } else if (this.lexer.state.inRawBlock && /^<\/(pre|code|kbd|script)(\s|>)/i.test(cap[0])) {
-        this.lexer.state.inRawBlock = false;
-      }
-
-      return {
-        type: this.options.sanitize
-          ? 'text'
-          : 'html',
-        raw: cap[0],
-        inLink: this.lexer.state.inLink,
-        inRawBlock: this.lexer.state.inRawBlock,
-        text: this.options.sanitize
-          ? (this.options.sanitizer
-            ? this.options.sanitizer(cap[0])
-            : marked_esm_escape(cap[0]))
-          : cap[0]
-      };
-    }
-  }
-
-  link(src) {
-    const cap = this.rules.inline.link.exec(src);
-    if (cap) {
-      const trimmedUrl = cap[2].trim();
-      if (!this.options.pedantic && /^</.test(trimmedUrl)) {
-        // commonmark requires matching angle brackets
-        if (!(/>$/.test(trimmedUrl))) {
-          return;
-        }
-
-        // ending angle bracket cannot be escaped
-        const rtrimSlash = rtrim(trimmedUrl.slice(0, -1), '\\');
-        if ((trimmedUrl.length - rtrimSlash.length) % 2 === 0) {
-          return;
-        }
-      } else {
-        // find closing parenthesis
-        const lastParenIndex = findClosingBracket(cap[2], '()');
-        if (lastParenIndex > -1) {
-          const start = cap[0].indexOf('!') === 0 ? 5 : 4;
-          const linkLen = start + cap[1].length + lastParenIndex;
-          cap[2] = cap[2].substring(0, lastParenIndex);
-          cap[0] = cap[0].substring(0, linkLen).trim();
-          cap[3] = '';
-        }
-      }
-      let href = cap[2];
-      let title = '';
-      if (this.options.pedantic) {
-        // split pedantic href and title
-        const link = /^([^'"]*[^\s])\s+(['"])(.*)\2/.exec(href);
-
-        if (link) {
-          href = link[1];
-          title = link[3];
-        }
-      } else {
-        title = cap[3] ? cap[3].slice(1, -1) : '';
-      }
-
-      href = href.trim();
-      if (/^</.test(href)) {
-        if (this.options.pedantic && !(/>$/.test(trimmedUrl))) {
-          // pedantic allows starting angle bracket without ending angle bracket
-          href = href.slice(1);
-        } else {
-          href = href.slice(1, -1);
-        }
-      }
-      return outputLink(cap, {
-        href: href ? href.replace(this.rules.inline._escapes, '$1') : href,
-        title: title ? title.replace(this.rules.inline._escapes, '$1') : title
-      }, cap[0], this.lexer);
-    }
-  }
-
-  reflink(src, links) {
-    let cap;
-    if ((cap = this.rules.inline.reflink.exec(src))
-        || (cap = this.rules.inline.nolink.exec(src))) {
-      let link = (cap[2] || cap[1]).replace(/\s+/g, ' ');
-      link = links[link.toLowerCase()];
-      if (!link || !link.href) {
-        const text = cap[0].charAt(0);
-        return {
-          type: 'text',
-          raw: text,
-          text
-        };
-      }
-      return outputLink(cap, link, cap[0], this.lexer);
-    }
-  }
-
-  emStrong(src, maskedSrc, prevChar = '') {
-    let match = this.rules.inline.emStrong.lDelim.exec(src);
-    if (!match) return;
-
-    // _ can't be between two alphanumerics. \p{L}\p{N} includes non-english alphabet/numbers as well
-    if (match[3] && prevChar.match(/[\p{L}\p{N}]/u)) return;
-
-    const nextChar = match[1] || match[2] || '';
-
-    if (!nextChar || (nextChar && (prevChar === '' || this.rules.inline.punctuation.exec(prevChar)))) {
-      const lLength = match[0].length - 1;
-      let rDelim, rLength, delimTotal = lLength, midDelimTotal = 0;
-
-      const endReg = match[0][0] === '*' ? this.rules.inline.emStrong.rDelimAst : this.rules.inline.emStrong.rDelimUnd;
-      endReg.lastIndex = 0;
-
-      // Clip maskedSrc to same section of string as src (move to lexer?)
-      maskedSrc = maskedSrc.slice(-1 * src.length + lLength);
-
-      while ((match = endReg.exec(maskedSrc)) != null) {
-        rDelim = match[1] || match[2] || match[3] || match[4] || match[5] || match[6];
-
-        if (!rDelim) continue; // skip single * in __abc*abc__
-
-        rLength = rDelim.length;
-
-        if (match[3] || match[4]) { // found another Left Delim
-          delimTotal += rLength;
-          continue;
-        } else if (match[5] || match[6]) { // either Left or Right Delim
-          if (lLength % 3 && !((lLength + rLength) % 3)) {
-            midDelimTotal += rLength;
-            continue; // CommonMark Emphasis Rules 9-10
-          }
-        }
-
-        delimTotal -= rLength;
-
-        if (delimTotal > 0) continue; // Haven't found enough closing delimiters
-
-        // Remove extra characters. *a*** -> *a*
-        rLength = Math.min(rLength, rLength + delimTotal + midDelimTotal);
-
-        // Create `em` if smallest delimiter has odd char count. *a***
-        if (Math.min(lLength, rLength) % 2) {
-          const text = src.slice(1, lLength + match.index + rLength);
-          return {
-            type: 'em',
-            raw: src.slice(0, lLength + match.index + rLength + 1),
-            text,
-            tokens: this.lexer.inlineTokens(text, [])
-          };
-        }
-
-        // Create 'strong' if smallest delimiter has even char count. **a***
-        const text = src.slice(2, lLength + match.index + rLength - 1);
-        return {
-          type: 'strong',
-          raw: src.slice(0, lLength + match.index + rLength + 1),
-          text,
-          tokens: this.lexer.inlineTokens(text, [])
-        };
-      }
-    }
-  }
-
-  codespan(src) {
-    const cap = this.rules.inline.code.exec(src);
-    if (cap) {
-      let text = cap[2].replace(/\n/g, ' ');
-      const hasNonSpaceChars = /[^ ]/.test(text);
-      const hasSpaceCharsOnBothEnds = /^ /.test(text) && / $/.test(text);
-      if (hasNonSpaceChars && hasSpaceCharsOnBothEnds) {
-        text = text.substring(1, text.length - 1);
-      }
-      text = marked_esm_escape(text, true);
-      return {
-        type: 'codespan',
-        raw: cap[0],
-        text
-      };
-    }
-  }
-
-  br(src) {
-    const cap = this.rules.inline.br.exec(src);
-    if (cap) {
-      return {
-        type: 'br',
-        raw: cap[0]
-      };
-    }
-  }
-
-  del(src) {
-    const cap = this.rules.inline.del.exec(src);
-    if (cap) {
-      return {
-        type: 'del',
-        raw: cap[0],
-        text: cap[2],
-        tokens: this.lexer.inlineTokens(cap[2], [])
-      };
-    }
-  }
-
-  autolink(src, mangle) {
-    const cap = this.rules.inline.autolink.exec(src);
-    if (cap) {
-      let text, href;
-      if (cap[2] === '@') {
-        text = marked_esm_escape(this.options.mangle ? mangle(cap[1]) : cap[1]);
-        href = 'mailto:' + text;
-      } else {
-        text = marked_esm_escape(cap[1]);
-        href = text;
-      }
-
-      return {
-        type: 'link',
-        raw: cap[0],
-        text,
-        href,
-        tokens: [
-          {
-            type: 'text',
-            raw: text,
-            text
-          }
-        ]
-      };
-    }
-  }
-
-  url(src, mangle) {
-    let cap;
-    if (cap = this.rules.inline.url.exec(src)) {
-      let text, href;
-      if (cap[2] === '@') {
-        text = marked_esm_escape(this.options.mangle ? mangle(cap[0]) : cap[0]);
-        href = 'mailto:' + text;
-      } else {
-        // do extended autolink path validation
-        let prevCapZero;
-        do {
-          prevCapZero = cap[0];
-          cap[0] = this.rules.inline._backpedal.exec(cap[0])[0];
-        } while (prevCapZero !== cap[0]);
-        text = marked_esm_escape(cap[0]);
-        if (cap[1] === 'www.') {
-          href = 'http://' + text;
-        } else {
-          href = text;
-        }
-      }
-      return {
-        type: 'link',
-        raw: cap[0],
-        text,
-        href,
-        tokens: [
-          {
-            type: 'text',
-            raw: text,
-            text
-          }
-        ]
-      };
-    }
-  }
-
-  inlineText(src, smartypants) {
-    const cap = this.rules.inline.text.exec(src);
-    if (cap) {
-      let text;
-      if (this.lexer.state.inRawBlock) {
-        text = this.options.sanitize ? (this.options.sanitizer ? this.options.sanitizer(cap[0]) : marked_esm_escape(cap[0])) : cap[0];
-      } else {
-        text = marked_esm_escape(this.options.smartypants ? smartypants(cap[0]) : cap[0]);
-      }
-      return {
-        type: 'text',
-        raw: cap[0],
-        text
-      };
-    }
-  }
-}
-
-/**
- * Block-Level Grammar
- */
-const block = {
-  newline: /^(?: *(?:\n|$))+/,
-  code: /^( {4}[^\n]+(?:\n(?: *(?:\n|$))*)?)+/,
-  fences: /^ {0,3}(`{3,}(?=[^`\n]*\n)|~{3,})([^\n]*)\n(?:|([\s\S]*?)\n)(?: {0,3}\1[~`]* *(?=\n|$)|$)/,
-  hr: /^ {0,3}((?:-[\t ]*){3,}|(?:_[ \t]*){3,}|(?:\*[ \t]*){3,})(?:\n+|$)/,
-  heading: /^ {0,3}(#{1,6})(?=\s|$)(.*)(?:\n+|$)/,
-  blockquote: /^( {0,3}> ?(paragraph|[^\n]*)(?:\n|$))+/,
-  list: /^( {0,3}bull)([ \t][^\n]+?)?(?:\n|$)/,
-  html: '^ {0,3}(?:' // optional indentation
-    + '<(script|pre|style|textarea)[\\s>][\\s\\S]*?(?:</\\1>[^\\n]*\\n+|$)' // (1)
-    + '|comment[^\\n]*(\\n+|$)' // (2)
-    + '|<\\?[\\s\\S]*?(?:\\?>\\n*|$)' // (3)
-    + '|<![A-Z][\\s\\S]*?(?:>\\n*|$)' // (4)
-    + '|<!\\[CDATA\\[[\\s\\S]*?(?:\\]\\]>\\n*|$)' // (5)
-    + '|</?(tag)(?: +|\\n|/?>)[\\s\\S]*?(?:(?:\\n *)+\\n|$)' // (6)
-    + '|<(?!script|pre|style|textarea)([a-z][\\w-]*)(?:attribute)*? */?>(?=[ \\t]*(?:\\n|$))[\\s\\S]*?(?:(?:\\n *)+\\n|$)' // (7) open tag
-    + '|</(?!script|pre|style|textarea)[a-z][\\w-]*\\s*>(?=[ \\t]*(?:\\n|$))[\\s\\S]*?(?:(?:\\n *)+\\n|$)' // (7) closing tag
-    + ')',
-  def: /^ {0,3}\[(label)\]: *(?:\n *)?<?([^\s>]+)>?(?:(?: +(?:\n *)?| *\n *)(title))? *(?:\n+|$)/,
-  table: noopTest,
-  lheading: /^([^\n]+)\n {0,3}(=+|-+) *(?:\n+|$)/,
-  // regex template, placeholders will be replaced according to different paragraph
-  // interruption rules of commonmark and the original markdown spec:
-  _paragraph: /^([^\n]+(?:\n(?!hr|heading|lheading|blockquote|fences|list|html|table| +\n)[^\n]+)*)/,
-  text: /^[^\n]+/
-};
-
-block._label = /(?!\s*\])(?:\\.|[^\[\]\\])+/;
-block._title = /(?:"(?:\\"?|[^"\\])*"|'[^'\n]*(?:\n[^'\n]+)*\n?'|\([^()]*\))/;
-block.def = edit(block.def)
-  .replace('label', block._label)
-  .replace('title', block._title)
-  .getRegex();
-
-block.bullet = /(?:[*+-]|\d{1,9}[.)])/;
-block.listItemStart = edit(/^( *)(bull) */)
-  .replace('bull', block.bullet)
-  .getRegex();
-
-block.list = edit(block.list)
-  .replace(/bull/g, block.bullet)
-  .replace('hr', '\\n+(?=\\1?(?:(?:- *){3,}|(?:_ *){3,}|(?:\\* *){3,})(?:\\n+|$))')
-  .replace('def', '\\n+(?=' + block.def.source + ')')
-  .getRegex();
-
-block._tag = 'address|article|aside|base|basefont|blockquote|body|caption'
-  + '|center|col|colgroup|dd|details|dialog|dir|div|dl|dt|fieldset|figcaption'
-  + '|figure|footer|form|frame|frameset|h[1-6]|head|header|hr|html|iframe'
-  + '|legend|li|link|main|menu|menuitem|meta|nav|noframes|ol|optgroup|option'
-  + '|p|param|section|source|summary|table|tbody|td|tfoot|th|thead|title|tr'
-  + '|track|ul';
-block._comment = /<!--(?!-?>)[\s\S]*?(?:-->|$)/;
-block.html = edit(block.html, 'i')
-  .replace('comment', block._comment)
-  .replace('tag', block._tag)
-  .replace('attribute', / +[a-zA-Z:_][\w.:-]*(?: *= *"[^"\n]*"| *= *'[^'\n]*'| *= *[^\s"'=<>`]+)?/)
-  .getRegex();
-
-block.paragraph = edit(block._paragraph)
-  .replace('hr', block.hr)
-  .replace('heading', ' {0,3}#{1,6} ')
-  .replace('|lheading', '') // setex headings don't interrupt commonmark paragraphs
-  .replace('|table', '')
-  .replace('blockquote', ' {0,3}>')
-  .replace('fences', ' {0,3}(?:`{3,}(?=[^`\\n]*\\n)|~{3,})[^\\n]*\\n')
-  .replace('list', ' {0,3}(?:[*+-]|1[.)]) ') // only lists starting from 1 can interrupt
-  .replace('html', '</?(?:tag)(?: +|\\n|/?>)|<(?:script|pre|style|textarea|!--)')
-  .replace('tag', block._tag) // pars can be interrupted by type (6) html blocks
-  .getRegex();
-
-block.blockquote = edit(block.blockquote)
-  .replace('paragraph', block.paragraph)
-  .getRegex();
-
-/**
- * Normal Block Grammar
- */
-
-block.normal = merge({}, block);
-
-/**
- * GFM Block Grammar
- */
-
-block.gfm = merge({}, block.normal, {
-  table: '^ *([^\\n ].*\\|.*)\\n' // Header
-    + ' {0,3}(?:\\| *)?(:?-+:? *(?:\\| *:?-+:? *)*)(?:\\| *)?' // Align
-    + '(?:\\n((?:(?! *\\n|hr|heading|blockquote|code|fences|list|html).*(?:\\n|$))*)\\n*|$)' // Cells
-});
-
-block.gfm.table = edit(block.gfm.table)
-  .replace('hr', block.hr)
-  .replace('heading', ' {0,3}#{1,6} ')
-  .replace('blockquote', ' {0,3}>')
-  .replace('code', ' {4}[^\\n]')
-  .replace('fences', ' {0,3}(?:`{3,}(?=[^`\\n]*\\n)|~{3,})[^\\n]*\\n')
-  .replace('list', ' {0,3}(?:[*+-]|1[.)]) ') // only lists starting from 1 can interrupt
-  .replace('html', '</?(?:tag)(?: +|\\n|/?>)|<(?:script|pre|style|textarea|!--)')
-  .replace('tag', block._tag) // tables can be interrupted by type (6) html blocks
-  .getRegex();
-
-block.gfm.paragraph = edit(block._paragraph)
-  .replace('hr', block.hr)
-  .replace('heading', ' {0,3}#{1,6} ')
-  .replace('|lheading', '') // setex headings don't interrupt commonmark paragraphs
-  .replace('table', block.gfm.table) // interrupt paragraphs with table
-  .replace('blockquote', ' {0,3}>')
-  .replace('fences', ' {0,3}(?:`{3,}(?=[^`\\n]*\\n)|~{3,})[^\\n]*\\n')
-  .replace('list', ' {0,3}(?:[*+-]|1[.)]) ') // only lists starting from 1 can interrupt
-  .replace('html', '</?(?:tag)(?: +|\\n|/?>)|<(?:script|pre|style|textarea|!--)')
-  .replace('tag', block._tag) // pars can be interrupted by type (6) html blocks
-  .getRegex();
-/**
- * Pedantic grammar (original John Gruber's loose markdown specification)
- */
-
-block.pedantic = merge({}, block.normal, {
-  html: edit(
-    '^ *(?:comment *(?:\\n|\\s*$)'
-    + '|<(tag)[\\s\\S]+?</\\1> *(?:\\n{2,}|\\s*$)' // closed tag
-    + '|<tag(?:"[^"]*"|\'[^\']*\'|\\s[^\'"/>\\s]*)*?/?> *(?:\\n{2,}|\\s*$))')
-    .replace('comment', block._comment)
-    .replace(/tag/g, '(?!(?:'
-      + 'a|em|strong|small|s|cite|q|dfn|abbr|data|time|code|var|samp|kbd|sub'
-      + '|sup|i|b|u|mark|ruby|rt|rp|bdi|bdo|span|br|wbr|ins|del|img)'
-      + '\\b)\\w+(?!:|[^\\w\\s@]*@)\\b')
-    .getRegex(),
-  def: /^ *\[([^\]]+)\]: *<?([^\s>]+)>?(?: +(["(][^\n]+[")]))? *(?:\n+|$)/,
-  heading: /^(#{1,6})(.*)(?:\n+|$)/,
-  fences: noopTest, // fences not supported
-  paragraph: edit(block.normal._paragraph)
-    .replace('hr', block.hr)
-    .replace('heading', ' *#{1,6} *[^\n]')
-    .replace('lheading', block.lheading)
-    .replace('blockquote', ' {0,3}>')
-    .replace('|fences', '')
-    .replace('|list', '')
-    .replace('|html', '')
-    .getRegex()
-});
-
-/**
- * Inline-Level Grammar
- */
-const inline = {
-  escape: /^\\([!"#$%&'()*+,\-./:;<=>?@\[\]\\^_`{|}~])/,
-  autolink: /^<(scheme:[^\s\x00-\x1f<>]*|email)>/,
-  url: noopTest,
-  tag: '^comment'
-    + '|^</[a-zA-Z][\\w:-]*\\s*>' // self-closing tag
-    + '|^<[a-zA-Z][\\w-]*(?:attribute)*?\\s*/?>' // open tag
-    + '|^<\\?[\\s\\S]*?\\?>' // processing instruction, e.g. <?php ?>
-    + '|^<![a-zA-Z]+\\s[\\s\\S]*?>' // declaration, e.g. <!DOCTYPE html>
-    + '|^<!\\[CDATA\\[[\\s\\S]*?\\]\\]>', // CDATA section
-  link: /^!?\[(label)\]\(\s*(href)(?:\s+(title))?\s*\)/,
-  reflink: /^!?\[(label)\]\[(ref)\]/,
-  nolink: /^!?\[(ref)\](?:\[\])?/,
-  reflinkSearch: 'reflink|nolink(?!\\()',
-  emStrong: {
-    lDelim: /^(?:\*+(?:([punct_])|[^\s*]))|^_+(?:([punct*])|([^\s_]))/,
-    //        (1) and (2) can only be a Right Delimiter. (3) and (4) can only be Left.  (5) and (6) can be either Left or Right.
-    //          () Skip orphan inside strong  () Consume to delim (1) #***                (2) a***#, a***                   (3) #***a, ***a                 (4) ***#              (5) #***#                 (6) a***a
-    rDelimAst: /^[^_*]*?\_\_[^_*]*?\*[^_*]*?(?=\_\_)|[^*]+(?=[^*])|[punct_](\*+)(?=[\s]|$)|[^punct*_\s](\*+)(?=[punct_\s]|$)|[punct_\s](\*+)(?=[^punct*_\s])|[\s](\*+)(?=[punct_])|[punct_](\*+)(?=[punct_])|[^punct*_\s](\*+)(?=[^punct*_\s])/,
-    rDelimUnd: /^[^_*]*?\*\*[^_*]*?\_[^_*]*?(?=\*\*)|[^_]+(?=[^_])|[punct*](\_+)(?=[\s]|$)|[^punct*_\s](\_+)(?=[punct*\s]|$)|[punct*\s](\_+)(?=[^punct*_\s])|[\s](\_+)(?=[punct*])|[punct*](\_+)(?=[punct*])/ // ^- Not allowed for _
-  },
-  code: /^(`+)([^`]|[^`][\s\S]*?[^`])\1(?!`)/,
-  br: /^( {2,}|\\)\n(?!\s*$)/,
-  del: noopTest,
-  text: /^(`+|[^`])(?:(?= {2,}\n)|[\s\S]*?(?:(?=[\\<!\[`*_]|\b_|$)|[^ ](?= {2,}\n)))/,
-  punctuation: /^([\spunctuation])/
-};
-
-// list of punctuation marks from CommonMark spec
-// without * and _ to handle the different emphasis markers * and _
-inline._punctuation = '!"#$%&\'()+\\-.,/:;<=>?@\\[\\]`^{|}~';
-inline.punctuation = edit(inline.punctuation).replace(/punctuation/g, inline._punctuation).getRegex();
-
-// sequences em should skip over [title](link), `code`, <html>
-inline.blockSkip = /\[[^\]]*?\]\([^\)]*?\)|`[^`]*?`|<[^>]*?>/g;
-inline.escapedEmSt = /\\\*|\\_/g;
-
-inline._comment = edit(block._comment).replace('(?:-->|$)', '-->').getRegex();
-
-inline.emStrong.lDelim = edit(inline.emStrong.lDelim)
-  .replace(/punct/g, inline._punctuation)
-  .getRegex();
-
-inline.emStrong.rDelimAst = edit(inline.emStrong.rDelimAst, 'g')
-  .replace(/punct/g, inline._punctuation)
-  .getRegex();
-
-inline.emStrong.rDelimUnd = edit(inline.emStrong.rDelimUnd, 'g')
-  .replace(/punct/g, inline._punctuation)
-  .getRegex();
-
-inline._escapes = /\\([!"#$%&'()*+,\-./:;<=>?@\[\]\\^_`{|}~])/g;
-
-inline._scheme = /[a-zA-Z][a-zA-Z0-9+.-]{1,31}/;
-inline._email = /[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+(@)[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)+(?![-_])/;
-inline.autolink = edit(inline.autolink)
-  .replace('scheme', inline._scheme)
-  .replace('email', inline._email)
-  .getRegex();
-
-inline._attribute = /\s+[a-zA-Z:_][\w.:-]*(?:\s*=\s*"[^"]*"|\s*=\s*'[^']*'|\s*=\s*[^\s"'=<>`]+)?/;
-
-inline.tag = edit(inline.tag)
-  .replace('comment', inline._comment)
-  .replace('attribute', inline._attribute)
-  .getRegex();
-
-inline._label = /(?:\[(?:\\.|[^\[\]\\])*\]|\\.|`[^`]*`|[^\[\]\\`])*?/;
-inline._href = /<(?:\\.|[^\n<>\\])+>|[^\s\x00-\x1f]*/;
-inline._title = /"(?:\\"?|[^"\\])*"|'(?:\\'?|[^'\\])*'|\((?:\\\)?|[^)\\])*\)/;
-
-inline.link = edit(inline.link)
-  .replace('label', inline._label)
-  .replace('href', inline._href)
-  .replace('title', inline._title)
-  .getRegex();
-
-inline.reflink = edit(inline.reflink)
-  .replace('label', inline._label)
-  .replace('ref', block._label)
-  .getRegex();
-
-inline.nolink = edit(inline.nolink)
-  .replace('ref', block._label)
-  .getRegex();
-
-inline.reflinkSearch = edit(inline.reflinkSearch, 'g')
-  .replace('reflink', inline.reflink)
-  .replace('nolink', inline.nolink)
-  .getRegex();
-
-/**
- * Normal Inline Grammar
- */
-
-inline.normal = merge({}, inline);
-
-/**
- * Pedantic Inline Grammar
- */
-
-inline.pedantic = merge({}, inline.normal, {
-  strong: {
-    start: /^__|\*\*/,
-    middle: /^__(?=\S)([\s\S]*?\S)__(?!_)|^\*\*(?=\S)([\s\S]*?\S)\*\*(?!\*)/,
-    endAst: /\*\*(?!\*)/g,
-    endUnd: /__(?!_)/g
-  },
-  em: {
-    start: /^_|\*/,
-    middle: /^()\*(?=\S)([\s\S]*?\S)\*(?!\*)|^_(?=\S)([\s\S]*?\S)_(?!_)/,
-    endAst: /\*(?!\*)/g,
-    endUnd: /_(?!_)/g
-  },
-  link: edit(/^!?\[(label)\]\((.*?)\)/)
-    .replace('label', inline._label)
-    .getRegex(),
-  reflink: edit(/^!?\[(label)\]\s*\[([^\]]*)\]/)
-    .replace('label', inline._label)
-    .getRegex()
-});
-
-/**
- * GFM Inline Grammar
- */
-
-inline.gfm = merge({}, inline.normal, {
-  escape: edit(inline.escape).replace('])', '~|])').getRegex(),
-  _extended_email: /[A-Za-z0-9._+-]+(@)[a-zA-Z0-9-_]+(?:\.[a-zA-Z0-9-_]*[a-zA-Z0-9])+(?![-_])/,
-  url: /^((?:ftp|https?):\/\/|www\.)(?:[a-zA-Z0-9\-]+\.?)+[^\s<]*|^email/,
-  _backpedal: /(?:[^?!.,:;*_~()&]+|\([^)]*\)|&(?![a-zA-Z0-9]+;$)|[?!.,:;*_~)]+(?!$))+/,
-  del: /^(~~?)(?=[^\s~])([\s\S]*?[^\s~])\1(?=[^~]|$)/,
-  text: /^([`~]+|[^`~])(?:(?= {2,}\n)|(?=[a-zA-Z0-9.!#$%&'*+\/=?_`{\|}~-]+@)|[\s\S]*?(?:(?=[\\<!\[`*~_]|\b_|https?:\/\/|ftp:\/\/|www\.|$)|[^ ](?= {2,}\n)|[^a-zA-Z0-9.!#$%&'*+\/=?_`{\|}~-](?=[a-zA-Z0-9.!#$%&'*+\/=?_`{\|}~-]+@)))/
-});
-
-inline.gfm.url = edit(inline.gfm.url, 'i')
-  .replace('email', inline.gfm._extended_email)
-  .getRegex();
-/**
- * GFM + Line Breaks Inline Grammar
- */
-
-inline.breaks = merge({}, inline.gfm, {
-  br: edit(inline.br).replace('{2,}', '*').getRegex(),
-  text: edit(inline.gfm.text)
-    .replace('\\b_', '\\b_| {2,}\\n')
-    .replace(/\{2,\}/g, '*')
-    .getRegex()
-});
-
-/**
- * smartypants text replacement
- * @param {string} text
- */
-function smartypants(text) {
-  return text
-    // em-dashes
-    .replace(/---/g, '\u2014')
-    // en-dashes
-    .replace(/--/g, '\u2013')
-    // opening singles
-    .replace(/(^|[-\u2014/(\[{"\s])'/g, '$1\u2018')
-    // closing singles & apostrophes
-    .replace(/'/g, '\u2019')
-    // opening doubles
-    .replace(/(^|[-\u2014/(\[{\u2018\s])"/g, '$1\u201c')
-    // closing doubles
-    .replace(/"/g, '\u201d')
-    // ellipses
-    .replace(/\.{3}/g, '\u2026');
-}
-
-/**
- * mangle email addresses
- * @param {string} text
- */
-function mangle(text) {
-  let out = '',
-    i,
-    ch;
-
-  const l = text.length;
-  for (i = 0; i < l; i++) {
-    ch = text.charCodeAt(i);
-    if (Math.random() > 0.5) {
-      ch = 'x' + ch.toString(16);
-    }
-    out += '&#' + ch + ';';
-  }
-
-  return out;
-}
-
-/**
- * Block Lexer
- */
-class Lexer {
-  constructor(options) {
-    this.tokens = [];
-    this.tokens.links = Object.create(null);
-    this.options = options || defaults;
-    this.options.tokenizer = this.options.tokenizer || new Tokenizer();
-    this.tokenizer = this.options.tokenizer;
-    this.tokenizer.options = this.options;
-    this.tokenizer.lexer = this;
-    this.inlineQueue = [];
-    this.state = {
-      inLink: false,
-      inRawBlock: false,
-      top: true
-    };
-
-    const rules = {
-      block: block.normal,
-      inline: inline.normal
-    };
-
-    if (this.options.pedantic) {
-      rules.block = block.pedantic;
-      rules.inline = inline.pedantic;
-    } else if (this.options.gfm) {
-      rules.block = block.gfm;
-      if (this.options.breaks) {
-        rules.inline = inline.breaks;
-      } else {
-        rules.inline = inline.gfm;
-      }
-    }
-    this.tokenizer.rules = rules;
-  }
-
-  /**
-   * Expose Rules
-   */
-  static get rules() {
-    return {
-      block,
-      inline
-    };
-  }
-
-  /**
-   * Static Lex Method
-   */
-  static lex(src, options) {
-    const lexer = new Lexer(options);
-    return lexer.lex(src);
-  }
-
-  /**
-   * Static Lex Inline Method
-   */
-  static lexInline(src, options) {
-    const lexer = new Lexer(options);
-    return lexer.inlineTokens(src);
-  }
-
-  /**
-   * Preprocessing
-   */
-  lex(src) {
-    src = src
-      .replace(/\r\n|\r/g, '\n');
-
-    this.blockTokens(src, this.tokens);
-
-    let next;
-    while (next = this.inlineQueue.shift()) {
-      this.inlineTokens(next.src, next.tokens);
-    }
-
-    return this.tokens;
-  }
-
-  /**
-   * Lexing
-   */
-  blockTokens(src, tokens = []) {
-    if (this.options.pedantic) {
-      src = src.replace(/\t/g, '    ').replace(/^ +$/gm, '');
-    } else {
-      src = src.replace(/^( *)(\t+)/gm, (_, leading, tabs) => {
-        return leading + '    '.repeat(tabs.length);
-      });
-    }
-
-    let token, lastToken, cutSrc, lastParagraphClipped;
-
-    while (src) {
-      if (this.options.extensions
-        && this.options.extensions.block
-        && this.options.extensions.block.some((extTokenizer) => {
-          if (token = extTokenizer.call({ lexer: this }, src, tokens)) {
-            src = src.substring(token.raw.length);
-            tokens.push(token);
-            return true;
-          }
-          return false;
-        })) {
-        continue;
-      }
-
-      // newline
-      if (token = this.tokenizer.space(src)) {
-        src = src.substring(token.raw.length);
-        if (token.raw.length === 1 && tokens.length > 0) {
-          // if there's a single \n as a spacer, it's terminating the last line,
-          // so move it there so that we don't get unecessary paragraph tags
-          tokens[tokens.length - 1].raw += '\n';
-        } else {
-          tokens.push(token);
-        }
-        continue;
-      }
-
-      // code
-      if (token = this.tokenizer.code(src)) {
-        src = src.substring(token.raw.length);
-        lastToken = tokens[tokens.length - 1];
-        // An indented code block cannot interrupt a paragraph.
-        if (lastToken && (lastToken.type === 'paragraph' || lastToken.type === 'text')) {
-          lastToken.raw += '\n' + token.raw;
-          lastToken.text += '\n' + token.text;
-          this.inlineQueue[this.inlineQueue.length - 1].src = lastToken.text;
-        } else {
-          tokens.push(token);
-        }
-        continue;
-      }
-
-      // fences
-      if (token = this.tokenizer.fences(src)) {
-        src = src.substring(token.raw.length);
-        tokens.push(token);
-        continue;
-      }
-
-      // heading
-      if (token = this.tokenizer.heading(src)) {
-        src = src.substring(token.raw.length);
-        tokens.push(token);
-        continue;
-      }
-
-      // hr
-      if (token = this.tokenizer.hr(src)) {
-        src = src.substring(token.raw.length);
-        tokens.push(token);
-        continue;
-      }
-
-      // blockquote
-      if (token = this.tokenizer.blockquote(src)) {
-        src = src.substring(token.raw.length);
-        tokens.push(token);
-        continue;
-      }
-
-      // list
-      if (token = this.tokenizer.list(src)) {
-        src = src.substring(token.raw.length);
-        tokens.push(token);
-        continue;
-      }
-
-      // html
-      if (token = this.tokenizer.html(src)) {
-        src = src.substring(token.raw.length);
-        tokens.push(token);
-        continue;
-      }
-
-      // def
-      if (token = this.tokenizer.def(src)) {
-        src = src.substring(token.raw.length);
-        lastToken = tokens[tokens.length - 1];
-        if (lastToken && (lastToken.type === 'paragraph' || lastToken.type === 'text')) {
-          lastToken.raw += '\n' + token.raw;
-          lastToken.text += '\n' + token.raw;
-          this.inlineQueue[this.inlineQueue.length - 1].src = lastToken.text;
-        } else if (!this.tokens.links[token.tag]) {
-          this.tokens.links[token.tag] = {
-            href: token.href,
-            title: token.title
-          };
-        }
-        continue;
-      }
-
-      // table (gfm)
-      if (token = this.tokenizer.table(src)) {
-        src = src.substring(token.raw.length);
-        tokens.push(token);
-        continue;
-      }
-
-      // lheading
-      if (token = this.tokenizer.lheading(src)) {
-        src = src.substring(token.raw.length);
-        tokens.push(token);
-        continue;
-      }
-
-      // top-level paragraph
-      // prevent paragraph consuming extensions by clipping 'src' to extension start
-      cutSrc = src;
-      if (this.options.extensions && this.options.extensions.startBlock) {
-        let startIndex = Infinity;
-        const tempSrc = src.slice(1);
-        let tempStart;
-        this.options.extensions.startBlock.forEach(function(getStartIndex) {
-          tempStart = getStartIndex.call({ lexer: this }, tempSrc);
-          if (typeof tempStart === 'number' && tempStart >= 0) { startIndex = Math.min(startIndex, tempStart); }
-        });
-        if (startIndex < Infinity && startIndex >= 0) {
-          cutSrc = src.substring(0, startIndex + 1);
-        }
-      }
-      if (this.state.top && (token = this.tokenizer.paragraph(cutSrc))) {
-        lastToken = tokens[tokens.length - 1];
-        if (lastParagraphClipped && lastToken.type === 'paragraph') {
-          lastToken.raw += '\n' + token.raw;
-          lastToken.text += '\n' + token.text;
-          this.inlineQueue.pop();
-          this.inlineQueue[this.inlineQueue.length - 1].src = lastToken.text;
-        } else {
-          tokens.push(token);
-        }
-        lastParagraphClipped = (cutSrc.length !== src.length);
-        src = src.substring(token.raw.length);
-        continue;
-      }
-
-      // text
-      if (token = this.tokenizer.text(src)) {
-        src = src.substring(token.raw.length);
-        lastToken = tokens[tokens.length - 1];
-        if (lastToken && lastToken.type === 'text') {
-          lastToken.raw += '\n' + token.raw;
-          lastToken.text += '\n' + token.text;
-          this.inlineQueue.pop();
-          this.inlineQueue[this.inlineQueue.length - 1].src = lastToken.text;
-        } else {
-          tokens.push(token);
-        }
-        continue;
-      }
-
-      if (src) {
-        const errMsg = 'Infinite loop on byte: ' + src.charCodeAt(0);
-        if (this.options.silent) {
-          console.error(errMsg);
-          break;
-        } else {
-          throw new Error(errMsg);
-        }
-      }
-    }
-
-    this.state.top = true;
-    return tokens;
-  }
-
-  inline(src, tokens) {
-    this.inlineQueue.push({ src, tokens });
-  }
-
-  /**
-   * Lexing/Compiling
-   */
-  inlineTokens(src, tokens = []) {
-    let token, lastToken, cutSrc;
-
-    // String with links masked to avoid interference with em and strong
-    let maskedSrc = src;
-    let match;
-    let keepPrevChar, prevChar;
-
-    // Mask out reflinks
-    if (this.tokens.links) {
-      const links = Object.keys(this.tokens.links);
-      if (links.length > 0) {
-        while ((match = this.tokenizer.rules.inline.reflinkSearch.exec(maskedSrc)) != null) {
-          if (links.includes(match[0].slice(match[0].lastIndexOf('[') + 1, -1))) {
-            maskedSrc = maskedSrc.slice(0, match.index) + '[' + repeatString('a', match[0].length - 2) + ']' + maskedSrc.slice(this.tokenizer.rules.inline.reflinkSearch.lastIndex);
-          }
-        }
-      }
-    }
-    // Mask out other blocks
-    while ((match = this.tokenizer.rules.inline.blockSkip.exec(maskedSrc)) != null) {
-      maskedSrc = maskedSrc.slice(0, match.index) + '[' + repeatString('a', match[0].length - 2) + ']' + maskedSrc.slice(this.tokenizer.rules.inline.blockSkip.lastIndex);
-    }
-
-    // Mask out escaped em & strong delimiters
-    while ((match = this.tokenizer.rules.inline.escapedEmSt.exec(maskedSrc)) != null) {
-      maskedSrc = maskedSrc.slice(0, match.index) + '++' + maskedSrc.slice(this.tokenizer.rules.inline.escapedEmSt.lastIndex);
-    }
-
-    while (src) {
-      if (!keepPrevChar) {
-        prevChar = '';
-      }
-      keepPrevChar = false;
-
-      // extensions
-      if (this.options.extensions
-        && this.options.extensions.inline
-        && this.options.extensions.inline.some((extTokenizer) => {
-          if (token = extTokenizer.call({ lexer: this }, src, tokens)) {
-            src = src.substring(token.raw.length);
-            tokens.push(token);
-            return true;
-          }
-          return false;
-        })) {
-        continue;
-      }
-
-      // escape
-      if (token = this.tokenizer.escape(src)) {
-        src = src.substring(token.raw.length);
-        tokens.push(token);
-        continue;
-      }
-
-      // tag
-      if (token = this.tokenizer.tag(src)) {
-        src = src.substring(token.raw.length);
-        lastToken = tokens[tokens.length - 1];
-        if (lastToken && token.type === 'text' && lastToken.type === 'text') {
-          lastToken.raw += token.raw;
-          lastToken.text += token.text;
-        } else {
-          tokens.push(token);
-        }
-        continue;
-      }
-
-      // link
-      if (token = this.tokenizer.link(src)) {
-        src = src.substring(token.raw.length);
-        tokens.push(token);
-        continue;
-      }
-
-      // reflink, nolink
-      if (token = this.tokenizer.reflink(src, this.tokens.links)) {
-        src = src.substring(token.raw.length);
-        lastToken = tokens[tokens.length - 1];
-        if (lastToken && token.type === 'text' && lastToken.type === 'text') {
-          lastToken.raw += token.raw;
-          lastToken.text += token.text;
-        } else {
-          tokens.push(token);
-        }
-        continue;
-      }
-
-      // em & strong
-      if (token = this.tokenizer.emStrong(src, maskedSrc, prevChar)) {
-        src = src.substring(token.raw.length);
-        tokens.push(token);
-        continue;
-      }
-
-      // code
-      if (token = this.tokenizer.codespan(src)) {
-        src = src.substring(token.raw.length);
-        tokens.push(token);
-        continue;
-      }
-
-      // br
-      if (token = this.tokenizer.br(src)) {
-        src = src.substring(token.raw.length);
-        tokens.push(token);
-        continue;
-      }
-
-      // del (gfm)
-      if (token = this.tokenizer.del(src)) {
-        src = src.substring(token.raw.length);
-        tokens.push(token);
-        continue;
-      }
-
-      // autolink
-      if (token = this.tokenizer.autolink(src, mangle)) {
-        src = src.substring(token.raw.length);
-        tokens.push(token);
-        continue;
-      }
-
-      // url (gfm)
-      if (!this.state.inLink && (token = this.tokenizer.url(src, mangle))) {
-        src = src.substring(token.raw.length);
-        tokens.push(token);
-        continue;
-      }
-
-      // text
-      // prevent inlineText consuming extensions by clipping 'src' to extension start
-      cutSrc = src;
-      if (this.options.extensions && this.options.extensions.startInline) {
-        let startIndex = Infinity;
-        const tempSrc = src.slice(1);
-        let tempStart;
-        this.options.extensions.startInline.forEach(function(getStartIndex) {
-          tempStart = getStartIndex.call({ lexer: this }, tempSrc);
-          if (typeof tempStart === 'number' && tempStart >= 0) { startIndex = Math.min(startIndex, tempStart); }
-        });
-        if (startIndex < Infinity && startIndex >= 0) {
-          cutSrc = src.substring(0, startIndex + 1);
-        }
-      }
-      if (token = this.tokenizer.inlineText(cutSrc, smartypants)) {
-        src = src.substring(token.raw.length);
-        if (token.raw.slice(-1) !== '_') { // Track prevChar before string of ____ started
-          prevChar = token.raw.slice(-1);
-        }
-        keepPrevChar = true;
-        lastToken = tokens[tokens.length - 1];
-        if (lastToken && lastToken.type === 'text') {
-          lastToken.raw += token.raw;
-          lastToken.text += token.text;
-        } else {
-          tokens.push(token);
-        }
-        continue;
-      }
-
-      if (src) {
-        const errMsg = 'Infinite loop on byte: ' + src.charCodeAt(0);
-        if (this.options.silent) {
-          console.error(errMsg);
-          break;
-        } else {
-          throw new Error(errMsg);
-        }
-      }
-    }
-
-    return tokens;
-  }
-}
-
-/**
- * Renderer
- */
-class Renderer {
-  constructor(options) {
-    this.options = options || defaults;
-  }
-
-  code(code, infostring, escaped) {
-    const lang = (infostring || '').match(/\S*/)[0];
-    if (this.options.highlight) {
-      const out = this.options.highlight(code, lang);
-      if (out != null && out !== code) {
-        escaped = true;
-        code = out;
-      }
-    }
-
-    code = code.replace(/\n$/, '') + '\n';
-
-    if (!lang) {
-      return '<pre><code>'
-        + (escaped ? code : marked_esm_escape(code, true))
-        + '</code></pre>\n';
-    }
-
-    return '<pre><code class="'
-      + this.options.langPrefix
-      + marked_esm_escape(lang, true)
-      + '">'
-      + (escaped ? code : marked_esm_escape(code, true))
-      + '</code></pre>\n';
-  }
-
-  /**
-   * @param {string} quote
-   */
-  blockquote(quote) {
-    return `<blockquote>\n${quote}</blockquote>\n`;
-  }
-
-  html(html) {
-    return html;
-  }
-
-  /**
-   * @param {string} text
-   * @param {string} level
-   * @param {string} raw
-   * @param {any} slugger
-   */
-  heading(text, level, raw, slugger) {
-    if (this.options.headerIds) {
-      const id = this.options.headerPrefix + slugger.slug(raw);
-      return `<h${level} id="${id}">${text}</h${level}>\n`;
-    }
-
-    // ignore IDs
-    return `<h${level}>${text}</h${level}>\n`;
-  }
-
-  hr() {
-    return this.options.xhtml ? '<hr/>\n' : '<hr>\n';
-  }
-
-  list(body, ordered, start) {
-    const type = ordered ? 'ol' : 'ul',
-      startatt = (ordered && start !== 1) ? (' start="' + start + '"') : '';
-    return '<' + type + startatt + '>\n' + body + '</' + type + '>\n';
-  }
-
-  /**
-   * @param {string} text
-   */
-  listitem(text) {
-    return `<li>${text}</li>\n`;
-  }
-
-  checkbox(checked) {
-    return '<input '
-      + (checked ? 'checked="" ' : '')
-      + 'disabled="" type="checkbox"'
-      + (this.options.xhtml ? ' /' : '')
-      + '> ';
-  }
-
-  /**
-   * @param {string} text
-   */
-  paragraph(text) {
-    return `<p>${text}</p>\n`;
-  }
-
-  /**
-   * @param {string} header
-   * @param {string} body
-   */
-  table(header, body) {
-    if (body) body = `<tbody>${body}</tbody>`;
-
-    return '<table>\n'
-      + '<thead>\n'
-      + header
-      + '</thead>\n'
-      + body
-      + '</table>\n';
-  }
-
-  /**
-   * @param {string} content
-   */
-  tablerow(content) {
-    return `<tr>\n${content}</tr>\n`;
-  }
-
-  tablecell(content, flags) {
-    const type = flags.header ? 'th' : 'td';
-    const tag = flags.align
-      ? `<${type} align="${flags.align}">`
-      : `<${type}>`;
-    return tag + content + `</${type}>\n`;
-  }
-
-  /**
-   * span level renderer
-   * @param {string} text
-   */
-  strong(text) {
-    return `<strong>${text}</strong>`;
-  }
-
-  /**
-   * @param {string} text
-   */
-  em(text) {
-    return `<em>${text}</em>`;
-  }
-
-  /**
-   * @param {string} text
-   */
-  codespan(text) {
-    return `<code>${text}</code>`;
-  }
-
-  br() {
-    return this.options.xhtml ? '<br/>' : '<br>';
-  }
-
-  /**
-   * @param {string} text
-   */
-  del(text) {
-    return `<del>${text}</del>`;
-  }
-
-  /**
-   * @param {string} href
-   * @param {string} title
-   * @param {string} text
-   */
-  link(href, title, text) {
-    href = cleanUrl(this.options.sanitize, this.options.baseUrl, href);
-    if (href === null) {
-      return text;
-    }
-    let out = '<a href="' + marked_esm_escape(href) + '"';
-    if (title) {
-      out += ' title="' + title + '"';
-    }
-    out += '>' + text + '</a>';
-    return out;
-  }
-
-  /**
-   * @param {string} href
-   * @param {string} title
-   * @param {string} text
-   */
-  image(href, title, text) {
-    href = cleanUrl(this.options.sanitize, this.options.baseUrl, href);
-    if (href === null) {
-      return text;
-    }
-
-    let out = `<img src="${href}" alt="${text}"`;
-    if (title) {
-      out += ` title="${title}"`;
-    }
-    out += this.options.xhtml ? '/>' : '>';
-    return out;
-  }
-
-  text(text) {
-    return text;
-  }
-}
-
-/**
- * TextRenderer
- * returns only the textual part of the token
- */
-class TextRenderer {
-  // no need for block level renderers
-  strong(text) {
-    return text;
-  }
-
-  em(text) {
-    return text;
-  }
-
-  codespan(text) {
-    return text;
-  }
-
-  del(text) {
-    return text;
-  }
-
-  html(text) {
-    return text;
-  }
-
-  text(text) {
-    return text;
-  }
-
-  link(href, title, text) {
-    return '' + text;
-  }
-
-  image(href, title, text) {
-    return '' + text;
-  }
-
-  br() {
-    return '';
-  }
-}
-
-/**
- * Slugger generates header id
- */
-class Slugger {
-  constructor() {
-    this.seen = {};
-  }
-
-  /**
-   * @param {string} value
-   */
-  serialize(value) {
-    return value
-      .toLowerCase()
-      .trim()
-      // remove html tags
-      .replace(/<[!\/a-z].*?>/ig, '')
-      // remove unwanted chars
-      .replace(/[\u2000-\u206F\u2E00-\u2E7F\\'!"#$%&()*+,./:;<=>?@[\]^`{|}~]/g, '')
-      .replace(/\s/g, '-');
-  }
-
-  /**
-   * Finds the next safe (unique) slug to use
-   * @param {string} originalSlug
-   * @param {boolean} isDryRun
-   */
-  getNextSafeSlug(originalSlug, isDryRun) {
-    let slug = originalSlug;
-    let occurenceAccumulator = 0;
-    if (this.seen.hasOwnProperty(slug)) {
-      occurenceAccumulator = this.seen[originalSlug];
-      do {
-        occurenceAccumulator++;
-        slug = originalSlug + '-' + occurenceAccumulator;
-      } while (this.seen.hasOwnProperty(slug));
-    }
-    if (!isDryRun) {
-      this.seen[originalSlug] = occurenceAccumulator;
-      this.seen[slug] = 0;
-    }
-    return slug;
-  }
-
-  /**
-   * Convert string to unique id
-   * @param {object} [options]
-   * @param {boolean} [options.dryrun] Generates the next unique slug without
-   * updating the internal accumulator.
-   */
-  slug(value, options = {}) {
-    const slug = this.serialize(value);
-    return this.getNextSafeSlug(slug, options.dryrun);
-  }
-}
-
-/**
- * Parsing & Compiling
- */
-class Parser {
-  constructor(options) {
-    this.options = options || defaults;
-    this.options.renderer = this.options.renderer || new Renderer();
-    this.renderer = this.options.renderer;
-    this.renderer.options = this.options;
-    this.textRenderer = new TextRenderer();
-    this.slugger = new Slugger();
-  }
-
-  /**
-   * Static Parse Method
-   */
-  static parse(tokens, options) {
-    const parser = new Parser(options);
-    return parser.parse(tokens);
-  }
-
-  /**
-   * Static Parse Inline Method
-   */
-  static parseInline(tokens, options) {
-    const parser = new Parser(options);
-    return parser.parseInline(tokens);
-  }
-
-  /**
-   * Parse Loop
-   */
-  parse(tokens, top = true) {
-    let out = '',
-      i,
-      j,
-      k,
-      l2,
-      l3,
-      row,
-      cell,
-      header,
-      body,
-      token,
-      ordered,
-      start,
-      loose,
-      itemBody,
-      item,
-      checked,
-      task,
-      checkbox,
-      ret;
-
-    const l = tokens.length;
-    for (i = 0; i < l; i++) {
-      token = tokens[i];
-
-      // Run any renderer extensions
-      if (this.options.extensions && this.options.extensions.renderers && this.options.extensions.renderers[token.type]) {
-        ret = this.options.extensions.renderers[token.type].call({ parser: this }, token);
-        if (ret !== false || !['space', 'hr', 'heading', 'code', 'table', 'blockquote', 'list', 'html', 'paragraph', 'text'].includes(token.type)) {
-          out += ret || '';
-          continue;
-        }
-      }
-
-      switch (token.type) {
-        case 'space': {
-          continue;
-        }
-        case 'hr': {
-          out += this.renderer.hr();
-          continue;
-        }
-        case 'heading': {
-          out += this.renderer.heading(
-            this.parseInline(token.tokens),
-            token.depth,
-            marked_esm_unescape(this.parseInline(token.tokens, this.textRenderer)),
-            this.slugger);
-          continue;
-        }
-        case 'code': {
-          out += this.renderer.code(token.text,
-            token.lang,
-            token.escaped);
-          continue;
-        }
-        case 'table': {
-          header = '';
-
-          // header
-          cell = '';
-          l2 = token.header.length;
-          for (j = 0; j < l2; j++) {
-            cell += this.renderer.tablecell(
-              this.parseInline(token.header[j].tokens),
-              { header: true, align: token.align[j] }
-            );
-          }
-          header += this.renderer.tablerow(cell);
-
-          body = '';
-          l2 = token.rows.length;
-          for (j = 0; j < l2; j++) {
-            row = token.rows[j];
-
-            cell = '';
-            l3 = row.length;
-            for (k = 0; k < l3; k++) {
-              cell += this.renderer.tablecell(
-                this.parseInline(row[k].tokens),
-                { header: false, align: token.align[k] }
-              );
-            }
-
-            body += this.renderer.tablerow(cell);
-          }
-          out += this.renderer.table(header, body);
-          continue;
-        }
-        case 'blockquote': {
-          body = this.parse(token.tokens);
-          out += this.renderer.blockquote(body);
-          continue;
-        }
-        case 'list': {
-          ordered = token.ordered;
-          start = token.start;
-          loose = token.loose;
-          l2 = token.items.length;
-
-          body = '';
-          for (j = 0; j < l2; j++) {
-            item = token.items[j];
-            checked = item.checked;
-            task = item.task;
-
-            itemBody = '';
-            if (item.task) {
-              checkbox = this.renderer.checkbox(checked);
-              if (loose) {
-                if (item.tokens.length > 0 && item.tokens[0].type === 'paragraph') {
-                  item.tokens[0].text = checkbox + ' ' + item.tokens[0].text;
-                  if (item.tokens[0].tokens && item.tokens[0].tokens.length > 0 && item.tokens[0].tokens[0].type === 'text') {
-                    item.tokens[0].tokens[0].text = checkbox + ' ' + item.tokens[0].tokens[0].text;
-                  }
-                } else {
-                  item.tokens.unshift({
-                    type: 'text',
-                    text: checkbox
-                  });
-                }
-              } else {
-                itemBody += checkbox;
-              }
-            }
-
-            itemBody += this.parse(item.tokens, loose);
-            body += this.renderer.listitem(itemBody, task, checked);
-          }
-
-          out += this.renderer.list(body, ordered, start);
-          continue;
-        }
-        case 'html': {
-          // TODO parse inline content if parameter markdown=1
-          out += this.renderer.html(token.text);
-          continue;
-        }
-        case 'paragraph': {
-          out += this.renderer.paragraph(this.parseInline(token.tokens));
-          continue;
-        }
-        case 'text': {
-          body = token.tokens ? this.parseInline(token.tokens) : token.text;
-          while (i + 1 < l && tokens[i + 1].type === 'text') {
-            token = tokens[++i];
-            body += '\n' + (token.tokens ? this.parseInline(token.tokens) : token.text);
-          }
-          out += top ? this.renderer.paragraph(body) : body;
-          continue;
-        }
-
-        default: {
-          const errMsg = 'Token with "' + token.type + '" type was not found.';
-          if (this.options.silent) {
-            console.error(errMsg);
-            return;
-          } else {
-            throw new Error(errMsg);
-          }
-        }
-      }
-    }
-
-    return out;
-  }
-
-  /**
-   * Parse Inline Tokens
-   */
-  parseInline(tokens, renderer) {
-    renderer = renderer || this.renderer;
-    let out = '',
-      i,
-      token,
-      ret;
-
-    const l = tokens.length;
-    for (i = 0; i < l; i++) {
-      token = tokens[i];
-
-      // Run any renderer extensions
-      if (this.options.extensions && this.options.extensions.renderers && this.options.extensions.renderers[token.type]) {
-        ret = this.options.extensions.renderers[token.type].call({ parser: this }, token);
-        if (ret !== false || !['escape', 'html', 'link', 'image', 'strong', 'em', 'codespan', 'br', 'del', 'text'].includes(token.type)) {
-          out += ret || '';
-          continue;
-        }
-      }
-
-      switch (token.type) {
-        case 'escape': {
-          out += renderer.text(token.text);
-          break;
-        }
-        case 'html': {
-          out += renderer.html(token.text);
-          break;
-        }
-        case 'link': {
-          out += renderer.link(token.href, token.title, this.parseInline(token.tokens, renderer));
-          break;
-        }
-        case 'image': {
-          out += renderer.image(token.href, token.title, token.text);
-          break;
-        }
-        case 'strong': {
-          out += renderer.strong(this.parseInline(token.tokens, renderer));
-          break;
-        }
-        case 'em': {
-          out += renderer.em(this.parseInline(token.tokens, renderer));
-          break;
-        }
-        case 'codespan': {
-          out += renderer.codespan(token.text);
-          break;
-        }
-        case 'br': {
-          out += renderer.br();
-          break;
-        }
-        case 'del': {
-          out += renderer.del(this.parseInline(token.tokens, renderer));
-          break;
-        }
-        case 'text': {
-          out += renderer.text(token.text);
-          break;
-        }
-        default: {
-          const errMsg = 'Token with "' + token.type + '" type was not found.';
-          if (this.options.silent) {
-            console.error(errMsg);
-            return;
-          } else {
-            throw new Error(errMsg);
-          }
-        }
-      }
-    }
-    return out;
-  }
-}
-
-/**
- * Marked
- */
-function marked(src, opt, callback) {
-  // throw error in case of non string input
-  if (typeof src === 'undefined' || src === null) {
-    throw new Error('marked(): input parameter is undefined or null');
-  }
-  if (typeof src !== 'string') {
-    throw new Error('marked(): input parameter is of type '
-      + Object.prototype.toString.call(src) + ', string expected');
-  }
-
-  if (typeof opt === 'function') {
-    callback = opt;
-    opt = null;
-  }
-
-  opt = merge({}, marked.defaults, opt || {});
-  checkSanitizeDeprecation(opt);
-
-  if (callback) {
-    const highlight = opt.highlight;
-    let tokens;
-
-    try {
-      tokens = Lexer.lex(src, opt);
-    } catch (e) {
-      return callback(e);
-    }
-
-    const done = function(err) {
-      let out;
-
-      if (!err) {
-        try {
-          if (opt.walkTokens) {
-            marked.walkTokens(tokens, opt.walkTokens);
-          }
-          out = Parser.parse(tokens, opt);
-        } catch (e) {
-          err = e;
-        }
-      }
-
-      opt.highlight = highlight;
-
-      return err
-        ? callback(err)
-        : callback(null, out);
-    };
-
-    if (!highlight || highlight.length < 3) {
-      return done();
-    }
-
-    delete opt.highlight;
-
-    if (!tokens.length) return done();
-
-    let pending = 0;
-    marked.walkTokens(tokens, function(token) {
-      if (token.type === 'code') {
-        pending++;
-        setTimeout(() => {
-          highlight(token.text, token.lang, function(err, code) {
-            if (err) {
-              return done(err);
-            }
-            if (code != null && code !== token.text) {
-              token.text = code;
-              token.escaped = true;
-            }
-
-            pending--;
-            if (pending === 0) {
-              done();
-            }
-          });
-        }, 0);
-      }
-    });
-
-    if (pending === 0) {
-      done();
-    }
-
-    return;
-  }
-
-  try {
-    const tokens = Lexer.lex(src, opt);
-    if (opt.walkTokens) {
-      marked.walkTokens(tokens, opt.walkTokens);
-    }
-    return Parser.parse(tokens, opt);
-  } catch (e) {
-    e.message += '\nPlease report this to https://github.com/markedjs/marked.';
-    if (opt.silent) {
-      return '<p>An error occurred:</p><pre>'
-        + marked_esm_escape(e.message + '', true)
-        + '</pre>';
-    }
-    throw e;
-  }
-}
-
-/**
- * Options
- */
-
-marked.options =
-marked.setOptions = function(opt) {
-  merge(marked.defaults, opt);
-  changeDefaults(marked.defaults);
-  return marked;
-};
-
-marked.getDefaults = getDefaults;
-
-marked.defaults = defaults;
-
-/**
- * Use Extension
- */
-
-marked.use = function(...args) {
-  const opts = merge({}, ...args);
-  const extensions = marked.defaults.extensions || { renderers: {}, childTokens: {} };
-  let hasExtensions;
-
-  args.forEach((pack) => {
-    // ==-- Parse "addon" extensions --== //
-    if (pack.extensions) {
-      hasExtensions = true;
-      pack.extensions.forEach((ext) => {
-        if (!ext.name) {
-          throw new Error('extension name required');
-        }
-        if (ext.renderer) { // Renderer extensions
-          const prevRenderer = extensions.renderers ? extensions.renderers[ext.name] : null;
-          if (prevRenderer) {
-            // Replace extension with func to run new extension but fall back if false
-            extensions.renderers[ext.name] = function(...args) {
-              let ret = ext.renderer.apply(this, args);
-              if (ret === false) {
-                ret = prevRenderer.apply(this, args);
-              }
-              return ret;
-            };
-          } else {
-            extensions.renderers[ext.name] = ext.renderer;
-          }
-        }
-        if (ext.tokenizer) { // Tokenizer Extensions
-          if (!ext.level || (ext.level !== 'block' && ext.level !== 'inline')) {
-            throw new Error("extension level must be 'block' or 'inline'");
-          }
-          if (extensions[ext.level]) {
-            extensions[ext.level].unshift(ext.tokenizer);
-          } else {
-            extensions[ext.level] = [ext.tokenizer];
-          }
-          if (ext.start) { // Function to check for start of token
-            if (ext.level === 'block') {
-              if (extensions.startBlock) {
-                extensions.startBlock.push(ext.start);
-              } else {
-                extensions.startBlock = [ext.start];
-              }
-            } else if (ext.level === 'inline') {
-              if (extensions.startInline) {
-                extensions.startInline.push(ext.start);
-              } else {
-                extensions.startInline = [ext.start];
-              }
-            }
-          }
-        }
-        if (ext.childTokens) { // Child tokens to be visited by walkTokens
-          extensions.childTokens[ext.name] = ext.childTokens;
-        }
-      });
-    }
-
-    // ==-- Parse "overwrite" extensions --== //
-    if (pack.renderer) {
-      const renderer = marked.defaults.renderer || new Renderer();
-      for (const prop in pack.renderer) {
-        const prevRenderer = renderer[prop];
-        // Replace renderer with func to run extension, but fall back if false
-        renderer[prop] = (...args) => {
-          let ret = pack.renderer[prop].apply(renderer, args);
-          if (ret === false) {
-            ret = prevRenderer.apply(renderer, args);
-          }
-          return ret;
-        };
-      }
-      opts.renderer = renderer;
-    }
-    if (pack.tokenizer) {
-      const tokenizer = marked.defaults.tokenizer || new Tokenizer();
-      for (const prop in pack.tokenizer) {
-        const prevTokenizer = tokenizer[prop];
-        // Replace tokenizer with func to run extension, but fall back if false
-        tokenizer[prop] = (...args) => {
-          let ret = pack.tokenizer[prop].apply(tokenizer, args);
-          if (ret === false) {
-            ret = prevTokenizer.apply(tokenizer, args);
-          }
-          return ret;
-        };
-      }
-      opts.tokenizer = tokenizer;
-    }
-
-    // ==-- Parse WalkTokens extensions --== //
-    if (pack.walkTokens) {
-      const walkTokens = marked.defaults.walkTokens;
-      opts.walkTokens = function(token) {
-        pack.walkTokens.call(this, token);
-        if (walkTokens) {
-          walkTokens.call(this, token);
-        }
-      };
-    }
-
-    if (hasExtensions) {
-      opts.extensions = extensions;
-    }
-
-    marked.setOptions(opts);
-  });
-};
-
-/**
- * Run callback for every token
- */
-
-marked.walkTokens = function(tokens, callback) {
-  for (const token of tokens) {
-    callback.call(marked, token);
-    switch (token.type) {
-      case 'table': {
-        for (const cell of token.header) {
-          marked.walkTokens(cell.tokens, callback);
-        }
-        for (const row of token.rows) {
-          for (const cell of row) {
-            marked.walkTokens(cell.tokens, callback);
-          }
-        }
-        break;
-      }
-      case 'list': {
-        marked.walkTokens(token.items, callback);
-        break;
-      }
-      default: {
-        if (marked.defaults.extensions && marked.defaults.extensions.childTokens && marked.defaults.extensions.childTokens[token.type]) { // Walk any extensions
-          marked.defaults.extensions.childTokens[token.type].forEach(function(childTokens) {
-            marked.walkTokens(token[childTokens], callback);
-          });
-        } else if (token.tokens) {
-          marked.walkTokens(token.tokens, callback);
-        }
-      }
-    }
-  }
-};
-
-/**
- * Parse Inline
- * @param {string} src
- */
-marked.parseInline = function(src, opt) {
-  // throw error in case of non string input
-  if (typeof src === 'undefined' || src === null) {
-    throw new Error('marked.parseInline(): input parameter is undefined or null');
-  }
-  if (typeof src !== 'string') {
-    throw new Error('marked.parseInline(): input parameter is of type '
-      + Object.prototype.toString.call(src) + ', string expected');
-  }
-
-  opt = merge({}, marked.defaults, opt || {});
-  checkSanitizeDeprecation(opt);
-
-  try {
-    const tokens = Lexer.lexInline(src, opt);
-    if (opt.walkTokens) {
-      marked.walkTokens(tokens, opt.walkTokens);
-    }
-    return Parser.parseInline(tokens, opt);
-  } catch (e) {
-    e.message += '\nPlease report this to https://github.com/markedjs/marked.';
-    if (opt.silent) {
-      return '<p>An error occurred:</p><pre>'
-        + marked_esm_escape(e.message + '', true)
-        + '</pre>';
-    }
-    throw e;
-  }
-};
-
-/**
- * Expose
- */
-marked.Parser = Parser;
-marked.parser = Parser.parse;
-marked.Renderer = Renderer;
-marked.TextRenderer = TextRenderer;
-marked.Lexer = Lexer;
-marked.lexer = Lexer.lex;
-marked.Tokenizer = Tokenizer;
-marked.Slugger = Slugger;
-marked.parse = marked;
-
-const options = marked.options;
-const setOptions = marked.setOptions;
-const use = marked.use;
-const walkTokens = marked.walkTokens;
-const parseInline = marked.parseInline;
-const parse = (/* unused pure expression or super */ null && (marked));
-const parser = Parser.parse;
-const lexer = Lexer.lex;
-
-
-
-;// CONCATENATED MODULE: ./node_modules/gitgitgadget/lib/markdown-renderer.ts
-
-
-// Provide our own renderings of headings and block quotes.
-function md2text(markdown, columns = 76) {
-    let quoteDepth = 0;
-    const formatOptions = {
-        wordwrap: columns,
-        formatters: {
-            headerFormatter: (elem, walk, builder, options) => {
-                builder.openBlock({
-                    leadingLineBreaks: options.leadingLineBreaks || 2
-                });
-                walk(elem.children, builder);
-                builder.closeBlock({
-                    trailingLineBreaks: options.trailingLineBreaks || 2,
-                    blockTransform: str => {
-                        const underline = str.substr(str.lastIndexOf("\n") + 1)
-                            .replace(/./g, "=");
-                        return `${str}\n${underline}`;
-                    }
-                });
-            },
-            blockFormatter: (elem, walk, builder, options) => {
-                builder.openBlock({
-                    leadingLineBreaks: options.leadingLineBreaks || 2,
-                    reservedLineLength: quoteDepth ? 1 : 2
-                });
-                quoteDepth++;
-                walk(elem.children, builder);
-                quoteDepth--;
-                builder.closeBlock({ trailingLineBreaks: options.trailingLineBreaks || 2,
-                    blockTransform: str => {
-                        return str
-                            .replace(/^>/mg, ">>") // add to quote
-                            .replace(/^(?!>|$)/mg, "> ") // new quote
-                            .replace(/(^|\n)(\n)(?!$)/g, "$1>$2"); // quote empty
-                    } });
-            },
-        },
-        selectors: [
-            {
-                selector: "a",
-                options: {
-                    hideLinkHrefIfSameAsText: true,
-                },
-            },
-            {
-                selector: "h1",
-                options: {
-                    uppercase: false
-                },
-                format: "headerFormatter",
-            },
-            {
-                selector: "h2",
-                options: {
-                    uppercase: false
-                },
-                format: "headerFormatter",
-            },
-            {
-                selector: "h3",
-                options: {
-                    uppercase: false
-                },
-                format: "headerFormatter",
-            },
-            {
-                selector: "blockquote",
-                options: {
-                    trimEmptyLines: false
-                },
-                format: "blockFormatter"
-            },
-        ],
-    };
-    return (0,html_to_text.htmlToText)(marked.parse(markdown), formatOptions);
-}
-
-// EXTERNAL MODULE: external "path"
-var external_path_ = __nccwpck_require__(1017);
-var external_path_default = /*#__PURE__*/__nccwpck_require__.n(external_path_);
-;// CONCATENATED MODULE: ./node_modules/gitgitgadget/lib/project-config.ts
-
-
-;
-let config; // singleton
-/**
- * Query to get the current configuration.
- *
- * @returns IConfig interface
- */
-function getConfig() {
-    if (config === undefined) {
-        throw new Error("project-config not set");
-    }
-    return config;
-}
-/**
- * Load a config.  The config may be a javascript file (plain or generated
- * from typescript) or a json file (with a .json extension).
- *
- * @param file fully qualified filename and path
- * @returns IConfig interface
- */
-async function loadConfig(file) {
-    let loadedConfig;
-    if (external_path_default().extname(file) === ".js") {
-        const { default: newConfig } = (await __nccwpck_require__(6302)(file));
-        loadedConfig = newConfig;
-    }
-    else {
-        const fileText = external_fs_.readFileSync(file, { encoding: "utf-8" });
-        loadedConfig = JSON.parse(fileText);
-    }
-    if (loadedConfig === undefined) {
-        throw new Error("project-config not set");
-    }
-    return loadedConfig;
-}
-/**
- * Set/update the configuration.
- *
- * @param newConfig configuration to be set
- * @returns current IConfig interface
- */
-function setConfig(newConfig) {
-    config = newConfig;
-    return config;
-}
-
-;// CONCATENATED MODULE: ./node_modules/gitgitgadget/lib/project-options.ts
-
-
-// For now, only the Git, Cygwin and BusyBox projects are supported
-class ProjectOptions {
-    constructor(branchName, upstreamBranch, basedOn, publishToRemote, to, cc, midUrlPrefix, workDir, baseCommit) {
-        this.branchName = branchName;
-        this.upstreamBranch = upstreamBranch;
-        this.baseCommit = baseCommit || upstreamBranch;
-        this.basedOn = basedOn;
-        this.publishToRemote = publishToRemote;
-        this.workDir = workDir;
-        this.to = to;
-        this.cc = cc;
-        this.midUrlPrefix = midUrlPrefix;
-    }
-    static async getBranchName(workDir) {
-        // Get the current branch name
-        const ref = await git(["rev-parse", "--symbolic-full-name", "HEAD"], { workDir });
-        const match = ref.match(/^refs\/heads\/(.*)/);
-        if (!match) {
-            throw new Error("Not on a branch (" + ref + ")?");
-        }
-        return match[1];
-    }
-    static async getLocal(workDir = ".") {
-        const branchName = await ProjectOptions.getBranchName(workDir);
-        const cc = await ProjectOptions.getCc(branchName, workDir);
-        const publishToRemote = await gitConfig("mail.publishtoremote", workDir);
-        const baseBranch = await ProjectOptions.determineBaseBranch(workDir, branchName, publishToRemote);
-        return await ProjectOptions.get(workDir, branchName, cc, baseBranch, publishToRemote);
-    }
-    static async get(workDir, branchName, cc, basedOn, publishToRemote, baseCommit) {
-        const config = getConfig();
-        let upstreamBranch;
-        let to;
-        let midUrlPrefix = " Message-ID: ";
-        if (config.hasOwnProperty("project")) {
-            const project = config.project;
-            to = `--to=${project.to}`;
-            upstreamBranch = project.branch;
-            midUrlPrefix = project.urlPrefix;
-            for (const user of project.cc) {
-                cc.push(user);
-            }
-        }
-        else if (await commitExists("cb07fc2a29c86d1bc11", workDir) &&
-            await revParse(`${baseCommit}:git-gui.sh`, workDir) !== undefined) {
-            // Git GUI
-            to = "--to=git@vger.kernel.org";
-            cc.push("Pratyush Yadav <me@yadavpratyush.com>");
-            upstreamBranch = "git-gui/master";
-        }
-        else if (await commitExists("e83c5163316f89bfbde", workDir)) {
-            // Git
-            to = "--to=git@vger.kernel.org";
-            // Do *not* Cc: Junio Hamano by default
-            upstreamBranch = "upstream/seen";
-            if (await git(["rev-list", branchName + ".." + upstreamBranch], { workDir })) {
-                upstreamBranch = "upstream/next";
-            }
-            if (await git(["rev-list", branchName + ".." + upstreamBranch], { workDir })) {
-                upstreamBranch = "upstream/master";
-            }
-            midUrlPrefix = "https://lore.kernel.org/git/";
-        }
-        else if (await commitExists("a3acbf46947e52ff596", workDir)) {
-            // Cygwin
-            to = "--to=cygwin-patches@cygwin.com";
-            upstreamBranch = "cygwin/master";
-            midUrlPrefix = "https://www.mail-archive.com/search?l=cygwin-patches@cygwin.com&q=";
-        }
-        else if (await commitExists("cc8ed39b240180b5881", workDir)) {
-            // BusyBox
-            to = "--to=busybox@busybox.net";
-            upstreamBranch = "busybox/master";
-            midUrlPrefix = "https://www.mail-archive.com/search?l=busybox@busybox.net&q=";
-        }
-        else if (await commitExists("7ccd18012de2e6c47e5", workDir)) {
-            // We're running in the test suite!
-            to = "--to=reviewer@example.com";
-            upstreamBranch = "master";
-            midUrlPrefix = "https://dummy.com/?mid=";
-        }
-        else {
-            throw new Error("Unrecognized project");
-        }
-        if (basedOn) {
-            upstreamBranch = basedOn;
-        }
-        if (!baseCommit &&
-            await git(["rev-list", branchName + ".." + upstreamBranch], { workDir })) {
-            throw new Error(`Branch ${branchName} is not rebased to ${upstreamBranch}`);
-        }
-        return new ProjectOptions(branchName, upstreamBranch, basedOn, publishToRemote, to, cc, midUrlPrefix, workDir, baseCommit);
-    }
-    static async determineBaseBranch(workDir, branchName, publishToRemote) {
-        const basedOn = await gitConfig(`branch.${branchName}.basedon`, workDir);
-        if (!basedOn || !await commitExists(basedOn, workDir)) {
-            return undefined;
-        }
-        if (!publishToRemote) {
-            throw new Error("Need a remote to publish to");
-        }
-        const remoteRef = `refs/remotes/${publishToRemote}/${basedOn}`;
-        if (!await commitExists(remoteRef, workDir)) {
-            throw new Error(`${basedOn} not pushed to ${publishToRemote}`);
-        }
-        const commit = await git(["rev-parse", "-q", "--verify", remoteRef], { workDir });
-        if (await git(["rev-parse", basedOn]) !== commit) {
-            throw new Error(`${basedOn} on ${publishToRemote} disagrees with local branch`);
-        }
-        return basedOn;
-    }
-    static async getCc(branchName, workDir) {
-        // Cc: from config
-        const cc = [];
-        const forEach = (email) => {
-            if (email) {
-                cc.push(email);
-            }
-        };
-        await gitConfigForEach(`branch.${branchName}.cc`, forEach, workDir);
-        return cc;
-    }
-}
-
-;// CONCATENATED MODULE: ./node_modules/gitgitgadget/lib/pullRequestKey.ts
-function getPullRequestKey(pullRequest) {
-    return typeof (pullRequest) === "string" ? getPullRequestKeyFromURL(pullRequest) : pullRequest;
-}
-function getPullRequestKeyFromURL(pullRequestURL) {
-    const match = pullRequestURL.match(/^https:\/\/github.com\/(.*)\/(.*)\/pull\/(\d+)$/);
-    if (!match) {
-        throw new Error(`Unrecognized PR URL: "${pullRequestURL}`);
-    }
-    return { owner: match[1], repo: match[2], pull_number: parseInt(match[3], 10) };
-}
-
-;// CONCATENATED MODULE: ./node_modules/gitgitgadget/lib/patch-series.ts
-
-
-// import { encodeWords } from "nodemailer/lib/mime-funcs";
-
-
-
-
-
-
-// NOTE: first values is used when emitting headers in addSingletonHeaders
-// unless it is an empty string
-const singletonHeaders = [
-    {
-        key: "Content-Description",
-        values: [],
-    },
-    {
-        key: "Content-ID",
-        values: [],
-    },
-    {
-        key: "Content-Type",
-        values: ["text/plain; charset=UTF-8", "text/plain; charset=\"UTF-8\"",
-            "text/plain; charset=utf-8", "text/plain"],
-    },
-    {
-        key: "Content-Transfer-Encoding",
-        values: ["8bit", "7bit"],
-    },
-    {
-        key: "MIME-Version",
-        values: ["1.0"],
-    },
-];
-class PatchSeries {
-    constructor(notes, options, project, metadata, rangeDiff, patchCount, coverLetter, senderName) {
-        this.config = getConfig();
-        this.notes = notes;
-        this.options = options;
-        this.project = project;
-        this.metadata = metadata;
-        this.rangeDiff = rangeDiff;
-        this.coverLetter = coverLetter;
-        this.senderName = senderName;
-        this.patchCount = patchCount;
-    }
-    static async getFromTag(options, project) {
-        const latestTag = await this.getLatestTag(project.branchName, options.redo);
-        const baseCommit = await revParse(project.upstreamBranch);
-        if (!baseCommit) {
-            throw new Error(`Cannot determine tip of ${project.basedOn}`);
-        }
-        const headCommit = await revParse("HEAD");
-        if (!headCommit) {
-            throw new Error("Cannot determine HEAD revision");
-        }
-        const metadata = {
-            baseCommit,
-            baseLabel: project.upstreamBranch,
-            headCommit,
-            headLabel: project.branchName,
-            iteration: 1,
-        };
-        let rangeDiff = "";
-        if (latestTag) {
-            const range = latestTag + "..." + project.branchName;
-            if (!await git(["rev-list", range])) {
-                throw new Error(`Branch ${project.branchName} was already submitted: ${latestTag}`);
-            }
-            let match = latestTag.match(/-v([1-9][0-9]*)$/);
-            metadata.iteration = parseInt(match && match[1] || "0", 10) + 1;
-            const tagMessage = await git(["cat-file", "tag", latestTag]);
-            match = tagMessage.match(/^[\s\S]*?\n\n([\s\S]*)/);
-            (match ? match[1] : tagMessage).split("\n").map((line) => {
-                match = line
-                    .match(/https:\/\/lore\.kernel\.org\/.*\/([^/]+)/);
-                if (!match) {
-                    const re = /https:\/\/public-inbox\.org\/.*\/([^/]+)/;
-                    match = line.match(re);
-                }
-                if (!match) {
-                    const re = /https:\/\/www\.mail-archive\.com\/.*\/([^/]+)/;
-                    match = line.match(re);
-                }
-                if (!match) {
-                    match = line.match(/http:\/\/mid.gmane.org\/(.*)/);
-                }
-                if (!match) {
-                    match = line.match(/^[^ :]*: Message-ID: ([^/]+)/);
-                }
-                if (match) {
-                    if (metadata.referencesMessageIds) {
-                        metadata.referencesMessageIds.unshift(match[1]);
-                    }
-                    else {
-                        metadata.referencesMessageIds = [match[1]];
-                    }
-                }
-            });
-            if (await gitCommandExists("range-diff", project.workDir)) {
-                rangeDiff = await git(["range-diff", "--creation-factor=95",
-                    "--no-color", range]);
-            }
-        }
-        const patchCount = await revListCount(["--no-merges",
-            `${baseCommit}..${headCommit}`], project.workDir);
-        const notes = new GitNotes(project.workDir, "refs/notes/mail-patch-series");
-        return new PatchSeries(notes, options, project, metadata, rangeDiff, patchCount);
-    }
-    static async getFromNotes(notes, pullRequestURL, pullRequestTitle, pullRequestBody, baseLabel, baseCommit, headLabel, headCommit, options, senderName, senderEmail) {
-        const workDir = notes.workDir;
-        if (!workDir) {
-            throw new Error("Need a worktree!");
-        }
-        let metadata = await notes.get(pullRequestURL);
-        const currentRange = `${baseCommit}..${headCommit}`;
-        const patchCount = await revListCount(["--no-merges", currentRange], workDir);
-        if (!patchCount) {
-            throw new Error(`Invalid commit range: ${currentRange}`);
-        }
-        let rangeDiff = "";
-        if (metadata === undefined) {
-            metadata = {
-                baseCommit,
-                baseLabel,
-                coverLetterMessageId: "not yet sent",
-                headCommit,
-                headLabel,
-                iteration: 1,
-                pullRequestURL,
-            };
-        }
-        else {
-            if (!options.noUpdate && // allow reprint of submitted PRs
-                !await git(["rev-list",
-                    `${metadata.headCommit}...${headCommit}`], { workDir })) {
-                throw new Error(`${headCommit} was already submitted`);
-            }
-            const previousRange = `${metadata.baseCommit}..${metadata.headCommit}`;
-            if (await gitCommandExists("range-diff", workDir)) {
-                rangeDiff = await git(["range-diff", "--no-color",
-                    "--creation-factor=95",
-                    previousRange, currentRange], { workDir });
-            }
-            metadata.iteration++;
-            metadata.baseCommit = baseCommit;
-            metadata.baseLabel = baseLabel;
-            metadata.headCommit = headCommit;
-            metadata.headLabel = headLabel;
-            if (metadata.coverLetterMessageId) {
-                if (!metadata.referencesMessageIds) {
-                    metadata.referencesMessageIds = [];
-                }
-                metadata.referencesMessageIds
-                    .push(metadata.coverLetterMessageId);
-            }
-            metadata.coverLetterMessageId = "not yet sent";
-        }
-        const indentCoverLetter = patchCount > 1 ? "" : "    ";
-        const wrapCoverLetterAt = 76 - indentCoverLetter.length;
-        const { basedOn, cc, coverLetter, } = await PatchSeries.parsePullRequest(workDir, pullRequestTitle, pullRequestBody, wrapCoverLetterAt, indentCoverLetter);
-        // if known, add submitter to email chain
-        if (senderEmail) {
-            cc.push(`${senderName} <${senderEmail}>`);
-        }
-        if (basedOn && !await revParse(basedOn, workDir)) {
-            throw new Error(`Cannot find base branch ${basedOn}`);
-        }
-        const publishToRemote = undefined;
-        const project = await ProjectOptions.get(workDir, headCommit, cc, basedOn, publishToRemote, baseCommit);
-        return new PatchSeries(notes, options, project, metadata, rangeDiff, patchCount, coverLetter, senderName);
-    }
-    static async parsePullRequest(workDir, prTitle, prBody, wrapCoverLetterAtColumn, indentCoverLetter) {
-        // Replace \r\n with \n to simplify remaining parsing.
-        // Note that md2text() in the end will do the replacement anyway.
-        prBody = prBody.replace(/\r\n/g, "\n");
-        // Remove template from description (if template exists)
-        try {
-            let prTemplate = await git(["show",
-                "upstream/master:.github/PULL_REQUEST_TEMPLATE.md"], { workDir });
-            // Depending on the core.autocrlf setting, the template may contain
-            // \r\n line endings.
-            prTemplate = prTemplate.replace(/\r\n/g, "\n");
-            prBody = prBody.replace(prTemplate, "");
-        }
-        catch (_) {
-            // Just ignore it
-        }
-        const { basedOn, cc, coverLetterBody, } = PatchSeries.parsePullRequestBody(prBody);
-        const coverLetter = `${prTitle}\n${coverLetterBody.length ?
-            `\n${coverLetterBody}` : ""}`;
-        let wrappedLetter = md2text(coverLetter, wrapCoverLetterAtColumn);
-        if (indentCoverLetter) {
-            wrappedLetter = wrappedLetter.replace(/^/mg, indentCoverLetter);
-        }
-        return {
-            basedOn,
-            cc,
-            coverLetter: wrappedLetter,
-        };
-    }
-    static parsePullRequestBody(prBody) {
-        let basedOn;
-        const cc = [];
-        let coverLetterBody = prBody.trim();
-        // parse the footers of the pullRequestDescription
-        let match = prBody.match(/^([^]+)\n\n([^]+)$/);
-        if (!match && !prBody.match(/\n\n/)) {
-            // handle PR descriptions that have no body, just footers
-            match = prBody.match(/^()([-A-Za-z]+: [^]+)$/);
-        }
-        if (match) {
-            coverLetterBody = match[1];
-            const footer = [];
-            for (const line of match[2].trimRight().split("\n")) {
-                const match2 = line.match(/^([-A-Za-z]+:)\s*(.*)$/);
-                if (!match2) {
-                    footer.push(line);
-                }
-                else {
-                    switch (match2[1].toLowerCase()) {
-                        case "based-on:":
-                            if (basedOn) {
-                                throw new Error(`Duplicate Based-On footer: ${basedOn} vs ${match2[2]}`);
-                            }
-                            basedOn = match2[2];
-                            break;
-                        case "cc:":
-                            addressparser_default()(match2[2], { flatten: true })
-                                .forEach((e) => {
-                                if (e.name) {
-                                    cc.push(`${e.name} <${e.address}>`);
-                                }
-                                else {
-                                    cc.push(e.address);
-                                }
-                            });
-                            break;
-                        default:
-                            footer.push(line);
-                    }
-                }
-            }
-            if (footer.length > 0) {
-                coverLetterBody += `\n\n${footer.join("\n")}`;
-            }
-        }
-        return {
-            basedOn,
-            cc,
-            coverLetterBody,
-        };
-    }
-    static async getLatestTag(branchName, redo) {
-        const args = [
-            "for-each-ref", "--format=%(refname)", "--sort=-taggerdate",
-            "refs/tags/" + branchName + "-v*[0-9]",
-        ];
-        const latesttags = (await git(args)).split("\n");
-        if (redo) {
-            return latesttags.length > 1 ? latesttags[1] : "";
-        }
-        return latesttags.length > 0 ? latesttags[0] : "";
-    }
-    static splitMails(mbox) {
-        const re = /\n(?=From [0-9a-f]{40} Mon Sep 17 00:00:00 2001\n)/;
-        return mbox.split(re);
-    }
-    static removeDuplicateHeaders(mails) {
-        mails.map((mail, i) => {
-            const endOfHeader = mail.indexOf("\n\n");
-            if (endOfHeader < 0) {
-                return;
-            }
-            let headers = mail.substr(0, endOfHeader + 1);
-            singletonHeaders.forEach((header) => {
-                headers = PatchSeries.stripDuplicateHeaders(headers, header);
-            });
-            mails[i] = headers + mail.substr(endOfHeader + 1);
-        });
-    }
-    static stripDuplicateHeaders(headers, header) {
-        const needle = "\n" + header.key + ":";
-        let offset;
-        if (headers.startsWith(`${header.key}:`)) {
-            offset = 0;
-        }
-        else {
-            offset = headers.indexOf(needle) + 1;
-            if (!offset) {
-                return headers;
-            }
-        }
-        let endOfKey = offset + needle.length - 1;
-        offset = headers.indexOf(needle, endOfKey);
-        if (offset < 0) {
-            return headers;
-        }
-        // extract values to determine if they match.
-        let endOfHdr = headers.indexOf("\n", endOfKey);
-        const value1 = headers.substr(endOfKey, endOfHdr - endOfKey).trim();
-        do {
-            endOfKey = offset + needle.length;
-            endOfHdr = headers.indexOf("\n", endOfKey);
-            const value2 = headers.substr(endOfKey, endOfHdr - endOfKey).trim();
-            if (value1 !== value2) {
-                if (0 >= header.values.indexOf(value2)) {
-                    console.log("Found multiple headers where only one allowed"
-                        + `\n    ${header.key}: ${value1}\n    `
-                        + `${header.key}: ${value2}\nProcessing headers:\n`
-                        + headers);
-                }
-            }
-            // substr up to \n and concat from next \n
-            headers = headers.substr(0, offset) + headers.substr(endOfHdr);
-            offset = headers.indexOf(needle, offset);
-        } while (offset >= 0);
-        return headers;
-    }
-    static encodeSender(sender) {
-        const encoded = mime_funcs_default().encodeWords(sender);
-        /* Don't quote if already quoted */
-        if (encoded.startsWith("\"") && encoded.match(/"\s*</)) {
-            return encoded;
-        }
-        const match = encoded.match(/^([^<]*[()<>[\]:;@\\,."][^<]*?)(\s*)(<.*)/);
-        if (!match) {
-            return encoded;
-        }
-        return `"${match[1]
-            .replace(/["\\\\]/g, "\\$&")}"${match[2]}${match[3]}`;
-    }
-    insertCcAndFromLines(mails, thisAuthor, senderName) {
-        const isGitGitGadget = thisAuthor.match(`^${this.config.mail.author} (<.*)$`);
-        mails.map((mail, i) => {
-            const match = mail.match(/^([^]*?)(\n\n[^]*)$/);
-            if (!match) {
-                throw new Error(`No header found in mail #${i}:\n${mail}`);
-            }
-            let header = match[1];
-            const authorMatch = header.match(/^([^]*\nFrom: )([^]*?)(\n(?![ \t])[^]*)$/);
-            if (!authorMatch) {
-                throw new Error("No From: line found in header:\n\n" + header);
-            }
-            let replaceSender = PatchSeries.encodeSender(thisAuthor);
-            if (isGitGitGadget) {
-                const onBehalfOf = i === 0 && senderName ?
-                    PatchSeries.encodeSender(senderName) :
-                    authorMatch[2].replace(/ <.*>$/, "");
-                // Special-case GitGitGadget to send from  "<author> via GitGitGadget"
-                replaceSender = `\"${onBehalfOf.replace(/^"(.*)"$/, "$1").replace(/"/g, "\\\"")} via ${this.config.mail.sender}" ${isGitGitGadget[1]}`;
-            }
-            else if (authorMatch[2] === thisAuthor) {
-                return;
-            }
-            header = authorMatch[1] + replaceSender + authorMatch[3];
-            if (mails.length > 1 && i === 0 && senderName) {
-                // skip Cc:ing and From:ing in the cover letter
-                mails[i] = header + match[2];
-                return;
-            }
-            const ccMatch = header.match(/^([^]*\nCc: [^]*?)(|\n(?![ \t])[^]*)$/);
-            if (ccMatch) {
-                header = ccMatch[1] + ",\n    " + authorMatch[2] + ccMatch[2];
-            }
-            else {
-                header += "\nCc: " + authorMatch[2];
-            }
-            mails[i] = header + "\n\nFrom: " + authorMatch[2] + match[2];
-        });
-    }
-    static adjustCoverLetter(coverLetter) {
-        const regex = new RegExp("^([^]*?\\nSubject: .* )"
-            + "\\*\\*\\* SUBJECT HERE \\*\\*\\*"
-            + "(?=\\n)([^]*?\\n\\n)"
-            + "\\*\\*\\* BLURB HERE \\*\\*\\*\\n\\n"
-            + "([^]*?)\\n\\n([^]*)$");
-        const match = coverLetter.match(regex);
-        if (!match) {
-            throw new Error("Could not parse cover letter:\n\n" + coverLetter);
-        }
-        const subject = match[3].split(/\n(?=.)/).join("\n ");
-        return match[1] + subject + match[2] + match[4];
-    }
-    static generateTagMessage(mail, isCoverLetter, midUrlPrefix, inReplyTo) {
-        const regex = isCoverLetter ?
-            /\nSubject: (\[.*?\] )?([^]*?(?=\n[^ ]))[^]*?\n\n([^]*?)\n*-- \n/ :
-            /\nSubject: (\[.*?\] )?([^]*?(?=\n[^ ]))[^]*?\n\n([^]*?)\n*---\n/;
-        const match = mail.match(regex);
-        if (!match) {
-            throw new Error("Could not generate tag message from mail:\n\n"
-                + mail);
-        }
-        const messageID = mail.match(/\nMessage-ID: <(.*?)>\n/i);
-        let footer = messageID ? `Submitted-As: ${midUrlPrefix}${messageID[1]}` : "";
-        if (inReplyTo) {
-            inReplyTo.map((id) => {
-                footer += "\nIn-Reply-To: " + midUrlPrefix + id;
-            });
-        }
-        // Subjects can contain continuation lines; simply strip out the new
-        // line and keep only the space
-        return match[2].replace(/\n */g, " ") + `\n\n${match[3]}${footer ? `\n\n${footer}` : ""}`;
-    }
-    static insertLinks(tagMessage, url, tagName, basedOn) {
-        if (!url) {
-            return tagMessage;
-        }
-        let match = url.match(/^https?(:\/\/github\.com\/.*)/);
-        if (match) {
-            url = "https" + match[1];
-        }
-        else {
-            match = url.match(/^(git@)?github\.com(:.*)/);
-            if (match) {
-                url = "https://github.com/" + match[1];
-            }
-            else {
-                return tagMessage;
-            }
-        }
-        let insert = `Published-As: ${url}/releases/tag/${tagName}\nFetch-It-Via: git fetch ${url} ${tagName}\n`;
-        if (basedOn) {
-            insert =
-                `Based-On: ${basedOn} at ${url}\nFetch-Base-Via: git fetch ${url} ${basedOn}\n${insert}`;
-        }
-        if (!tagMessage.match(/\n[-A-Za-z]+: [^\n]*\n$/)) {
-            insert = "\n" + insert;
-        }
-        return tagMessage + insert;
-    }
-    static insertFooters(mail, isCoverLetter, footers) {
-        const regex = isCoverLetter ?
-            /^([^]*?\n)(-- \n[^]*)$/ :
-            /^([^]*?\n---\n(?:\n[A-Za-z:]+ [^]*?\n\n)?)([^]*)$/;
-        const match = mail.match(regex);
-        if (!match) {
-            throw new Error("Failed to find range-diff insertion "
-                + "point for\n\n" + mail);
-        }
-        const n = isCoverLetter ? "" : "\n";
-        return `${match[1]}${n}${footers.join("\n")}\n${n}${match[2]}`;
-    }
-    static adjustDateHeaders(mails, forceDate) {
-        let count = 0;
-        const time = forceDate.getTime();
-        for (let i = 0, j = mails.length - 1; i < mails.length; i++, j--) {
-            const mail = mails[i];
-            /* Look for the date header */
-            let dateOffset;
-            if (mail.startsWith("Date: ")) {
-                dateOffset = 6;
-            }
-            else {
-                dateOffset = mail.indexOf("\nDate: ");
-                if (dateOffset < 0) {
-                    continue;
-                }
-                const endOfHeader = mail.indexOf("\n\n");
-                if (dateOffset > endOfHeader) {
-                    continue;
-                }
-                dateOffset += 7;
-            }
-            const endOfLine = mail.indexOf("\n", dateOffset);
-            mails[i] = mail.substr(0, dateOffset) +
-                new Date(time - j * 1000).toUTCString().replace(/GMT$/, "+0000")
-                + mail.substr(endOfLine);
-            count++;
-        }
-        return count;
-    }
-    static generateSingletonHeaders() {
-        const results = [];
-        for (const key of singletonHeaders) {
-            if (key.values.length) {
-                results.push(`--add-header=${key.key}: ${key.values[0]}`);
-            }
-        }
-        return results;
-    }
-    subjectPrefix() {
-        return `${this.options.noUpdate ? "PREVIEW" : "PATCH"}${this.options.rfc ?
-            "/RFC" : ""}${this.metadata.iteration > 1 ?
-            ` v${this.metadata.iteration}` : ""}`;
-    }
-    async generateAndSend(logger, send, publishTagsAndNotesToRemote, pullRequestURL, forceDate) {
-        let globalOptions;
-        if (this.options.dryRun) {
-            logger.log(`Dry-run ${this.project.branchName} v${this.metadata.iteration}`);
-        }
-        else {
-            logger.log(`Submitting ${this.project.branchName} v${this.metadata.iteration}`);
-            globalOptions = await this.notes.get("");
-        }
-        logger.log("Generating mbox");
-        const mbox = await this.generateMBox();
-        const mails = PatchSeries.splitMails(mbox);
-        PatchSeries.removeDuplicateHeaders(mails);
-        const ident = await git(["var", "GIT_AUTHOR_IDENT"], {
-            workDir: this.project.workDir,
-        });
-        const match = ident.match(/.*>/);
-        const thisAuthor = match && match[0];
-        if (!thisAuthor) {
-            throw new Error("Could not determine author ident from " + ident);
-        }
-        logger.log("Adding Cc: and explicit From: lines for other authors, if needed");
-        this.insertCcAndFromLines(mails, thisAuthor, this.senderName);
-        if (mails.length > 1) {
-            if (this.coverLetter) {
-                const match2 = mails[0].match(/^([^]*?\n\*\*\* BLURB HERE \*\*\*\n\n)([^]*)/);
-                if (!match2) {
-                    throw new Error(`Could not find blurb in ${mails[0]}`);
-                }
-                mails[0] = `${match2[1]}${this.coverLetter}\n\n${match2[2]}`;
-            }
-            logger.log("Fixing Subject: line of the cover letter");
-            mails[0] = PatchSeries.adjustCoverLetter(mails[0]);
-        }
-        const midMatch = mails[0].match(/\nMessage-ID: <(.*)>/i);
-        let coverMid = midMatch ? midMatch[1] : undefined;
-        if (this.metadata.pullRequestURL) {
-            if (!coverMid) {
-                throw new Error("Could not extract cover letter Message-ID");
-            }
-            const mid = coverMid;
-            const tsMatch = coverMid.match(/cover\.([0-9]+)\./);
-            const timeStamp = tsMatch ? tsMatch[1] : `${Date.now()}`;
-            const emailMatch = thisAuthor.match(/<(.*)>/);
-            if (!emailMatch) {
-                throw new Error(`Could not parse email of '${thisAuthor}`);
-            }
-            const email = emailMatch[1];
-            const prMatch = this.metadata.pullRequestURL.match(/\/([^/]+)\/([^/]+)\/pull\/(\d+)$/);
-            if (prMatch) {
-                const infix = this.metadata.iteration > 1 ? `.v${this.metadata.iteration}` : "";
-                const repoInfix = prMatch[1] === this.config.repo.owner ?
-                    prMatch[2] : `${prMatch[1]}.${prMatch[2]}`;
-                const newCoverMid = `pull.${prMatch[3]}${infix}.${repoInfix}.${timeStamp}.${email}`;
-                mails.map((value, index) => {
-                    // cheap replace-all
-                    mails[index] = value.split(mid).join(newCoverMid);
-                });
-                coverMid = newCoverMid;
-            }
-        }
-        this.metadata.coverLetterMessageId = coverMid;
-        logger.log("Generating tag message");
-        let tagMessage = PatchSeries.generateTagMessage(mails[0], mails.length > 1, this.project.midUrlPrefix, this.metadata.referencesMessageIds);
-        let tagName;
-        if (!this.metadata.pullRequestURL) {
-            tagName = `${this.project.branchName}-v${this.metadata.iteration}`;
-        }
-        else {
-            const prKey = getPullRequestKeyFromURL(this.metadata.pullRequestURL);
-            const branch = this.metadata.headLabel.replace(/:/g, "/");
-            const tagPrefix = prKey.owner === this.config.repo.owner ? "pr-" : `pr-${prKey.owner}-`;
-            tagName = `${tagPrefix}${prKey.pull_number}/${branch}-v${this.metadata.iteration}`;
-        }
-        this.metadata.latestTag = tagName;
-        if (this.project.publishToRemote) {
-            const url = await gitConfig(`remote.${this.project.publishToRemote}.url`, this.project.workDir);
-            if (!url) {
-                throw new Error(`remote ${this.project.publishToRemote} lacks URL`);
-            }
-            logger.log("Inserting links");
-            tagMessage = PatchSeries.insertLinks(tagMessage, url, tagName, this.project.basedOn);
-        }
-        if (this.options.noUpdate) {
-            logger.log(`Would generate tag ${tagName} with message:\n\n ${tagMessage.split("\n").map((line) => {
-                return "    " + line;
-            }).join("\n")}`);
-        }
-        else {
-            logger.log("Generating tag object");
-            await this.generateTagObject(tagName, tagMessage);
-        }
-        const footers = [];
-        if (pullRequestURL) {
-            const prefix = `https://github.com/${this.config.repo.owner}/${this.config.repo.name}`;
-            const tagName2 = encodeURIComponent(tagName);
-            footers.push(`Published-As: ${prefix}/releases/tag/${tagName2}`);
-            footers.push(`Fetch-It-Via: git fetch ${prefix} ${tagName}`);
-            footers.push(`Pull-Request: ${pullRequestURL}`);
-        }
-        if (this.rangeDiff) {
-            if (footers.length > 0) {
-                footers.push(""); // empty line
-            }
-            // split the range-diff and prefix with a space
-            footers.push(`Range-diff vs v${this.metadata.iteration - 1}:\n\n${this.rangeDiff.replace(/(^|\n(?!$))/g, "$1 ")}\n`);
-        }
-        logger.log("Inserting footers");
-        if (footers.length > 0) {
-            mails[0] = PatchSeries.insertFooters(mails[0], mails.length > 1, footers);
-        }
-        /*
-         * Finally, *after* inserting the range-diff and the footers (if any),
-         * insert the cover letter into single-patch submissions.
-         */
-        if (mails.length === 1 && this.coverLetter) {
-            if (this.patchCount !== 1) {
-                throw new Error(`Patch count mismatch: ${mails.length} vs ${this.patchCount}`);
-            }
-            // Need to insert it into the first mail
-            const splitAtTripleDash = mails[0].match(/([^]*?\n---\n)([^]*)$/);
-            if (!splitAtTripleDash) {
-                throw new Error(`No \`---\` found in\n${mails[0]}`);
-            }
-            console.log(`Insert cover letter into\n${mails[0]}\nwith match:`);
-            console.log(splitAtTripleDash);
-            mails[0] = splitAtTripleDash[1] +
-                this.coverLetter + "\n" + splitAtTripleDash[2];
-            console.log(mails[0]);
-        }
-        logger.log("Adjusting Date headers");
-        if (forceDate) {
-            PatchSeries.adjustDateHeaders(mails, forceDate);
-        }
-        if (this.options.dryRun) {
-            logger.log(`Would send this mbox:\n\n${mbox.split("\n").map((line) => {
-                return "    " + line;
-            }).join("\n")}`);
-        }
-        else if (send) {
-            for (const mail of mails) {
-                await send(mail);
-            }
-        }
-        else {
-            logger.log("Calling the `send-mbox` alias");
-            await this.sendMBox(mails.join("\n"));
-        }
-        if (this.options.noUpdate)
-            return this.metadata;
-        logger.log("Updating the mail metadata");
-        let isCoverLetter = mails.length > 1;
-        for (const mail of mails) {
-            const messageID = mail.match(/\nMessage-ID: <(.*?)>\n/i);
-            if (messageID) {
-                let originalCommit;
-                if (isCoverLetter) {
-                    isCoverLetter = false;
-                }
-                else {
-                    const commitMatch = mail.match(/^From ([0-9a-f]{40}) /);
-                    if (commitMatch) {
-                        originalCommit = commitMatch[1];
-                    }
-                }
-                const mid = messageID[1];
-                const mailMeta = {
-                    messageID: mid,
-                    originalCommit,
-                    pullRequestURL: this.metadata.pullRequestURL,
-                };
-                await this.notes.set(mid, mailMeta, true);
-                if (globalOptions && originalCommit &&
-                    this.metadata.pullRequestURL) {
-                    if (!globalOptions.activeMessageIDs) {
-                        globalOptions.activeMessageIDs = {};
-                    }
-                    globalOptions.activeMessageIDs[mid] = originalCommit;
-                }
-                if (originalCommit &&
-                    await commitExists(originalCommit, this.project.workDir)) {
-                    await this.notes.appendCommitNote(originalCommit, mid);
-                }
-            }
-        }
-        if (globalOptions && this.metadata.pullRequestURL) {
-            if (!globalOptions.openPRs) {
-                globalOptions.openPRs = {};
-            }
-            globalOptions.openPRs[this.metadata.pullRequestURL] =
-                coverMid || "";
-            await this.notes.set("", globalOptions, true);
-        }
-        logger.log("Publishing branch and tag");
-        await this.publishBranch(tagName);
-        if (!this.options.dryRun) {
-            const key = this.metadata.pullRequestURL || this.project.branchName;
-            await this.notes.set(key, this.metadata, true);
-        }
-        if (publishTagsAndNotesToRemote) {
-            await git(["push", publishTagsAndNotesToRemote, this.notes.notesRef,
-                `refs/tags/${tagName}`], { workDir: this.notes.workDir });
-        }
-        return this.metadata;
-    }
-    async generateMBox() {
-        const mergeBase = await git(["merge-base", this.project.baseCommit,
-            this.project.branchName], { workDir: this.project.workDir });
-        const args = [
-            "format-patch", "--thread", "--stdout", `--signature=${this.config.repo.owner}`,
-            "--add-header=Fcc: Sent",
-            "--base", mergeBase, this.project.to,
-        ].concat(PatchSeries.generateSingletonHeaders());
-        this.project.cc.map((email) => {
-            args.push("--cc=" + PatchSeries.encodeSender(email));
-        });
-        if (this.metadata.referencesMessageIds) {
-            this.metadata.referencesMessageIds.map((email) => {
-                args.push("--in-reply-to=" + email);
-            });
-        }
-        const subjectPrefix = this.subjectPrefix();
-        if (subjectPrefix) {
-            args.push("--subject-prefix=" + subjectPrefix);
-        }
-        if (this.patchCount > 1) {
-            if (!this.coverLetter) {
-                throw new Error(`Branch ${this.project.branchName} needs a description`);
-            }
-            args.push("--cover-letter");
-        }
-        if (this.options.patience) {
-            args.push("--patience");
-        }
-        args.push(`${this.project.baseCommit}..${this.project.branchName}`);
-        return await git(args, { workDir: this.project.workDir });
-    }
-    async generateTagObject(tagName, tagMessage) {
-        const args = ["tag", "-F", "-", "-a"];
-        if (this.options.redo) {
-            args.push("-f");
-        }
-        args.push(tagName);
-        args.push(this.metadata.headCommit);
-        await git(args, { stdin: tagMessage, workDir: this.project.workDir });
-    }
-    async sendMBox(mbox) {
-        await git(["send-mbox"], {
-            stdin: mbox,
-            workDir: this.project.workDir,
-        });
-    }
-    async publishBranch(tagName) {
-        if (!this.project.publishToRemote || this.options.noUpdate) {
-            return;
-        }
-        if (this.options.redo) {
-            tagName = "+" + tagName;
-        }
-        await git(["push", this.project.publishToRemote,
-            `+${this.project.branchName}`, tagName], { workDir: this.project.workDir });
-    }
-}
-
-// EXTERNAL MODULE: ./node_modules/mailparser/index.js
-var mailparser = __nccwpck_require__(469);
-// EXTERNAL MODULE: ./node_modules/nodemailer/lib/nodemailer.js
-var nodemailer = __nccwpck_require__(4289);
-// EXTERNAL MODULE: ./node_modules/rfc2047/lib/rfc2047.js
-var rfc2047 = __nccwpck_require__(9829);
-;// CONCATENATED MODULE: ./node_modules/gitgitgadget/lib/send-mail.ts
-
-
-
-async function parseHeadersAndSendMail(mbox, smtpOptions) {
-    return await sendMail(await parseMBox(mbox), smtpOptions);
-}
-/**
- * Parses a mail in mbox format, in preparation for sending it.
- *
- * Note: this function does *not* validate the input. For example, it does not
- * error out if, say, duplicate `Date:` headers were provided.
- *
- * @param {string} mbox The mail, in mbox format
- * @returns {IParsedMBox} the parsed headers/body
- */
-async function parseMBox(mbox, gentle) {
-    let cc;
-    let date;
-    let from;
-    const headers = new Array();
-    let messageId;
-    let subject;
-    let to;
-    const options = {
-        skipHtmlToText: true,
-        skipTextLinks: true,
-        skipTextToHtml: true
-    };
-    const parsed = await (0,mailparser.simpleParser)(mbox, options);
-    for (const entry of parsed.headerLines) {
-        const valueSet = entry.line.match(/(.*): *([^]*)$/);
-        if (!valueSet) {
-            if (entry.line[entry.line.length - 1] === ":") {
-                continue;
-            }
-            throw new Error(`Failed to parse header line '${entry.line}'`);
-        }
-        const key = valueSet[1];
-        const value = valueSet[2];
-        switch (entry.key) {
-            case "cc":
-                cc = (cc || []).concat(value.replace(/\r?\n/g, " ").split(", ").map(item => item.trim()));
-                break;
-            case "date":
-                date = value;
-                break;
-            case "fcc": break;
-            case "from":
-                from = (0,rfc2047.decode)(value.trim());
-                break;
-            case "message-id":
-                messageId = value;
-                break;
-            case "subject":
-                subject = value;
-                break;
-            case "to":
-                to = value;
-                break;
-            default:
-                headers.push({ key, value });
-        }
-    }
-    if (!gentle && (!to || !subject || !from)) {
-        throw new Error(`Missing To, Subject and/or From header:\n${mbox}`);
-    }
-    return {
-        body: parsed.text || "",
-        cc,
-        date,
-        from,
-        headers,
-        messageId,
-        raw: mbox,
-        subject,
-        to,
-    };
-}
-function parseMBoxMessageIDAndReferences(parsed) {
-    const references = [];
-    const seen = new Set();
-    /*
-     * This regular expression parses whitespace-separated lists of the form
-     * <MESSAGE-ID> [(COMMENT ["QUOTED"])], i.e. lists of message IDs that are
-     * enclosed in pointy brackets, possibly followed by a comment that is
-     * enclosed in parentheses which possibly contains one quoted string.
-     *
-     * This is in no way a complete parser for RFC2822 (which is not possible
-     * using regular expressions due to its recursive nature) but seems to be
-     * good enough for the Git mailing list.
-     */
-    const msgIdRegex = /^\s*<([^>]+)>(\s*|,)(\([^")]*("[^"]*")?\)\s*|\([^)]*\)$)?(<.*)?$/;
-    for (const header of parsed.headers ?? []) {
-        if (header.key === "In-Reply-To" || header.key === "References") {
-            let value = header.value.replace(/[\r\n]/g, " ");
-            while (value) {
-                const match = value.match(msgIdRegex);
-                if (!match) {
-                    if (value !== undefined && !value.match(/^\s*$/)) {
-                        throw new Error(`Error parsing Message-ID '${value}'`);
-                    }
-                    break;
-                }
-                if (!seen.has(match[1])) {
-                    references.push(match[1]);
-                    seen.add(match[1]);
-                }
-                value = match[5];
-            }
-        }
-    }
-    if (!parsed.messageId) {
-        throw new Error(`No Message-ID found in ${parsed.raw}`);
-    }
-    const messageID = parsed.messageId.match(/^<(.*)>$/);
-    if (!messageID) {
-        throw new Error(`Unexpected Message-ID format: ${parsed.messageId}`);
-    }
-    return { messageID: messageID[1], references };
-}
-async function sendMail(mail, smtpOptions) {
-    const transportOpts = {
-        auth: {
-            pass: smtpOptions.smtpPass,
-            user: smtpOptions.smtpUser,
-        },
-        host: smtpOptions.smtpHost,
-        secure: true,
-    };
-    if (smtpOptions.smtpOpts) {
-        // Add quoting for JSON.parse
-        const smtpOpts = smtpOptions.smtpOpts
-            .replace(/([ {])([a-zA-Z0-9.]+?) *?:/g, "$1\"$2\":");
-        Object.assign(transportOpts, JSON.parse(smtpOpts));
-    }
-    return new Promise((resolve, reject) => {
-        const transporter = (0,nodemailer/* createTransport */.qv)(transportOpts);
-        // setup email data with unicode symbols
-        const mailOptions = {
-            envelope: {
-                cc: mail.cc ? mail.cc.join(", ") : undefined,
-                from: mail.from,
-                to: mail.to,
-            },
-            raw: mail.raw,
-        };
-        transporter.sendMail(mailOptions, (error, info) => {
-            if (error) {
-                reject(error);
-            }
-            else {
-                resolve(info.messageId);
-            }
-        });
-    });
-}
-
-;// CONCATENATED MODULE: ./node_modules/gitgitgadget/lib/gitgitgadget.ts
-
-
-
-
-
-
-/**
- * The central class of the GitHub App.
- */
-class GitGitGadget {
-    constructor(notes, options, allowedUsers, smtpOptions, publishTagsAndNotesToRemote) {
-        this.config = getConfig();
-        if (!notes.workDir) {
-            throw new Error("Could not determine Git worktree");
-        }
-        this.workDir = notes.workDir;
-        this.notes = notes;
-        this.options = options;
-        this.allowedUsers = allowedUsers;
-        this.smtpOptions = smtpOptions;
-        this.publishTagsAndNotesToRemote = publishTagsAndNotesToRemote;
-    }
-    static async getWorkDir(gitGitGadgetDir) {
-        const workDir = await gitConfig("gitgitgadget.workDir", gitGitGadgetDir);
-        if (!workDir) {
-            throw new Error("Could not find GitGitGadget's work tree");
-        }
-        return workDir;
-    }
-    static async get(gitGitGadgetDir, workDir) {
-        if (!workDir) {
-            workDir = await this.getWorkDir(gitGitGadgetDir);
-        }
-        const publishTagsAndNotesToRemote = await gitConfig("gitgitgadget.publishRemote", gitGitGadgetDir);
-        if (!publishTagsAndNotesToRemote) {
-            throw new Error("No remote to which to push configured");
-        }
-        // Initialize the worktree if necessary
-        if (!await isDirectory(workDir)) {
-            await git(["init", "--bare", workDir]);
-        }
-        // Always fetch the Git notes first thing
-        await git(["fetch", publishTagsAndNotesToRemote, "--",
-            `+${GitNotes.defaultNotesRef}:${GitNotes.defaultNotesRef}`], { workDir });
-        const notes = new GitNotes(workDir);
-        const smtpUser = await gitConfig("gitgitgadget.smtpUser", gitGitGadgetDir);
-        const smtpHost = await gitConfig("gitgitgadget.smtpHost", gitGitGadgetDir);
-        const smtpPass = await gitConfig("gitgitgadget.smtpPass", gitGitGadgetDir);
-        const smtpOpts = await gitConfig("gitgitgadget.smtpOpts", gitGitGadgetDir);
-        if (!smtpUser || !smtpHost || !smtpPass) {
-            throw new Error("No SMTP settings configured");
-        }
-        const [options, allowedUsers] = await GitGitGadget.readOptions(notes);
-        return new GitGitGadget(notes, options, allowedUsers, { smtpHost, smtpOpts, smtpPass, smtpUser }, publishTagsAndNotesToRemote);
-    }
-    static async readOptions(notes) {
-        const defaultOptions = { allowedUsers: [], };
-        const options = await notes.get("") ?? defaultOptions;
-        const allowedUsers = new Set(options.allowedUsers);
-        return [options, allowedUsers];
-    }
-    isUserAllowed(user) {
-        return this.allowedUsers.has(user);
-    }
-    async allowUser(vouchingUser, user) {
-        await this.fetchAndReReadOptions();
-        if (!this.isUserAllowed(vouchingUser)) {
-            throw new Error(`User ${vouchingUser} lacks permission for this.`);
-        }
-        if (this.isUserAllowed(user)) {
-            return false;
-        }
-        this.allowedUsers.add(user);
-        this.options.allowedUsers.push(user);
-        await this.notes.set("", this.options, true);
-        await this.pushNotesRef();
-        return true;
-    }
-    async denyUser(vouchingUser, user) {
-        await this.fetchAndReReadOptions();
-        if (!this.isUserAllowed(vouchingUser)) {
-            throw new Error(`User ${vouchingUser} lacks permission for this.`);
-        }
-        if (!this.isUserAllowed(user)) {
-            return false;
-        }
-        for (let i = 0; i < this.options.allowedUsers.length; i++) {
-            if (this.options.allowedUsers[i] === user) {
-                this.options.allowedUsers.splice(i, 1);
-                break;
-            }
-        }
-        this.allowedUsers.delete(user);
-        await this.notes.set("", this.options, true);
-        await this.pushNotesRef();
-        return true;
-    }
-    // Send emails only to the user
-    async preview(pr, userInfo) {
-        if (!userInfo.email) {
-            throw new Error(`No email in user info for ${userInfo.login}`);
-        }
-        const email = userInfo.email;
-        const send = async (mail) => {
-            const mbox = await parseMBox(mail);
-            mbox.cc = [];
-            mbox.to = email;
-            console.log(mbox);
-            return await sendMail(mbox, this.smtpOptions);
-        };
-        return await this.genAndSend(pr, userInfo, { noUpdate: true }, send);
-    }
-    // Send emails out for review
-    async submit(pr, userInfo) {
-        const send = async (mail) => {
-            return await parseHeadersAndSendMail(mail, this.smtpOptions);
-        };
-        return await this.genAndSend(pr, userInfo, {}, send);
-    }
-    async updateNotesAndPullRef(repositoryOwner, pullRequestNumber, additionalRef) {
-        const pullRequestRef = `refs/pull/${pullRequestNumber}/head`;
-        const pullRequestMerge = `refs/pull/${pullRequestNumber}/merge`;
-        const args = [
-            "fetch",
-            this.publishTagsAndNotesToRemote,
-            "--",
-            `+${this.notes.notesRef}:${this.notes.notesRef}`
-        ];
-        args.push(...this.config.repo.trackingBranches.map(branch => `+refs/heads/${branch}:refs/remotes/upstream/${branch}`));
-        const prArgs = [
-            `+${pullRequestRef}:${pullRequestRef}`,
-            `+${pullRequestMerge}:${pullRequestMerge}`,
-        ];
-        if (additionalRef) {
-            args.push(`+${additionalRef}:${additionalRef}`);
-        }
-        if (repositoryOwner === this.config.repo.owner) {
-            args.push(...prArgs);
-        }
-        else {
-            await git(["fetch", `https://github.com/${repositoryOwner}/${this.config.repo.name}`, ...prArgs], { workDir: this.workDir });
-        }
-        await git(args, { workDir: this.workDir });
-        // re-read options
-        [this.options, this.allowedUsers] = await GitGitGadget.readOptions(this.notes);
-        return pullRequestRef;
-    }
-    async fetchAndReReadOptions() {
-        await git(["fetch", this.publishTagsAndNotesToRemote, "--",
-            `+${GitNotes.defaultNotesRef}:${GitNotes.defaultNotesRef}`], { workDir: this.workDir });
-        [this.options, this.allowedUsers] =
-            await GitGitGadget.readOptions(this.notes);
-    }
-    async pushNotesRef() {
-        await git(["push", this.publishTagsAndNotesToRemote, "--",
-            `${this.notes.notesRef}`], { workDir: this.workDir });
-        // re-read options
-        [this.options, this.allowedUsers] =
-            await GitGitGadget.readOptions(this.notes);
-    }
-    // Finish the job for preview and submit
-    async genAndSend(pr, userInfo, options, send) {
-        // get metadata in work repo
-        const metadata = await this.notes.get(pr.pullRequestURL);
-        const previousTag = metadata && metadata.latestTag ?
-            `refs/tags/${metadata.latestTag}` : undefined;
-        // update work repo from base
-        await this.updateNotesAndPullRef(pr.baseOwner, pr.number, previousTag);
-        const series = await PatchSeries.getFromNotes(this.notes, pr.pullRequestURL, pr.title, pr.body, pr.baseLabel, pr.baseCommit, pr.headLabel, pr.headCommit, options, userInfo.name, userInfo.email);
-        const patchSeriesMetadata = await series.generateAndSend(console, send, this.publishTagsAndNotesToRemote, pr.pullRequestURL, new Date());
-        return patchSeriesMetadata;
-    }
-}
-
-// EXTERNAL MODULE: ./node_modules/@octokit/rest/dist-node/index.js
-var dist_node = __nccwpck_require__(5375);
-;// CONCATENATED MODULE: ./node_modules/gitgitgadget/lib/github-glue.ts
-
-
-
-
-class GitHubGlue {
-    constructor(workDir, owner, repo) {
-        this.client = new dist_node/* Octokit */.v({ log: console }); // add { log: console } to debug
-        this.owner = owner;
-        this.repo = repo;
-        this.workDir = workDir;
-    }
-    async annotateCommit(originalCommit, gitGitCommit, repositoryOwner, baseOwner) {
-        const output = await git(["show", "-s", "--format=%h %cI", gitGitCommit], { workDir: this.workDir });
-        const match = output.match(/^(\S+) (\S+)$/);
-        if (!match) {
-            throw new Error(`Could not find ${gitGitCommit}: '${output}'`);
-        }
-        const [, short, completedAt] = match;
-        const url = `https://github.com/${baseOwner}/${this.repo}/commit/${gitGitCommit}`;
-        await this.ensureAuthenticated(repositoryOwner);
-        const checks = await this.client.rest.checks.create({
-            completed_at: completedAt,
-            conclusion: "success",
-            details_url: url,
-            head_sha: originalCommit,
-            name: "upstream commit",
-            output: {
-                summary: `Integrated into ${baseOwner}.${this.repo} as [${short}](${url}).`,
-                title: `In ${baseOwner}.${this.repo}: ${short}`,
-            },
-            owner: repositoryOwner,
-            repo: this.repo,
-            started_at: completedAt,
-            status: "completed",
-        });
-        return checks.data.id;
-    }
-    /**
-     * Add a cc to a Pull Request
-     *
-     * @param {pullRequestKeyInfo} pullRequest - the Pull Request to comment on
-     * @param {string} cc to add
-     * @returns the comment ID and the URL to the comment
-     */
-    async addPRCc(pullRequest, cc) {
-        const id = cc.match(/<(.*)>/);
-        if (!id || id[1] === "gitster@pobox.com") {
-            return;
-        }
-        const ccLower = id[1].toLowerCase();
-        const prKey = getPullRequestKey(pullRequest);
-        const pr = await this.getPRInfo(prKey);
-        const trimBody = pr.body.trimRight();
-        let footer = trimBody.match(/^[^]+\r?\n\s*?\r?\n([^]+)$/);
-        // handle PR descriptions that have no body, just footers
-        if (!footer && !trimBody.match(/\r?\n\r?\n/)) {
-            footer = trimBody.match(/^([a-z][-a-z0-9]+:\s*[^]+)$/i);
-        }
-        let found = false;
-        let footerSeparator = "\r\n";
-        if (footer && footer[1].match(/:/))
-            try {
-                footer[1].split(/\r?\n/).reverse().forEach(line => {
-                    const match = line.match(/^([a-z][-a-z0-9]+):\s*(.*)$/i);
-                    if (!match) { // stop if not a footer
-                        throw new Error("No Footer");
-                    }
-                    footerSeparator = ""; // body already has footers
-                    if (!found && match[1].toLowerCase() === "cc")
-                        try {
-                            addressparser_default()(match[2], { flatten: true }).forEach(email => {
-                                if (ccLower === email.address.toLowerCase()) {
-                                    found = true;
-                                    throw new Error("Found");
-                                }
-                            });
-                        }
-                        catch (_) {
-                            // quick exit for cc matched (comment to quiet linter)
-                        }
-                });
-            }
-            catch (_) {
-                found = false; // ensure it was not a cc: false positive
-                footerSeparator = "\r\n"; // reset
-            }
-        if (!found) {
-            const user = await this.getGitHubUserInfo(pr.author);
-            if (!user.email || ccLower !== user.email.toLowerCase()) {
-                await this.updatePR(prKey, `${trimBody}${footerSeparator}\r\ncc: ${cc}`);
-                await this.addPRComment(prKey, `User \`${cc}\` has been added to the cc: list.`);
-            }
-        }
-    }
-    /**
-     * Add a Pull Request comment
-     *
-     * @param {pullRequestKeyInfo} pullRequest - the Pull Request to comment on
-     * @param {string} comment the comment
-     * @returns the comment ID and the URL to the comment
-     */
-    async addPRComment(pullRequest, comment) {
-        const prKey = getPullRequestKey(pullRequest);
-        await this.ensureAuthenticated(prKey.owner);
-        const status = await this.client.rest.issues.createComment({
-            body: comment,
-            issue_number: prKey.pull_number,
-            owner: prKey.owner,
-            repo: prKey.repo,
-        });
-        return {
-            id: status.data.id,
-            url: status.data.html_url,
-        };
-    }
-    /**
-     * Add a Pull Request comment on a specific commit
-     *
-     * @param {pullRequestKeyInfo} pullRequest - the Pull Request to comment on
-     * @param {string} commit the hash of the commit to comment on
-     * @param {string} comment the comment
-     * @returns the comment ID and the URL to the comment
-     */
-    async addPRCommitComment(pullRequest, commit, gitWorkDir, comment) {
-        const prKey = getPullRequestKey(pullRequest);
-        await this.ensureAuthenticated(prKey.owner);
-        const files = await git(["diff", "--name-only",
-            `${commit}^..${commit}`, "--"], { workDir: gitWorkDir });
-        const path = files.replace(/\n[^]*/, "");
-        const status = await this.client.rest.pulls.createReviewComment({
-            body: comment,
-            commit_id: commit,
-            path,
-            position: 1,
-            ...prKey
-        });
-        return {
-            id: status.data.id,
-            url: status.data.html_url,
-        };
-    }
-    /**
-     * Add a Pull Request comment as reply to a specific comment
-     *
-     * @param {pullRequestKeyInfo} pullRequest - the Pull Request to comment on
-     * @param {number} id the ID of the comment to which to reply
-     * @param {string} comment the comment to add
-     * @returns the comment ID and the URL to the added comment
-     */
-    async addPRCommentReply(pullRequest, id, comment) {
-        const prKey = getPullRequestKey(pullRequest);
-        await this.ensureAuthenticated(prKey.owner);
-        const status = await this.client.rest.pulls.createReplyForReviewComment({
-            body: comment,
-            comment_id: id,
-            ...prKey
-        });
-        return {
-            id: status.data.id,
-            url: status.data.html_url,
-        };
-    }
-    /**
-     * Update a Pull Request body or title
-     *
-     * @param {pullRequestKey} prKey - the Pull Request to update
-     * @param {string} body the updated body
-     * @param {string} title the updated title
-     * @returns the PR number
-     */
-    async updatePR(prKey, body, title) {
-        await this.ensureAuthenticated(prKey.owner);
-        const result = await this.client.rest.pulls.update({
-            "body": body || undefined,
-            "title": title || undefined,
-            ...prKey
-        });
-        return result.data.id;
-    }
-    async addPRLabels(pullRequest, labels) {
-        const prKey = getPullRequestKey(pullRequest);
-        await this.ensureAuthenticated(prKey.owner);
-        const result = await this.client.rest.issues.addLabels({
-            issue_number: prKey.pull_number,
-            labels,
-            owner: prKey.owner,
-            repo: prKey.repo,
-        });
-        return result.data.map((res) => `${res.id}`);
-    }
-    async closePR(pullRequest, viaMergeCommit) {
-        const prKey = getPullRequestKey(pullRequest);
-        await this.ensureAuthenticated(prKey.owner);
-        await this.client.rest.pulls.update({
-            state: "closed",
-            ...prKey
-        });
-        const result = await this.client.rest.issues.createComment({
-            body: `Closed via ${viaMergeCommit}.`,
-            issue_number: prKey.pull_number,
-            owner: prKey.owner,
-            repo: prKey.repo,
-        });
-        return result.data.id;
-    }
-    // The following public methods do not require authentication
-    async getOpenPRs(repositoryOwner) {
-        const result = [];
-        const response = await this.client.rest.pulls.list({
-            owner: repositoryOwner,
-            per_page: 1000,
-            repo: this.repo,
-            state: "open",
-        });
-        response.data.map((pr) => {
-            if (!pr.user || !pr.base.repo.owner) {
-                throw new Error(`PR ${pr.number} is missing information. ${pr.toString()}`);
-            }
-            result.push({
-                author: pr.user.login,
-                baseCommit: pr.base.sha,
-                baseLabel: pr.base.label,
-                baseOwner: pr.base.repo.owner.login,
-                baseRepo: pr.base.repo.name,
-                body: pr.body || "",
-                hasComments: pr.updated_at !== pr.created_at,
-                headCommit: pr.head.sha,
-                headLabel: pr.head.label,
-                mergeable: true,
-                number: pr.number,
-                pullRequestURL: pr.html_url,
-                title: pr.title,
-            });
-        });
-        return result;
-    }
-    /**
-     * Retrieve a Pull Request's information relevant to GitGitGadget's operations.
-     *
-     * @param prKey the Pull Request's basic id (owner, repo, number)
-     * @returns information about that Pull Request
-     */
-    async getPRInfo(prKey) {
-        const response = await this.client.rest.pulls.get({
-            ...prKey
-        });
-        const pullRequest = response.data;
-        if (!pullRequest.user) {
-            throw new Error(`PR ${pullRequest.number} is missing information. ${pullRequest.toString()}`);
-        }
-        return {
-            author: pullRequest.user.login,
-            baseCommit: pullRequest.base.sha,
-            baseLabel: pullRequest.base.label,
-            baseOwner: pullRequest.base.repo.owner.login,
-            baseRepo: pullRequest.base.repo.name,
-            body: pullRequest.body || "",
-            commits: pullRequest.commits,
-            hasComments: pullRequest.comments > 0,
-            headCommit: pullRequest.head.sha,
-            headLabel: pullRequest.head.label,
-            mergeable: pullRequest.mergeable || true,
-            number: pullRequest.number,
-            pullRequestURL: pullRequest.html_url,
-            title: pullRequest.title,
-        };
-    }
-    /**
-     * Retrieves the body of the specified PR/issue comment.
-     *
-     * @param commentID the ID of the PR/issue comment
-     * @returns the text in the comment
-     */
-    async getPRComment(repositoryOwner, commentID) {
-        const response = await this.client.rest.issues.getComment({
-            comment_id: commentID,
-            owner: repositoryOwner,
-            repo: this.repo,
-        });
-        const match = response.data.html_url.match(/\/pull\/([0-9]+)/);
-        const prNumber = match ? parseInt(match[1], 10) : -1;
-        if (!response.data.user) {
-            throw new Error(`PR ${prNumber} comment is missing information. ${response.data.toString()}`);
-        }
-        return {
-            author: response.data.user.login,
-            body: response.data.body || "",
-            prNumber,
-        };
-    }
-    /**
-     * Retrieves the commits of the specified PR.
-     *
-     * @param repositoryOwner owner of the GitHub repo for the pull request
-     * @param prNumber the Pull Request's number
-     * @returns the set of commits
-     */
-    async getPRCommits(repositoryOwner, prNumber) {
-        const response = await this.client.rest.pulls.listCommits({
-            owner: repositoryOwner,
-            pull_number: prNumber,
-            repo: this.repo,
-        });
-        const result = [];
-        response.data.map((cm) => {
-            if (!cm.commit.committer || !cm.commit.author || !cm.sha) {
-                throw new Error(`Commit information missing for PR ${prNumber} - ${cm.toString()}`);
-            }
-            const committer = cm.commit.committer;
-            const author = cm.commit.author;
-            result.push({
-                author: {
-                    email: author.email || "unknown email",
-                    login: cm.author ? cm.author.login : "unknown login",
-                    name: author.name || "unknown name",
-                },
-                commit: cm.sha,
-                committer: {
-                    email: committer.email || "unknown email",
-                    login: cm.committer ? cm.committer.login : "unknown login",
-                    name: committer.name || "unknown name",
-                },
-                message: cm.commit.message,
-                parentCount: cm.parents.length,
-            });
-        });
-        return result;
-    }
-    /**
-     * Obtain basic information for a given GitHub user.
-     *
-     * @param login the GitHub login
-     */
-    async getGitHubUserInfo(login) {
-        // required to get email
-        await this.ensureAuthenticated(this.authenticated || this.owner);
-        const response = await this.client.rest.users.getByUsername({
-            username: login,
-        });
-        if (response.status === 200) {
-            return {
-                email: response.data.email,
-                login: response.data.login,
-                name: response.data.name || "",
-                type: response.data.type,
-            };
-        }
-        else {
-            throw new Error(`GitHub unresponsive for getByUsername`);
-        }
-    }
-    async ensureAuthenticated(repositoryOwner) {
-        console.log(`authenticating ${repositoryOwner}`);
-        if (repositoryOwner !== this.authenticated) {
-            const infix = repositoryOwner === "gitgitgadget" ?
-                "" : `.${repositoryOwner}`;
-            const token = await gitConfig(`gitgitgadget${infix}.githubToken`);
-            if (!token) {
-                throw new Error(`Need a GitHub token for ${repositoryOwner}`);
-            }
-            this.client = new dist_node/* Octokit */.v({ auth: token }); // add log: console to debug
-            this.authenticated = repositoryOwner;
-            console.log(`authenticated ${this.authenticated}`);
-        }
-    }
-}
-
-// EXTERNAL MODULE: external "crypto"
-var external_crypto_ = __nccwpck_require__(6113);
-;// CONCATENATED MODULE: ./node_modules/gitgitgadget/lib/sous-chef.ts
-/*
- * This class is designed to parse the "What's cooking" mails sent to
- * the Git mailing list about twice a week by the Git maintainer.
- */
-class SousChef {
-    constructor(mbox) {
-        this.branches = new Map();
-        this.mbox = mbox;
-        const sections = mbox.split(/^-{10,}\n\[([^\]]+)\]\n/mg);
-        for (let i = 1; i < sections.length; i += 2) {
-            const sectionName = sections[i];
-            const branches = sections[i + 1].split(/\n\* ([a-z][^]+?)\n\n/m);
-            for (let j = 1; j < branches.length; j += 2) {
-                const match = branches[j]
-                    .match(/([^ ]+).*\n *(\(merged to [^)]+\))?/m);
-                if (!match) {
-                    continue;
-                }
-                const branchName = match[1];
-                const merged = match[2];
-                const text = branches[j + 1]
-                    .replace(/^ /mg, "").replace(/\s*$/, "");
-                this.branches.set(branchName, { merged, sectionName, text });
-            }
-        }
-        const messageIDMatch = `\n${sections[0]}`.match(/\nMessage-ID: <([^>]+)>/i);
-        this.messageID = messageIDMatch?.[1];
-        const subjectMatch = `\n${sections[0]}`.match(/\nSubject: (.*)/i);
-        this.subject = subjectMatch?.[1];
-    }
-}
-
-;// CONCATENATED MODULE: ./node_modules/gitgitgadget/lib/mail-archive-helper.ts
-
-
-
-
-const stateKey = "git@vger.kernel.org <-> GitGitGadget";
-const replyToThisURL = "https://github.com/gitgitgadget/gitgitgadget/wiki/ReplyToThis";
-class MailArchiveGitHelper {
-    constructor(gggNotes, mailArchiveGitDir, githubGlue, state, branch) {
-        this.branch = branch;
-        this.gggNotes = gggNotes;
-        this.mailArchiveGitDir = mailArchiveGitDir;
-        this.githubGlue = githubGlue;
-        this.state = state;
-    }
-    static async get(gggNotes, mailArchiveGitDir, githubGlue, branch) {
-        const state = await gggNotes.get(stateKey) || {};
-        return new MailArchiveGitHelper(gggNotes, mailArchiveGitDir, githubGlue, state, branch);
-    }
-    /**
-     * Returns the object name Git would generate if the key (plus a trailing
-     * newline) were fed to `git hash-object`.
-     *
-     * @param key the content to hash (a newline is automatically appended)
-     * @returns the object name
-     */
-    static hashKey(key) {
-        const hash = (0,external_crypto_.createHash)("sha1", { encoding: "utf8" });
-        hash.update(`blob ${Buffer.byteLength(key) + 1}`);
-        hash.update(`\0${key}\n`);
-        return hash.digest("hex");
-    }
-    static mbox2markdown(mbox) {
-        const body = mbox.body;
-        if (!body.length) {
-            return "";
-        }
-        const backTicks = "``````````";
-        const wrapTop = `${backTicks}email\n`;
-        const wrapBottom = `${backTicks}\n`;
-        return `${wrapTop}${body}${body.endsWith("\n") ? "" : "\n"}${wrapBottom}`;
-    }
-    async processMails(prFilter) {
-        const keys = new Set();
-        (await git(["ls-tree", "-r", `${this.gggNotes.notesRef}:`], { workDir: this.gggNotes.workDir })).split("\n")
-            .map((line) => {
-            keys.add(line.substr(53).replace(/\//g, ""));
-        });
-        const seen = (messageID) => {
-            return keys.has(MailArchiveGitHelper.hashKey(messageID));
-        };
-        const handleWhatsCooking = async (mbox) => {
-            const options = await this.gggNotes.get("");
-            if (!options || !options.openPRs) {
-                return;
-            }
-            /*
-             * This map points from branch names in `gitster/git` to their
-             * corresponding Pull Request URL.
-             */
-            const branchNameMap = new Map();
-            for (const pullRequestURL of Object.keys(options.openPRs)) {
-                if (prFilter && !prFilter(pullRequestURL)) {
-                    continue;
-                }
-                const prMeta = await this.gggNotes
-                    .get(pullRequestURL);
-                if (prMeta && prMeta.branchNameInGitsterGit) {
-                    branchNameMap.set(prMeta.branchNameInGitsterGit, pullRequestURL);
-                }
-            }
-            const sousChef = new SousChef(mbox);
-            if (!sousChef.messageID) {
-                throw new Error(`Could not parse Message-ID of ${mbox}`);
-            }
-            console.log(`Handling "${sousChef.subject}"`);
-            const whatsCookingBaseURL = "https://lore.kernel.org/git/";
-            for (const branchName of sousChef.branches.keys()) {
-                const pullRequestURL = branchNameMap.get(branchName);
-                if (pullRequestURL) {
-                    const branchBaseURL = "https://github.com/gitgitgadget/git/commits/";
-                    const info = sousChef.branches.get(branchName);
-                    const pre = info?.text
-                        .replace(/&/g, "&amp;")
-                        .replace(/</g, "&lt;").replace(/>/g, "&gt;");
-                    let comment;
-                    if (!pre || pre.trim() === "") {
-                        comment = `The branch [\`${branchName}\`](${branchBaseURL}${branchName}) was mentioned in the "${info?.sectionName}" section of the [status updates](${whatsCookingBaseURL}${sousChef.messageID}) on the Git mailing list.`;
-                    }
-                    else {
-                        comment = `There was a [status update](${whatsCookingBaseURL}${sousChef.messageID}) in the "${info?.sectionName}" section about the branch [\`${branchName}\`](${branchBaseURL}${branchName}) on the Git mailing list:\n\n<pre>\n${pre}\n</pre>`;
-                    }
-                    console.log(`\n${pullRequestURL}: ${comment}`);
-                    await this.githubGlue
-                        .addPRComment(pullRequestURL, comment);
-                }
-            }
-        };
-        const mboxHandler = async (mbox) => {
-            const parsedMbox = await parseMBox(mbox, true);
-            if (!parsedMbox.headers) {
-                throw new Error(`Could not parse ${mbox}`);
-            }
-            const parsed = parseMBoxMessageIDAndReferences(parsedMbox);
-            if (parsedMbox.subject?.match(/^What's cooking in git.git /) &&
-                parsedMbox.from === "Junio C Hamano <gitster@pobox.com>") {
-                return handleWhatsCooking(mbox);
-            }
-            if (seen(parsed.messageID)) {
-                console.log(`Already handled: ${parsed.messageID}`);
-                return;
-            }
-            let pullRequestURL;
-            let originalCommit;
-            let issueCommentId;
-            for (const reference of parsed.references.filter(seen)) {
-                const data = await this.gggNotes.get(reference);
-                if (data && data.pullRequestURL) {
-                    if (prFilter && !prFilter(data.pullRequestURL)) {
-                        continue;
-                    }
-                    /* Cover letters were recorded with their tip commits */
-                    const commit = reference.match(/^pull/) ?
-                        undefined : data.originalCommit;
-                    if (!pullRequestURL ||
-                        (!originalCommit && commit) ||
-                        (!issueCommentId && data.issueCommentId)) {
-                        pullRequestURL = data.pullRequestURL;
-                        issueCommentId = data.issueCommentId;
-                        originalCommit = commit;
-                    }
-                }
-            }
-            if (!pullRequestURL) {
-                return;
-            }
-            console.log(`Message-ID ${parsed.messageID} (length ${mbox.length}) for PR ${pullRequestURL}, commit ${originalCommit}, comment ID: ${issueCommentId}`);
-            const archiveURL = `https://lore.kernel.org/git/${parsed.messageID}`;
-            const header = `[On the Git mailing list](${archiveURL}), ` +
-                (parsedMbox.from ?
-                    parsedMbox.from.replace(/ *<.*>/, "") : "Somebody") +
-                ` wrote ([reply to this](${replyToThisURL})):\n\n`;
-            const comment = header +
-                MailArchiveGitHelper.mbox2markdown(parsedMbox);
-            if (issueCommentId) {
-                await this.githubGlue.addPRCommentReply(pullRequestURL, issueCommentId, comment);
-            }
-            else if (originalCommit) {
-                const result = await this.githubGlue
-                    .addPRCommitComment(pullRequestURL, originalCommit, this.gggNotes.workDir, comment);
-                issueCommentId = result.id;
-            }
-            else {
-                /*
-                 * We will not use the ID of this comment, as it is an
-                 * issue comment, really, not a Pull Request comment.
-                 */
-                await this.githubGlue
-                    .addPRComment(pullRequestURL, comment);
-            }
-            await this.githubGlue.addPRCc(pullRequestURL, parsedMbox.from || "");
-            await this.gggNotes.set(parsed.messageID, {
-                issueCommentId,
-                messageID: parsed.messageID,
-                originalCommit,
-                pullRequestURL,
-            });
-            /* It is now known */
-            keys.add(MailArchiveGitHelper.hashKey(parsed.messageID));
-        };
-        let buffer = "";
-        let counter = 0;
-        const lineHandler = async (line) => {
-            if (line.startsWith("@@ ")) {
-                const match = line.match(/^@@ -(\d+,)?\d+ \+(\d+,)?(\d+)?/);
-                if (match) {
-                    if (counter) {
-                        console.log(`Oops: unprocessed buffer ${buffer}`);
-                    }
-                    counter = parseInt(match[3], 10);
-                    buffer = "";
-                }
-            }
-            else if (counter && line.match(/^[ +]/)) {
-                buffer += line.substr(1) + "\n";
-                if (--counter) {
-                    return;
-                }
-                try {
-                    await mboxHandler(buffer);
-                }
-                catch (reason) {
-                    console.log(`${reason}: skipping`);
-                }
-            }
-        };
-        if (!this.state.latestRevision) {
-            throw new Error(`Mail archive email commit tip not set.  Please run \`misc-helper init-email-commit-tip\` ${""}to set the value.`);
-        }
-        const head = await revParse(this.branch, this.mailArchiveGitDir);
-        if (this.state.latestRevision === head) {
-            return false;
-        }
-        const range = `${this.state.latestRevision}..${head}`;
-        console.log(`Handling commit range ${range}`);
-        await git(["log", "-p", "-U99999", "--reverse", range], { lineHandler, workDir: this.mailArchiveGitDir });
-        this.state.latestRevision = head;
-        await this.gggNotes.set(stateKey, this.state, true);
-        return true;
-    }
-}
-
-;// CONCATENATED MODULE: ./node_modules/gitgitgadget/lib/mail-commit-mapping.ts
-
-
-
-class MailCommitMapping {
-    constructor(workDir) {
-        this.config = getConfig();
-        this.workDir = workDir;
-        this.mail2CommitNotes = new GitNotes(workDir, "refs/notes/mail-to-commit");
-    }
-    async getGitGitCommitForMessageId(messageID) {
-        return await this.mail2CommitNotes.getString(messageID);
-    }
-    async updateMail2CommitAndBranches() {
-        return await this.update(true, true, true);
-    }
-    async updateMail2CommitRef() {
-        return await this.update(true);
-    }
-    async update(includeNotesRef, includeUpstreamBranches, includeGitsterBranches) {
-        const refs = [];
-        if (includeNotesRef) {
-            refs.push("refs/notes/mail-to-commit:refs/notes/mail-to-commit");
-        }
-        if (includeUpstreamBranches) {
-            for (const ref of this.config.repo.trackingBranches) {
-                refs.push(`+refs/heads/${ref}:refs/remotes/upstream/${ref}`);
-            }
-        }
-        if (includeGitsterBranches && this.config.repo.maintainerBranch) {
-            refs.push(`+refs/heads/*:refs/remotes/${this.config.repo.maintainerBranch}/*`);
-        }
-        if (refs.length) {
-            await git(["fetch", `https://github.com/${this.config.repo.owner}/${this.config.repo.name}`, ...refs], { workDir: this.workDir });
-        }
-    }
-}
-
-;// CONCATENATED MODULE: ./node_modules/gitgitgadget/lib/ci-helper.ts
-
-
-// import addressparser = require("nodemailer/lib/addressparser");
-
-
-
-
-
-
-
-
-
-
-const readFile = external_util_.promisify(external_fs_.readFile);
-/*
- * This class offers functions to support the operations we want to perform from
- * automated builds, e.g. identify corresponding commits in git.git,
- * corresponding branches in https://github.com/gitster/git, identify which
- * git.git branches integrated said branch already (if any), and via which merge
- * commit.
- */
-class CIHelper {
-    constructor(workDir, skipUpdate, gggConfigDir = ".") {
-        this.config = getConfig();
-        this.gggConfigDir = gggConfigDir;
-        this.workDir = workDir;
-        this.notes = new GitNotes(workDir);
-        this.gggNotesUpdated = !!skipUpdate;
-        this.mail2commit = new MailCommitMapping(this.notes.workDir);
-        this.mail2CommitMapUpdated = !!skipUpdate;
-        this.github = new GitHubGlue(workDir, this.config.repo.owner, this.config.repo.name);
-        this.testing = false;
-        this.maxCommitsExceptions = this.config.lint?.maxCommitsIgnore || [];
-        this.urlBase = `https://github.com/${this.config.repo.owner}/`;
-        this.urlRepo = `${this.urlBase}${this.config.repo.name}/`;
-    }
-    /*
-     * Given a commit that was contributed as a patch via GitGitGadget (i.e.
-     * a commit with a Message-ID recorded in `refs/notes/gitgitgadget`),
-     * identify the commit (if any) in `git.git`.
-     */
-    async identifyUpstreamCommit(originalCommit) {
-        await this.maybeUpdateMail2CommitMap();
-        const messageId = await this.getMessageIdForOriginalCommit(originalCommit);
-        if (!messageId) {
-            return undefined;
-        }
-        return await this.mail2commit.getGitGitCommitForMessageId(messageId);
-    }
-    /**
-     * Given an original commit that was contributed as a patch via
-     * GitGitGadget (i.e. a commit with a Message-ID recorded in
-     * `refs/notes/gitgitgadget`), and the (known and verified) commit in
-     * `git.git`, update the `refs/notes/mail-to-commit` ref accordingly.
-     * This is sometimes needed when the automated job fails to identify
-     * the correct commit.
-     *
-     * @param originalCommit the original, contributed commit
-     * @param gitGitCommit the corresponding commit in git.git
-     */
-    async setUpstreamCommit(originalCommit, gitGitCommit) {
-        await this.maybeUpdateMail2CommitMap();
-        if (!this.commit2mailNotes) {
-            this.commit2mailNotes = new GitNotes(this.mail2commit.workDir, "refs/notes/commit-to-mail");
-            await this.commit2mailNotes.update(this.urlRepo);
-        }
-        const messageId = await this.getMessageIdForOriginalCommit(originalCommit);
-        if (!messageId) {
-            return undefined;
-        }
-        await this.mail2commit.mail2CommitNotes.setString(messageId, gitGitCommit, true);
-        await this.commit2mailNotes.appendCommitNote(gitGitCommit, messageId);
-    }
-    /**
-     * Given a Message-Id, identify the upstream commit (if any), and if there
-     * is one, and if it was not yet recorded in GitGitGadget's metadata, record
-     * it and create a GitHub Commit Status.
-     *
-     * @returns `true` if the metadata had to be updated
-     */
-    async updateCommitMapping(messageID, upstreamCommit) {
-        await this.maybeUpdateGGGNotes();
-        const mailMeta = await this.notes.get(messageID);
-        if (!mailMeta) {
-            throw new Error(`No metadata found for ${messageID}`);
-        }
-        if (upstreamCommit === undefined) {
-            await this.maybeUpdateMail2CommitMap();
-            upstreamCommit = await this.mail2commit.getGitGitCommitForMessageId(messageID);
-        }
-        if (!upstreamCommit || upstreamCommit === mailMeta.commitInGitGit) {
-            return false;
-        }
-        mailMeta.commitInGitGit = upstreamCommit;
-        if (!mailMeta.originalCommit) {
-            const originalCommit = await this.getOriginalCommitForMessageId(messageID);
-            if (!originalCommit) {
-                throw new Error(`No original commit found for ${messageID}`);
-            }
-            mailMeta.originalCommit = originalCommit;
-        }
-        await this.notes.set(messageID, mailMeta, true);
-        if (!this.testing && mailMeta.pullRequestURL && mailMeta.pullRequestURL.startsWith(this.urlBase)) {
-            await this.github.annotateCommit(mailMeta.originalCommit, upstreamCommit, this.config.repo.owner, this.config.repo.baseOwner);
-        }
-        return true;
-    }
-    async updateCommitMappings() {
-        if (!this.gggNotesUpdated) {
-            const args = [];
-            args.push(...this.config.repo.branches.map(branch => `+refs/heads/${branch}:refs/remotes/upstream/${branch}`));
-            await git(["fetch", this.urlRepo, "--tags",
-                "+refs/notes/gitgitgadget:refs/notes/gitgitgadget",
-                ...args], { workDir: this.workDir });
-            this.gggNotesUpdated = true;
-        }
-        const options = await this.getGitGitGadgetOptions();
-        if (!options.openPRs) {
-            return false;
-        }
-        const commitsInSeen = new Set((await git(["rev-list", "--no-merges",
-            "^refs/remotes/upstream/maint~100",
-            "refs/remotes/upstream/seen"], { workDir: this.workDir })).split("\n"));
-        let result = false;
-        /*
-         * Both `bases` and `heads` accumulate the `-p<commit-hash>` parameters
-         * for the `git commit-tree` command for the two octopus merges. We
-         * need to make sure that no parent is listed twice, as `git
-         * commit-tree` would error out on that.
-         */
-        const bases = new Set();
-        const heads = new Set();
-        for (const pullRequestURL of Object.keys(options.openPRs)) {
-            const info = await this.getPRMetadata(pullRequestURL);
-            if (info === undefined || info.latestTag === undefined ||
-                info.baseCommit === undefined ||
-                info.headCommit === undefined || info.baseLabel === undefined ||
-                info.baseLabel.match(/^gitgitgadget:git-gui\//)) {
-                continue;
-            }
-            const messageID = await this.getMessageIdForOriginalCommit(info.headCommit);
-            if (!messageID) {
-                continue;
-            }
-            const meta = await this.getMailMetadata(messageID);
-            if (!meta) {
-                continue;
-            }
-            if (meta.commitInGitGit !== undefined) {
-                if (commitsInSeen.has(meta.commitInGitGit)) {
-                    continue;
-                }
-                console.log(`Upstream commit ${meta.commitInGitGit} for ${info.headCommit} of ${info.pullRequestURL} no longer found in 'seen'`);
-                meta.commitInGitGit = undefined;
-                result = true;
-            }
-            bases.add(`-p${info.baseCommit}`);
-            heads.add(`-p${info.headCommit}`);
-        }
-        if (heads.size > 0) {
-            /*
-             * Generate throw-away octopus merges to combine multiple commit
-             * ranges into a single one.
-             */
-            const octopus = async (set) => {
-                const array = Array.from(set);
-                if (array.length === 1) {
-                    return array[0];
-                }
-                return await git(["commit-tree", ...array, emptyTreeName, "-m", "()"], { workDir: this.workDir });
-            };
-            const range1 = `${await octopus(bases)}..${await octopus(heads)}`;
-            const range2 = "refs/remotes/upstream/maint~100..refs/remotes/upstream/seen";
-            const start = Date.now();
-            const out = await git(["-c", "core.abbrev=40", "range-diff", "-s",
-                range1, range2], { workDir: this.workDir });
-            const duration = Date.now() - start;
-            if (duration > 2000)
-                console.log(`warning: \`git range-diff ${range1} ${range2}\` took ${duration / 1000} seconds`);
-            for (const line of out.split("\n")) {
-                const match = line.match(/^[^:]*: *([^ ]*) [!=][^:]*: *([^ ]*)/);
-                if (!match) {
-                    continue;
-                }
-                const messageID2 = await this.getMessageIdForOriginalCommit(match[1]);
-                if (messageID2 === undefined) {
-                    continue;
-                }
-                if (await this.updateCommitMapping(messageID2, match[2])) {
-                    result = true;
-                }
-            }
-        }
-        return result;
-    }
-    /**
-     * Process all open PRs.
-     *
-     * @returns true if `refs/notes/gitgitgadget` was updated (and needs to
-     * be pushed)
-     */
-    async handleOpenPRs() {
-        const options = await this.getGitGitGadgetOptions();
-        if (!options.openPRs) {
-            return false;
-        }
-        let result = false;
-        let optionsUpdated = false;
-        for (const pullRequestURL in options.openPRs) {
-            if (!options.openPRs.hasOwnProperty(pullRequestURL)) {
-                continue;
-            }
-            console.log(`Handling ${pullRequestURL}`);
-            const [notesUpdated, optionsUpdated2] = await this.handlePR(pullRequestURL, options);
-            if (notesUpdated) {
-                result = true;
-            }
-            if (optionsUpdated2) {
-                optionsUpdated = true;
-            }
-        }
-        if (optionsUpdated) {
-            await this.notes.set("", options, true);
-            result = true;
-        }
-        return result;
-    }
-    /**
-     * Handles one PR, i.e. looks whether an upstream commit has been
-     * created/updated that corresponds to the tip commit of the PR, whether it
-     * got its own branch in gitster/git, whether it has been integrated into
-     * any upstream branch, whether it was kicked out of a branch, etc, and
-     * updates the PR on GitHub accordingly (labels, add a comment to inform the
-     * user, close the PR, etc).
-     *
-     * @param {string} pullRequestURL the PR to handle
-     * @param {IGitGitGadgetOptions} options the GitGitGadget options which may
-     * need to be updated.
-     *
-     * @returns two booleans; the first is `true` if there were updates that
-     * require `refs/notes/gitgitgadget` to be pushed. The second is `true`
-     * if the `options` were updated.
-     */
-    async handlePR(pullRequestURL, options) {
-        await this.maybeUpdateGGGNotes();
-        await this.maybeUpdateMail2CommitMap();
-        let updateOptionsInRef;
-        if (options) {
-            updateOptionsInRef = false;
-        }
-        else {
-            options = await this.getGitGitGadgetOptions();
-            updateOptionsInRef = true;
-        }
-        const prMeta = await this.notes.get(pullRequestURL);
-        if (!prMeta || !prMeta.coverLetterMessageId) {
-            return [false, false];
-        }
-        const headMessageID = await this.getMessageIdForOriginalCommit(prMeta.headCommit);
-        const headMeta = headMessageID && await this.getMailMetadata(headMessageID);
-        const tipCommitInGitGit = headMeta && headMeta.commitInGitGit;
-        if (!tipCommitInGitGit) {
-            return [false, false];
-        }
-        let notesUpdated = false;
-        if (tipCommitInGitGit !== prMeta.tipCommitInGitGit) {
-            prMeta.tipCommitInGitGit = tipCommitInGitGit;
-            notesUpdated = true;
-        }
-        const prKey = getPullRequestKeyFromURL(pullRequestURL);
-        // Identify branch in maintainer repo
-        const maintainerBranch = `refs/remotes/${this.config.repo.maintainerBranch}/`;
-        const maintainerRepo = `${this.config.repo.maintainerBranch}.${this.config.repo.name}`;
-        let gitsterBranch = await git(["for-each-ref", `--points-at=${tipCommitInGitGit}`,
-            "--format=%(refname)", maintainerBranch], { workDir: this.workDir });
-        if (gitsterBranch) {
-            const newline = gitsterBranch.indexOf("\n");
-            if (newline > 0) {
-                const comment2 = `Found multiple candidates in ${maintainerRepo}:\n${gitsterBranch};\n\nUsing the first one.`;
-                const url2 = await this.github.addPRComment(prKey, comment2);
-                console.log(`Added comment about ${gitsterBranch}: ${url2}`);
-                gitsterBranch = gitsterBranch.substring(0, newline);
-            }
-            gitsterBranch = gitsterBranch.substring(maintainerBranch.length);
-            const comment = `This branch is now known as [\`${gitsterBranch}\`](https://github.com/${maintainerRepo}/commits/${gitsterBranch}).`;
-            if (prMeta.branchNameInGitsterGit !== gitsterBranch) {
-                prMeta.branchNameInGitsterGit = gitsterBranch;
-                notesUpdated = true;
-                const url = await this.github.addPRComment(prKey, comment);
-                console.log(`Added comment about ${gitsterBranch}: ${url}`);
-            }
-        }
-        let closePR;
-        const prLabelsToAdd = [];
-        for (const branch of this.config.repo.trackingBranches) {
-            const mergeCommit = await this.identifyMergeCommit(branch, tipCommitInGitGit);
-            if (!mergeCommit) {
-                continue;
-            }
-            if (this.config.repo.closingBranches.includes(branch)) {
-                closePR = mergeCommit;
-            }
-            if (!prMeta.mergedIntoUpstream) {
-                prMeta.mergedIntoUpstream = {};
-            }
-            if (prMeta.mergedIntoUpstream[branch] !== mergeCommit) {
-                prMeta.mergedIntoUpstream[branch] = mergeCommit;
-                notesUpdated = true;
-                // Add label on GitHub
-                prLabelsToAdd.push(branch);
-                // Add comment on GitHub
-                const comment = `This patch series was integrated into ${branch} via https://github.com/${this.config.repo.baseOwner}/${this.config.repo.name}/commit/${mergeCommit}.`;
-                const url = await this.github.addPRComment(prKey, comment);
-                console.log(`Added comment about ${branch}: ${url}`);
-            }
-        }
-        if (prLabelsToAdd.length) {
-            await this.github.addPRLabels(prKey, prLabelsToAdd);
-        }
-        let optionsUpdated = false;
-        if (closePR) {
-            if (options.openPRs) {
-                delete options.openPRs[pullRequestURL];
-                optionsUpdated = true;
-            }
-            // Remove items from activeMessageIDs
-            if (options.activeMessageIDs) {
-                for (const rev of await this.getOriginalCommitsForPR(prMeta)) {
-                    const messageID = await this.notes.getLastCommitNote(rev);
-                    delete options.activeMessageIDs[messageID];
-                }
-                optionsUpdated = true;
-            }
-            await this.github.closePR(prKey, closePR);
-        }
-        if (notesUpdated) {
-            await this.notes.set(pullRequestURL, prMeta, true);
-        }
-        if (optionsUpdated && updateOptionsInRef) {
-            await this.notes.set("", options, true);
-        }
-        return [notesUpdated, optionsUpdated];
-    }
-    async getMessageIdForOriginalCommit(commit) {
-        await this.maybeUpdateGGGNotes();
-        return await this.notes.getLastCommitNote(commit);
-    }
-    async getOriginalCommitForMessageId(messageID) {
-        await this.maybeUpdateGGGNotes();
-        const note = await this.notes.get(messageID);
-        return note ? note.originalCommit : undefined;
-    }
-    /*
-     * Given a branch and a commit, identify the merge that integrated that
-     * commit into that branch.
-     */
-    async identifyMergeCommit(upstreamBranch, integratedCommit) {
-        await this.maybeUpdateMail2CommitMap();
-        const revs = await git(["rev-list", "--ancestry-path", "--parents",
-            `${integratedCommit}..upstream/${upstreamBranch}`], { workDir: this.workDir });
-        if (revs === "") {
-            return undefined;
-        }
-        let commit = integratedCommit;
-        // Was it integrated via a merge?
-        let match = revs.match(`(^|\n)([^ ]+) ([^\n]+) ${commit}`);
-        if (!match) {
-            // Look for a descendant that *was* integrated via a merge
-            for (;;) {
-                match = revs.match(`(^|\n)([^ ]+) ${commit}(\n|$)`);
-                if (!match) {
-                    // None found, return the original commit
-                    return integratedCommit;
-                }
-                commit = match[2];
-                match = revs.match(`(^|\n)([^ ]+) ([^\n]+) ${commit}`);
-                if (match) {
-                    // found a merge!
-                    break;
-                }
-            }
-        }
-        for (;;) {
-            commit = match[2];
-            // was this merge integrated via another merge?
-            match = revs.match(`(^|\n)([^ ]+) ([^\n]+) ${commit}`);
-            if (!match) {
-                return commit;
-            }
-        }
-    }
-    async getGitGitGadgetOptions() {
-        await this.maybeUpdateGGGNotes();
-        const options = await this.notes.get("");
-        if (options === undefined) {
-            throw new Error("No GitGitGadgetOptions?!?!?");
-        }
-        return options;
-    }
-    async getPRMetadata(pullRequestURL) {
-        await this.maybeUpdateGGGNotes();
-        return this.notes.get(pullRequestURL);
-    }
-    async getMailMetadata(messageID) {
-        await this.maybeUpdateGGGNotes();
-        return this.notes.get(messageID);
-    }
-    async getOriginalCommitsForPR(prMeta) {
-        if (!this.workDir) {
-            throw new Error("Need a workDir");
-        }
-        if (!await commitExists(prMeta.headCommit, this.workDir)) {
-            if (!prMeta.pullRequestURL) {
-                throw new Error(`Require URL in ${JSON.stringify(prMeta, null, 4)}`);
-            }
-            if (!prMeta.latestTag) {
-                throw new Error("Cannot fetch commits without tag");
-            }
-            const prKey = getPullRequestKeyFromURL(prMeta.pullRequestURL);
-            const fetchURL = `https://github.com/${prKey.owner}/${prKey.repo}`;
-            const fetchRef = `refs/pull/${prKey.pull_number}/head`;
-            await git(["fetch", fetchURL, fetchRef, prMeta.latestTag], {
-                workDir: this.workDir,
-            });
-        }
-        const revs = await git(["rev-list",
-            `${prMeta.baseCommit}..${prMeta.headCommit}`], { workDir: this.workDir });
-        return revs.split(/\s+/);
-    }
-    warnOnMissingPublicEmail(username) {
-        return `WARNING: ${username} has no public email address set on GitHub;
-GitGitGadget needs an email address to Cc: you on your contribution, so that you receive any feedback ${""}on the Git mailing list. Go to https://github.com/settings/profile to make your preferred email public ${""}to let GitGitGadget know which email address to use.`;
-    }
-    /**
-     * Retrieves comments on PRs and handles `/submit` and friends.
-     *
-     * @param commentID the ID of the PR comment to handle
-     */
-    async handleComment(repositoryOwner, commentID) {
-        const comment = await this.github.getPRComment(repositoryOwner, commentID);
-        const match = comment.body.match(/^\s*(\/[-a-z]+)(\s+(.*?))?\s*$/);
-        if (!match) {
-            console.log(`Not a command; doing nothing: '${comment.body}'`);
-            return; /* nothing to do */
-        }
-        const command = match[1];
-        const argument = match[3];
-        const prKey = {
-            owner: repositoryOwner,
-            repo: this.config.repo.name,
-            pull_number: comment.prNumber
-        };
-        const pullRequestURL = `https://github.com/${repositoryOwner}/${this.config.repo.name}/pull/${comment.prNumber}`;
-        console.log(`Handling command ${command} with argument ${argument} at ${pullRequestURL}#issuecomment-${commentID}`);
-        const addComment = async (body) => {
-            const redacted = CIHelper.redactGitHubToken(body);
-            console.log(`Adding comment to ${pullRequestURL}:\n${redacted}`);
-            await this.github.addPRComment(prKey, redacted);
-        };
-        try {
-            const gitGitGadget = await GitGitGadget.get(this.gggConfigDir, this.workDir);
-            if (!gitGitGadget.isUserAllowed(comment.author)) {
-                throw new Error(`User ${comment.author} is not yet permitted to use ${this.config.app.displayName}`);
-            }
-            const getPRAuthor = async () => {
-                const pr = await this.github.getPRInfo(prKey);
-                return pr.author;
-            };
-            if (command === "/submit") {
-                if (argument && argument !== "") {
-                    throw new Error(`/submit does not accept arguments ('${argument}')`);
-                }
-                const pr = await this.getPRInfo(prKey);
-                if (pr.author !== comment.author) {
-                    throw new Error("Only the owner of a PR can submit it!");
-                }
-                const userInfo = await this.getUserInfo(comment.author);
-                const commitOkay = await this.checkCommits(pr, addComment, userInfo);
-                if (commitOkay) {
-                    const extraComment = userInfo.email === null ?
-                        `\n\n${this.warnOnMissingPublicEmail(comment.author)}` : "";
-                    const metadata = await gitGitGadget.submit(pr, userInfo);
-                    const code = "\n```";
-                    await addComment(`Submitted as [${metadata?.coverLetterMessageId}](https://${this.config.mailrepo.host}/${this.config.mailrepo.name}/${metadata?.coverLetterMessageId})\n\nTo fetch this version into \`FETCH_HEAD\`:${code}\ngit fetch ${this.urlRepo} ${metadata?.latestTag}${code}\n\nTo fetch this version to local tag \`${metadata?.latestTag}\`:${code}\ngit fetch --no-tags ${this.urlRepo} tag ${metadata?.latestTag}${code}${extraComment}`);
-                }
-            }
-            else if (command === "/preview") {
-                if (argument && argument !== "") {
-                    throw new Error(`/preview does not accept arguments ('${argument}')`);
-                }
-                const pr = await this.getPRInfo(prKey);
-                const userInfo = await this.getUserInfo(comment.author);
-                const commitOkay = await this.checkCommits(pr, addComment, userInfo);
-                if (!userInfo.email) {
-                    throw new Error(`Could not determine public email of ${comment.author}`);
-                }
-                if (commitOkay) {
-                    const metadata = await gitGitGadget.preview(pr, userInfo);
-                    await addComment(`Preview email sent as ${metadata?.coverLetterMessageId}`);
-                }
-            }
-            else if (command === "/allow") {
-                const accountName = argument || await getPRAuthor();
-                let extraComment = "";
-                try {
-                    const userInfo = await this.github.getGitHubUserInfo(accountName);
-                    if (userInfo.email === null) {
-                        extraComment = `\n\n${this.warnOnMissingPublicEmail(accountName)}`;
-                    }
-                }
-                catch (reason) {
-                    throw new Error(`User ${accountName} is not a valid GitHub username: ${reason}`);
-                }
-                if (await gitGitGadget.allowUser(comment.author, accountName)) {
-                    await addComment(`User ${accountName} is now allowed to use ${this.config.app.displayName}.${extraComment}`);
-                }
-                else {
-                    await addComment(`User ${accountName} already allowed to use ${this.config.app.displayName}.`);
-                }
-            }
-            else if (command === "/disallow") {
-                const accountName = argument || await getPRAuthor();
-                if (await gitGitGadget.denyUser(comment.author, accountName)) {
-                    await addComment(`User ${accountName} is no longer allowed to use ${this.config.app.displayName}.`);
-                }
-                else {
-                    await addComment(`User ${accountName} already not allowed to use ${this.config.app.displayName}.`);
-                }
-            }
-            else if (command === "/cc") {
-                await this.handleCC(argument, prKey);
-            }
-            else if (command === "/test") {
-                await addComment(`Received test '${argument}'`);
-            }
-            else {
-                console.log(`Ignoring unrecognized command ${command} in ${pullRequestURL}#issuecomment-${commentID}`);
-            }
-        }
-        catch (e) {
-            const error = e;
-            await addComment(error.toString());
-        }
-    }
-    async checkCommits(pr, addComment, userInfo) {
-        let result = true;
-        const maxCommits = this.config.lint.maxCommits;
-        if (!this.maxCommitsExceptions.includes(pr.pullRequestURL) &&
-            pr.commits && pr.commits > maxCommits) {
-            await addComment(`The pull request has ${pr.commits} commits.  The max allowed is ${maxCommits}.  Please split the patch series into multiple pull requests. Also consider ${""}squashing related commits.`);
-            result = false;
-        }
-        const commits = await this.github.getPRCommits(pr.baseOwner, pr.number);
-        const merges = [];
-        for (const cm of commits) {
-            if (cm.parentCount > 1) {
-                merges.push(cm.commit);
-            }
-            if (cm.author.email.endsWith("@users.noreply.github.com")) {
-                await addComment(`Invalid author email in ${cm.commit}: "${cm.author.email}"`);
-                result = false;
-                continue;
-            }
-            // Update email from git info if not already set
-            if (userInfo && !userInfo.email) {
-                if (userInfo.login === cm.author.login) {
-                    userInfo.email = cm.author.email;
-                }
-                else if (userInfo.login === cm.committer.login) {
-                    userInfo.email = cm.committer.email;
-                }
-            }
-        }
-        if (merges.length) {
-            await addComment(`There ${merges.length > 1 ? "are merge commits" : "is a merge commit"} in this Pull Request:\n\n    ${merges.join("\n    ")}\n\nPlease rebase the branch and force-push.`);
-            result = false;
-        }
-        // if no initial failure, run linting checks
-        if (result) {
-            const results = await Promise.all(commits.map((commit) => {
-                const linter = new LintCommit(commit);
-                return linter.lint();
-            }));
-            for (const lintError of results.filter((el) => el)) {
-                await addComment(lintError.message);
-                if (lintError.checkFailed) {
-                    result = false;
-                }
-            }
-        }
-        return result;
-    }
-    static redactGitHubToken(text) {
-        return text.replace(/(https:\/\/)x-access-token:.*?@/g, "$1");
-    }
-    async handleCC(ccSet, prKey) {
-        const addresses = addressparser_default()(ccSet, { flatten: true });
-        for (const address of addresses) {
-            const cc = address.name ? `${address.name} <${address.address}>` : address.address;
-            await this.github.addPRCc(prKey, cc);
-        }
-    }
-    async handlePush(repositoryOwner, prNumber) {
-        const prKey = {
-            owner: repositoryOwner,
-            repo: this.config.repo.name,
-            pull_number: prNumber
-        };
-        const pr = await this.github.getPRInfo(prKey);
-        const addComment = async (body) => {
-            const redacted = CIHelper.redactGitHubToken(body);
-            console.log(`Adding comment to ${pr.pullRequestURL}:\n${redacted}`);
-            await this.github.addPRComment(prKey, redacted);
-        };
-        const gitGitGadget = await GitGitGadget.get(this.gggConfigDir, this.workDir);
-        if (!pr.hasComments && !gitGitGadget.isUserAllowed(pr.author)) {
-            const welcome = (await readFile("res/WELCOME.md")).toString()
-                .replace(/\${username}/g, pr.author);
-            await this.github.addPRComment(prKey, welcome);
-            await this.github.addPRLabels(prKey, ["new user"]);
-        }
-        const commitOkay = await this.checkCommits(pr, addComment);
-        if (!commitOkay) { // make check fail to get user attention
-            throw new Error("Failing check due to commit linting errors.");
-        }
-    }
-    async handleNewMails(mailArchiveGitDir, onlyPRs) {
-        await git(["fetch"], { workDir: mailArchiveGitDir });
-        const prFilter = !onlyPRs ? undefined :
-            (pullRequestURL) => {
-                const match = pullRequestURL.match(/.*\/(\d+)$/);
-                return !match ? false : onlyPRs.has(parseInt(match[1], 10));
-            };
-        await this.maybeUpdateGGGNotes();
-        const mailArchiveGit = await MailArchiveGitHelper.get(this.notes, mailArchiveGitDir, this.github, this.config.mailrepo.branch);
-        return await mailArchiveGit.processMails(prFilter);
-    }
-    async getPRInfo(prKey) {
-        const pr = await this.github.getPRInfo(prKey);
-        if (!this.config.repo.owners.includes(pr.baseOwner) ||
-            pr.baseRepo !== this.config.repo.name) {
-            throw new Error(`Unsupported repository: ${pr.pullRequestURL}`);
-        }
-        if (!pr.baseLabel || !pr.baseCommit || !pr.headLabel || !pr.headCommit) {
-            throw new Error(`Could not determine PR details for ${pr.pullRequestURL}`);
-        }
-        if (!pr.title || (!pr.body && pr.commits !== 1)) {
-            throw new Error("Ignoring PR with empty title and/or body");
-        }
-        if (!pr.mergeable) {
-            throw new Error("Refusing to submit a patch series that does not merge cleanly.");
-        }
-        return pr;
-    }
-    async getUserInfo(author) {
-        const userInfo = await this.github.getGitHubUserInfo(author);
-        if (!userInfo.name) {
-            if (this.config.user.allowUserAsLogin) {
-                userInfo.name = userInfo.login;
-            }
-            else {
-                throw new Error(`Could not determine full name of ${author}`);
-            }
-            throw new Error(`Could not determine full name of ${author}`);
-        }
-        return userInfo;
-    }
-    async maybeUpdateGGGNotes() {
-        if (!this.gggNotesUpdated) {
-            await this.notes.update(this.urlRepo);
-            this.gggNotesUpdated = true;
-        }
-    }
-    async maybeUpdateMail2CommitMap() {
-        if (!this.mail2CommitMapUpdated) {
-            await this.mail2commit.updateMail2CommitAndBranches();
-            this.mail2CommitMapUpdated = true;
-        }
-    }
-}
-
-;// CONCATENATED MODULE: ./node_modules/gitgitgadget/lib/gitgitgadget-config.ts
-
-const defaultConfig = {
-    repo: {
-        name: "git",
-        owner: "gitgitgadget",
-        baseOwner: "git",
-        owners: ["gitgitgadget", "git", "dscho"],
-        branches: ["maint", "seen"],
-        closingBranches: ["maint", "master"],
-        trackingBranches: ["maint", "seen", "master", "next"],
-        maintainerBranch: "gitster",
-        host: "github.com",
-    },
-    mailrepo: {
-        name: "git",
-        owner: "gitgitgadget",
-        branch: "master",
-        host: "lore.kernel.org",
-    },
-    mail: {
-        author: "GitGitGadget",
-        sender: "GitGitGadget"
-    },
-    app: {
-        appID: 12836,
-        installationID: 195971,
-        name: "gitgitgadget",
-        displayName: "GitGitGadget",
-        altname: "gitgitgadget-git"
-    },
-    lint: {
-        maxCommitsIgnore: [
-            "https://github.com/gitgitgadget/git/pull/923"
-        ],
-        maxCommits: 30,
-    },
-    user: {
-        allowUserAsLogin: false,
-    }
-};
-/* harmony default export */ const gitgitgadget_config = ((/* unused pure expression or super */ null && (defaultConfig)));
-setConfig(defaultConfig);
-function gitgitgadget_config_getConfig() {
-    return setConfig(defaultConfig);
-}
-
-;// CONCATENATED MODULE: ./node_modules/gitgitgadget/gitgitgadget-helper.ts
-
-
-// import { gitConfig } from "./lib/git";
-
-
-
-async function processWork(work) {
-    const config = work.config ? setConfig(await getExternalConfig(work.config)) : gitgitgadget_config_getConfig();
-    // Update with current values
-    config.repo.name = work.repoName;
-    config.repo.owner = work.repoOwner;
-    config.repo.baseOwner = work.repoBaseowner;
-    setConfig(config);
-    lintConfig(config);
-    if (!(await isDirectory(work.repositoryDir))) {
-        throw new Error(`git WorkDir '${work.repositoryDir}' not found.`);
-    }
-    const ci = new CIHelper(work.repositoryDir, work.skipUpdate ? true : false, work.configRepositoryDir);
-    if (work.action === "comment") {
-        if (work.commentId) {
-            const commentId = parseInt(work.commentId, 10);
-            await ci.handleComment(work.repoOwner, commentId);
-        }
-        else {
-            throw new Error(`Action '${work.action}' requires a comment-id.`);
-        }
-    }
-    else if (work.action === "push") {
-        const pullRequestNumber = parseInt(work.pullRequestNumber, 10);
-        await ci.handlePush(work.repoOwner, pullRequestNumber);
-    }
-    else {
-        throw new Error(`Action '${work.action}' not found.`);
-    }
-}
-async function getExternalConfig(file) {
-    const newConfig = await loadConfig(external_path_default().resolve(file));
-    if (!newConfig.hasOwnProperty("project")) {
-        throw new Error(`User configurations must have a 'project:'.  Not found in ${file}`);
-    }
-    if (!newConfig.repo.owner.match(/^[a-z\d](?:[a-z\d]|-(?=[a-z\d])){0,38}$/i)) {
-        throw new Error(`Invalid 'owner' ${newConfig.repo.owner} in ${file}`);
-    }
-    if (!newConfig.repo.baseOwner.match(/^[a-z\d](?:[a-z\d]|-(?=[a-z\d])){0,38}$/i)) {
-        throw new Error(`Invalid 'baseOwner' ${newConfig.repo.baseOwner} in ${file}`);
-    }
-    return newConfig;
-}
-function lintConfig(config) {
-    if (!config.hasOwnProperty("project")) {
-        throw new Error(`User configurations must have a 'project:'.  Not found in ${(external_path_default())}`);
-    }
-    if (!config.repo.owner.match(/^[a-z\d](?:[a-z\d]|-(?=[a-z\d])){0,38}$/i)) {
-        throw new Error(`Invalid 'owner' ${config.repo.owner} in ${(external_path_default())}`);
-    }
-    if (!config.repo.baseOwner.match(/^[a-z\d](?:[a-z\d]|-(?=[a-z\d])){0,38}$/i)) {
-        throw new Error(`Invalid 'baseOwner' ${config.repo.baseOwner} in ${(external_path_default())}`);
-    }
-}
-
-;// CONCATENATED MODULE: ./src/main.ts
-
-
-
-async function run() {
-    try {
-        const inputs = {
-            token: core.getInput("token"),
-            reactionToken: core.getInput("reaction-token"),
-            reactions: core.getInput("reactions"),
-            permission: core.getInput("permission"),
-            repositoryDir: core.getInput("repository-dir"),
-            configRepositoryDir: core.getInput("config-repository-dir"),
-            configurationFile: core.getInput("configuration-file"),
-            config: core.getInput("config"),
-            configFromFile: core.getInput("config-from-file"),
-            repoOwner: core.getInput("repo-owner"),
-            repoName: core.getInput("repo-name"),
-            repoBaseowner: core.getInput("repo-baseowner"),
-            pullRequestNumber: core.getInput("pull-request-number"),
-            commentId: core.getInput("comment-id"),
-            action: core.getInput("action"),
-            skipUpdate: core.getInput("skip-update"),
-        };
-        core.debug(`Inputs: ${(0,external_util_.inspect)(inputs)}`);
-        // Check required inputs
-        if (!inputs.token) {
-            throw new Error(`Missing required input 'token'.`);
-        }
-        await processWork({ ...inputs });
-    }
-    catch (err) {
-        const error = err;
-        core.debug((0,external_util_.inspect)(error));
-        const message = error.message;
-        // Handle validation errors from workflow dispatch
-        if (message.startsWith("Unexpected inputs provided") ||
-            (message.startsWith("Required input") && message.endsWith("not provided")) ||
-            message.startsWith("No ref found for:") ||
-            message === `Workflow does not have 'workflow_dispatch' trigger`) {
-            core.setOutput("error-message", message);
-            core.warning(message);
-        }
-        else {
-            core.setFailed(error.message);
-        }
-    }
-}
-void run();
-
-})();
-
-module.exports = __webpack_exports__;
+/******/ 	
+/******/ 	// startup
+/******/ 	// Load entry module and return exports
+/******/ 	// This entry module is referenced by other modules so it can't be inlined
+/******/ 	var __webpack_exports__ = __nccwpck_require__(399);
+/******/ 	module.exports = __webpack_exports__;
+/******/ 	
 /******/ })()
 ;

@@ -32,7 +32,8 @@
   "homepage": "https://github.com/gitgitgadget/gitgitgadget-pr-action#readme",
   "dependencies": {
     "@actions/core": "^1.8.2",
-    "@actions/github": "^5.0.3"
+    "@actions/github": "^5.0.3",
+    "find-git-exec": "^0.0.4"
   },
   "devDependencies": {
     "@types/node": "^17.0.35",
