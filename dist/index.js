@@ -51794,10 +51794,11 @@ __nccwpck_require__.r(__webpack_exports__);
 var core = __nccwpck_require__(2186);
 // EXTERNAL MODULE: external "util"
 var external_util_ = __nccwpck_require__(3837);
-;// CONCATENATED MODULE: external "module"
-const external_module_namespaceObject = require("module");
 // EXTERNAL MODULE: external "fs"
 var external_fs_ = __nccwpck_require__(7147);
+// EXTERNAL MODULE: ./node_modules/nodemailer/lib/addressparser/index.js
+var addressparser = __nccwpck_require__(7382);
+var addressparser_default = /*#__PURE__*/__nccwpck_require__.n(addressparser);
 ;// CONCATENATED MODULE: ./node_modules/gitgitgadget/lib/commit-lint.ts
 /*
  * Simple single use class to drive lint tests on commit messages.
@@ -52247,6 +52248,9 @@ async function isFile(path) {
     return false;
 }
 
+// EXTERNAL MODULE: ./node_modules/nodemailer/lib/mime-funcs/index.js
+var mime_funcs = __nccwpck_require__(994);
+var mime_funcs_default = /*#__PURE__*/__nccwpck_require__.n(mime_funcs);
 // EXTERNAL MODULE: ./node_modules/html-to-text/index.js
 var html_to_text = __nccwpck_require__(7015);
 ;// CONCATENATED MODULE: ./node_modules/marked/lib/marked.esm.js
@@ -55307,9 +55311,7 @@ function getPullRequestKeyFromURL(pullRequestURL) {
 
 ;// CONCATENATED MODULE: ./node_modules/gitgitgadget/lib/patch-series.ts
 
-const __require = (0,external_module_namespaceObject.createRequire)("file:///C:/Users/chris/Documents/GitHub/gitgitgadget-pr-action/node_modules/gitgitgadget/lib/patch-series.ts");
-const addressparser = __require("nodemailer/lib/addressparser");
-const mimeFuncs = __require("nodemailer/lib/mime-funcs");
+
 // import { encodeWords } from "nodemailer/lib/mime-funcs";
 
 
@@ -55536,7 +55538,7 @@ class PatchSeries {
                             basedOn = match2[2];
                             break;
                         case "cc:":
-                            addressparser(match2[2], { flatten: true })
+                            addressparser_default()(match2[2], { flatten: true })
                                 .forEach((e) => {
                                 if (e.name) {
                                     cc.push(`${e.name} <${e.address}>`);
@@ -55628,7 +55630,7 @@ class PatchSeries {
         return headers;
     }
     static encodeSender(sender) {
-        const encoded = mimeFuncs.encodeWords(sender);
+        const encoded = mime_funcs_default().encodeWords(sender);
         /* Don't quote if already quoted */
         if (encoded.startsWith("\"") && encoded.match(/"\s*</)) {
             return encoded;
@@ -56401,8 +56403,6 @@ class GitGitGadget {
 var dist_node = __nccwpck_require__(5375);
 ;// CONCATENATED MODULE: ./node_modules/gitgitgadget/lib/github-glue.ts
 
-const github_glue_require = (0,external_module_namespaceObject.createRequire)("file:///C:/Users/chris/Documents/GitHub/gitgitgadget-pr-action/node_modules/gitgitgadget/lib/github-glue.ts");
-const github_glue_addressparser = github_glue_require("nodemailer/lib/addressparser");
 
 
 
@@ -56472,7 +56472,7 @@ class GitHubGlue {
                     footerSeparator = ""; // body already has footers
                     if (!found && match[1].toLowerCase() === "cc")
                         try {
-                            github_glue_addressparser(match[2], { flatten: true }).forEach(email => {
+                            addressparser_default()(match[2], { flatten: true }).forEach(email => {
                                 if (ccLower === email.address.toLowerCase()) {
                                     found = true;
                                     throw new Error("Found");
@@ -57056,10 +57056,9 @@ class MailCommitMapping {
 
 ;// CONCATENATED MODULE: ./node_modules/gitgitgadget/lib/ci-helper.ts
 
-const ci_helper_require = (0,external_module_namespaceObject.createRequire)("file:///C:/Users/chris/Documents/GitHub/gitgitgadget-pr-action/node_modules/gitgitgadget/lib/ci-helper.ts");
 
+// import addressparser = require("nodemailer/lib/addressparser");
 
-const ci_helper_addressparser = ci_helper_require("nodemailer/lib/addressparser");
 
 
 
@@ -57652,7 +57651,7 @@ GitGitGadget needs an email address to Cc: you on your contribution, so that you
         return text.replace(/(https:\/\/)x-access-token:.*?@/g, "$1");
     }
     async handleCC(ccSet, prKey) {
-        const addresses = ci_helper_addressparser(ccSet, { flatten: true });
+        const addresses = addressparser_default()(ccSet, { flatten: true });
         for (const address of addresses) {
             const cc = address.name ? `${address.name} <${address.address}>` : address.address;
             await this.github.addPRCc(prKey, cc);
