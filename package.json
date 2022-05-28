@@ -3,13 +3,15 @@
   "version": "0.5.0",
   "private": true,
   "description": "Action to support workflows using the gitgitgadget tooling",
-  "main": "lib/main.js",
+  "main": "dist/index.js",
+  "type": "module",
   "scripts": {
     "build": "ncc build src/main.ts -t -d",
     "compile": "tsc",
     "format": "prettier --write '**/*.ts'",
     "format-check": "prettier --check **/*.ts",
     "lint": "eslint src/**/*.ts",
+    "ncc:run": "ncc run ./dist/index.js",
     "test": "jest unit",
     "test:int": "jest int",
     "build:readme": "docker run -it --rm --name readme-gen -v %cd%:/usr/src/app -w /usr/src/app -e DEBUG=true -e npm_package_version=%npm_package_version% node:18 npx --trace-warnings github-action-readme-generator@1.0.12"
@@ -30,19 +32,19 @@
   },
   "homepage": "https://github.com/gitgitgadget/gitgitgadget-pr-action#readme",
   "dependencies": {
-    "@actions/core": "latest",
-    "@actions/github": "latest"
+    "@actions/core": "^1.8.2",
+    "@actions/github": "^5.0.3"
   },
   "devDependencies": {
-    "@types/node": "latest",
-    "@typescript-eslint/parser": "latest",
-    "@vercel/ncc": "latest",
-    "eslint": "latest",
-    "eslint-plugin-anti-trojan-source": "latest",
-    "eslint-plugin-github": "latest",
+    "@types/node": "^17.0.35",
+    "@typescript-eslint/parser": "^5.26.0",
+    "@vercel/ncc": "^0.34.0",
+    "eslint": "^8.16.0",
+    "eslint-plugin-anti-trojan-source": "^1.1.0",
+    "eslint-plugin-github": "^4.3.6",
     "gitgitgadget": "file:../gitgitgadget/gitgitgadget-1.0.0.tgz",
-    "js-yaml": "latest",
-    "prettier": "latest",
-    "typescript": "latest"
+    "js-yaml": "^4.1.0",
+    "prettier": "^2.6.2",
+    "typescript": "^4.7.2"
   }
 }
