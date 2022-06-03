@@ -899,6 +899,221 @@ exports.toCommandProperties = toCommandProperties;
 
 /***/ }),
 
+/***/ 4087:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.Context = void 0;
+const fs_1 = __nccwpck_require__(7147);
+const os_1 = __nccwpck_require__(2037);
+class Context {
+    /**
+     * Hydrate the context from the environment
+     */
+    constructor() {
+        var _a, _b, _c;
+        this.payload = {};
+        if (process.env.GITHUB_EVENT_PATH) {
+            if (fs_1.existsSync(process.env.GITHUB_EVENT_PATH)) {
+                this.payload = JSON.parse(fs_1.readFileSync(process.env.GITHUB_EVENT_PATH, { encoding: 'utf8' }));
+            }
+            else {
+                const path = process.env.GITHUB_EVENT_PATH;
+                process.stdout.write(`GITHUB_EVENT_PATH ${path} does not exist${os_1.EOL}`);
+            }
+        }
+        this.eventName = process.env.GITHUB_EVENT_NAME;
+        this.sha = process.env.GITHUB_SHA;
+        this.ref = process.env.GITHUB_REF;
+        this.workflow = process.env.GITHUB_WORKFLOW;
+        this.action = process.env.GITHUB_ACTION;
+        this.actor = process.env.GITHUB_ACTOR;
+        this.job = process.env.GITHUB_JOB;
+        this.runNumber = parseInt(process.env.GITHUB_RUN_NUMBER, 10);
+        this.runId = parseInt(process.env.GITHUB_RUN_ID, 10);
+        this.apiUrl = (_a = process.env.GITHUB_API_URL) !== null && _a !== void 0 ? _a : `https://api.github.com`;
+        this.serverUrl = (_b = process.env.GITHUB_SERVER_URL) !== null && _b !== void 0 ? _b : `https://github.com`;
+        this.graphqlUrl = (_c = process.env.GITHUB_GRAPHQL_URL) !== null && _c !== void 0 ? _c : `https://api.github.com/graphql`;
+    }
+    get issue() {
+        const payload = this.payload;
+        return Object.assign(Object.assign({}, this.repo), { number: (payload.issue || payload.pull_request || payload).number });
+    }
+    get repo() {
+        if (process.env.GITHUB_REPOSITORY) {
+            const [owner, repo] = process.env.GITHUB_REPOSITORY.split('/');
+            return { owner, repo };
+        }
+        if (this.payload.repository) {
+            return {
+                owner: this.payload.repository.owner.login,
+                repo: this.payload.repository.name
+            };
+        }
+        throw new Error("context.repo requires a GITHUB_REPOSITORY environment variable like 'owner/repo'");
+    }
+}
+exports.Context = Context;
+//# sourceMappingURL=context.js.map
+
+/***/ }),
+
+/***/ 5438:
+/***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
+
+"use strict";
+
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.getOctokit = exports.context = void 0;
+const Context = __importStar(__nccwpck_require__(4087));
+const utils_1 = __nccwpck_require__(3030);
+exports.context = new Context.Context();
+/**
+ * Returns a hydrated octokit ready to use for GitHub Actions
+ *
+ * @param     token    the repo PAT or GITHUB_TOKEN
+ * @param     options  other options to set
+ */
+function getOctokit(token, options) {
+    return new utils_1.GitHub(utils_1.getOctokitOptions(token, options));
+}
+exports.getOctokit = getOctokit;
+//# sourceMappingURL=github.js.map
+
+/***/ }),
+
+/***/ 7914:
+/***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
+
+"use strict";
+
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.getApiBaseUrl = exports.getProxyAgent = exports.getAuthString = void 0;
+const httpClient = __importStar(__nccwpck_require__(6255));
+function getAuthString(token, options) {
+    if (!token && !options.auth) {
+        throw new Error('Parameter token or opts.auth is required');
+    }
+    else if (token && options.auth) {
+        throw new Error('Parameters token and opts.auth may not both be specified');
+    }
+    return typeof options.auth === 'string' ? options.auth : `token ${token}`;
+}
+exports.getAuthString = getAuthString;
+function getProxyAgent(destinationUrl) {
+    const hc = new httpClient.HttpClient();
+    return hc.getAgent(destinationUrl);
+}
+exports.getProxyAgent = getProxyAgent;
+function getApiBaseUrl() {
+    return process.env['GITHUB_API_URL'] || 'https://api.github.com';
+}
+exports.getApiBaseUrl = getApiBaseUrl;
+//# sourceMappingURL=utils.js.map
+
+/***/ }),
+
+/***/ 3030:
+/***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
+
+"use strict";
+
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.getOctokitOptions = exports.GitHub = exports.context = void 0;
+const Context = __importStar(__nccwpck_require__(4087));
+const Utils = __importStar(__nccwpck_require__(7914));
+// octokit + plugins
+const core_1 = __nccwpck_require__(6762);
+const plugin_rest_endpoint_methods_1 = __nccwpck_require__(3044);
+const plugin_paginate_rest_1 = __nccwpck_require__(4193);
+exports.context = new Context.Context();
+const baseUrl = Utils.getApiBaseUrl();
+const defaults = {
+    baseUrl,
+    request: {
+        agent: Utils.getProxyAgent(baseUrl)
+    }
+};
+exports.GitHub = core_1.Octokit.plugin(plugin_rest_endpoint_methods_1.restEndpointMethods, plugin_paginate_rest_1.paginateRest).defaults(defaults);
+/**
+ * Convience function to correctly format Octokit Options to pass into the constructor.
+ *
+ * @param     token    the repo PAT or GITHUB_TOKEN
+ * @param     options  other options to set
+ */
+function getOctokitOptions(token, options) {
+    const opts = Object.assign({}, options || {}); // Shallow clone - don't mutate the object provided by the caller
+    // Auth
+    const auth = Utils.getAuthString(token, opts);
+    if (auth) {
+        opts.auth = auth;
+    }
+    return opts;
+}
+exports.getOctokitOptions = getOctokitOptions;
+//# sourceMappingURL=utils.js.map
+
+/***/ }),
+
 /***/ 5526:
 /***/ (function(__unused_webpack_module, exports) {
 
@@ -50766,14 +50981,18 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.processWork = void 0;
+exports.handlePRUpdate = void 0;
 const ci_helper_1 = __nccwpck_require__(8707);
 const fs_util_1 = __nccwpck_require__(7927);
-// import { gitConfig } from "./lib/git";
 const gitgitgadget_config_1 = __nccwpck_require__(3650);
 const project_config_1 = __nccwpck_require__(5520);
 const path_1 = __importDefault(__nccwpck_require__(1017));
-function processWork(work) {
+/**
+ * Handle an update to a pull request.  It may be a create or sync of changes or a comment.
+ *
+ * @param work
+ */
+function handlePRUpdate(work) {
     return __awaiter(this, void 0, void 0, function* () {
         const config = work.config ? (0, project_config_1.setConfig)(yield getExternalConfig(work.config)) : (0, gitgitgadget_config_1.getConfig)();
         // Update with current values
@@ -50802,23 +51021,12 @@ function processWork(work) {
         else {
             throw new Error(`Action '${work.action}' not found.`);
         }
-        console.log(`Action '${work.action}' completed`);
     });
 }
-exports.processWork = processWork;
+exports.handlePRUpdate = handlePRUpdate;
 function getExternalConfig(file) {
     return __awaiter(this, void 0, void 0, function* () {
-        const newConfig = yield (0, project_config_1.loadConfig)(path_1.default.resolve(file));
-        if (!newConfig.hasOwnProperty("project")) {
-            throw new Error(`User configurations must have a 'project:'.  Not found in ${file}`);
-        }
-        if (!newConfig.repo.owner.match(/^[a-z\d](?:[a-z\d]|-(?=[a-z\d])){0,38}$/i)) {
-            throw new Error(`Invalid 'owner' ${newConfig.repo.owner} in ${file}`);
-        }
-        if (!newConfig.repo.baseOwner.match(/^[a-z\d](?:[a-z\d]|-(?=[a-z\d])){0,38}$/i)) {
-            throw new Error(`Invalid 'baseOwner' ${newConfig.repo.baseOwner} in ${file}`);
-        }
-        return newConfig;
+        return yield (0, project_config_1.loadConfig)(path_1.default.resolve(file));
     });
 }
 function lintConfig(config) {
@@ -50880,7 +51088,6 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.CIHelper = void 0;
 const fs = __importStar(__nccwpck_require__(7147));
 const util = __importStar(__nccwpck_require__(3837));
-// import addressparser = require("nodemailer/lib/addressparser");
 const addressparser_1 = __importDefault(__nccwpck_require__(7382));
 const commit_lint_1 = __nccwpck_require__(8058);
 const git_1 = __nccwpck_require__(888);
@@ -51506,12 +51713,9 @@ GitGitGadget needs an email address to Cc: you on your contribution, so that you
     }
     handleCC(ccSet, prKey) {
         return __awaiter(this, void 0, void 0, function* () {
-            console.log(`Adding cc`);
             const addresses = (0, addressparser_1.default)(ccSet, { flatten: true });
-            console.log(`Adding ${addresses.length} addresses`);
             for (const address of addresses) {
                 const cc = address.name ? `${address.name} <${address.address}>` : address.address;
-                console.log(`Adding ${cc}`);
                 yield this.github.addPRCc(prKey, cc);
             }
         });
@@ -51648,6 +51852,8 @@ class LintCommit {
             }
             for (let i = 1; i < this.lines.length; i++) {
                 if (this.lines[i].length > this.maxColumns &&
+                    // Allow long lines if prefixed with whitespace (ex. quoted error messages)
+                    (!this.lines[i].match(/^\s+/)) &&
                     // Allow long lines if they cannot be wrapped at some
                     // white-space character, e.g. URLs. To allow ` [1] <URL>`
                     // lines, we skip the first 10 characters.
@@ -52475,7 +52681,7 @@ const git_1 = __nccwpck_require__(888);
 const pullRequestKey_1 = __nccwpck_require__(4988);
 class GitHubGlue {
     constructor(workDir, owner, repo) {
-        this.client = new rest_1.Octokit({ log: console }); // add { log: console } to debug
+        this.client = new rest_1.Octokit(); // add { log: console } to debug
         this.owner = owner;
         this.repo = repo;
         this.workDir = workDir;
@@ -52829,7 +53035,6 @@ class GitHubGlue {
     }
     ensureAuthenticated(repositoryOwner) {
         return __awaiter(this, void 0, void 0, function* () {
-            console.log(`authenticating ${repositoryOwner}`);
             if (repositoryOwner !== this.authenticated) {
                 const infix = repositoryOwner === "gitgitgadget" ?
                     "" : `.${repositoryOwner}`;
@@ -52839,7 +53044,6 @@ class GitHubGlue {
                 }
                 this.client = new rest_1.Octokit({ auth: token }); // add log: console to debug
                 this.authenticated = repositoryOwner;
-                console.log(`authenticated ${this.authenticated}`);
             }
         });
     }
@@ -54605,73 +54809,119 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 const core = __importStar(__nccwpck_require__(2186));
+const github = __importStar(__nccwpck_require__(5438));
 const path_1 = __nccwpck_require__(1017);
 const util_1 = __nccwpck_require__(3837);
 const gitgitgadget_helper_1 = __nccwpck_require__(9027);
 const find_git_exec_1 = __importDefault(__nccwpck_require__(1664));
+;
 function run() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const inputs = {
-                token: core.getInput("token"),
-                reactionToken: core.getInput("reaction-token"),
-                reactions: core.getInput("reactions"),
-                permission: core.getInput("permission"),
-                repositoryDir: core.getInput("repository-dir"),
-                configRepositoryDir: core.getInput("config-repository-dir"),
-                configurationFile: core.getInput("configuration-file"),
-                config: core.getInput("config"),
-                configFromFile: core.getInput("config-from-file"),
-                repoOwner: core.getInput("repo-owner"),
-                repoName: core.getInput("repo-name"),
-                repoBaseowner: core.getInput("repo-baseowner"),
-                pullRequestNumber: core.getInput("pull-request-number"),
-                commentId: core.getInput("comment-id"),
-                action: core.getInput("action"),
-                skipUpdate: core.getInput("skip-update"),
-            };
-            core.debug(`Inputs: ${(0, util_1.inspect)(inputs)}`);
-            // Check required inputs
-            if (!inputs.token) {
-                throw new Error(`Missing required input 'token'.`);
-            }
+            const parms = getParms();
             yield setupGitEnvironment();
             /*
             if (gitInfo === null) {
               throw new Error('External Git was not found on the host system.');
             }
             */
-            yield (0, gitgitgadget_helper_1.processWork)(Object.assign({}, inputs));
+            const octokit = parms.token ? github.getOctokit(parms.token) : null;
+            let id = 0;
+            if (octokit) {
+                if (parms.commentId) {
+                    const response = yield octokit.rest.reactions.createForIssueComment({
+                        owner: parms.repoOwner,
+                        repo: parms.repoName,
+                        comment_id: parseInt(parms.commentId, 10),
+                        content: "eyes",
+                    });
+                    id = response.data.id;
+                }
+                else {
+                    const response = yield octokit.rest.reactions.createForIssue({
+                        owner: parms.repoOwner,
+                        repo: parms.repoName,
+                        issue_number: parseInt(parms.pullRequestNumber, 10),
+                        content: "eyes",
+                    });
+                    id = response.data.id;
+                }
+            }
+            yield (0, gitgitgadget_helper_1.handlePRUpdate)(Object.assign({}, parms));
+            if (octokit) {
+                if (parms.commentId) {
+                    yield octokit.rest.reactions.deleteForPullRequestComment({
+                        owner: parms.repoOwner,
+                        repo: parms.repoName,
+                        comment_id: parseInt(parms.commentId, 10),
+                        reaction_id: id,
+                    });
+                    yield octokit.rest.reactions.createForIssueComment({
+                        owner: parms.repoOwner,
+                        repo: parms.repoName,
+                        comment_id: parseInt(parms.commentId, 10),
+                        content: "rocket",
+                    });
+                }
+                else {
+                    yield octokit.rest.reactions.deleteForIssue({
+                        owner: parms.repoOwner,
+                        repo: parms.repoName,
+                        issue_number: parseInt(parms.pullRequestNumber, 10),
+                        reaction_id: id,
+                    });
+                }
+            }
         }
         catch (err) {
             const error = err;
             core.debug((0, util_1.inspect)(error));
-            const message = error.message;
-            // Handle validation errors from workflow dispatch
-            if (message.startsWith("Unexpected inputs provided") ||
-                (message.startsWith("Required input") && message.endsWith("not provided")) ||
-                message.startsWith("No ref found for:") ||
-                message === `Workflow does not have 'workflow_dispatch' trigger`) {
-                core.setOutput("error-message", message);
-                core.warning(message);
-            }
-            else {
-                core.setFailed(error.message);
-            }
+            core.setFailed(error.message);
         }
     });
 }
 void run();
+/**
+ *  Set the environment variables to be able to use an external Git.
+ */
 function setupGitEnvironment() {
     return __awaiter(this, void 0, void 0, function* () {
         const gitInfo = yield (0, find_git_exec_1.default)();
         if (gitInfo.path && gitInfo.execPath) {
-            // Set the environment variables to be able to use an external Git.
             process.env.GIT_EXEC_PATH = gitInfo.execPath;
             process.env.LOCAL_GIT_DIRECTORY = (0, path_1.dirname)((0, path_1.dirname)(gitInfo.path));
         }
         return gitInfo;
     });
+}
+function getParms() {
+    const parms = {
+        token: core.getInput("token"),
+        reactionToken: core.getInput("reaction-token"),
+        reactions: core.getInput("reactions"),
+        permission: core.getInput("permission"),
+        repositoryDir: core.getInput("repository-dir"),
+        configRepositoryDir: core.getInput("config-repository-dir"),
+        configurationFile: core.getInput("configuration-file"),
+        config: core.getInput("config"),
+        configFromFile: core.getInput("config-from-file"),
+        repoOwner: core.getInput("repo-owner"),
+        repoName: core.getInput("repo-name"),
+        repoBaseowner: core.getInput("repo-baseowner"),
+        pullRequestNumber: core.getInput("pull-request-number"),
+        commentId: core.getInput("comment-id"),
+        action: core.getInput("action"),
+        skipUpdate: core.getInput("skip-update"),
+    };
+    core.debug(`Inputs: ${(0, util_1.inspect)(parms)}`);
+    // Check required inputs
+    if (!parms.token) {
+        throw new Error(`Missing required input 'token'.`);
+    }
+    if (!parms.action || !["comment", "push"].includes(parms.action)) {
+        throw new Error(`Missing or invalid required input 'format'.`);
+    }
+    return parms;
 }
 
 
