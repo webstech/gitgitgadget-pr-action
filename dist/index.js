@@ -50990,36 +50990,36 @@ const path_1 = __importDefault(__nccwpck_require__(1017));
 /**
  * Handle an update to a pull request.  It may be a create or sync of changes or a comment.
  *
- * @param work
+ * @param parms
  */
-function handlePRUpdate(work) {
+function handlePRUpdate(parms) {
     return __awaiter(this, void 0, void 0, function* () {
-        const config = work.config ? (0, project_config_1.setConfig)(yield getExternalConfig(work.config)) : (0, gitgitgadget_config_1.getConfig)();
+        const config = parms.config ? (0, project_config_1.setConfig)(yield getExternalConfig(parms.config)) : (0, gitgitgadget_config_1.getConfig)();
         // Update with current values
-        config.repo.name = work.repoName;
-        config.repo.owner = work.repoOwner;
-        config.repo.baseOwner = work.repoBaseowner;
+        config.repo.name = parms.repoName;
+        config.repo.owner = parms.repoOwner;
+        config.repo.baseOwner = parms.repoBaseowner;
         (0, project_config_1.setConfig)(config);
         lintConfig(config);
-        if (!(yield (0, fs_util_1.isDirectory)(work.repositoryDir))) {
-            throw new Error(`git WorkDir '${work.repositoryDir}' not found.`);
+        if (!(yield (0, fs_util_1.isDirectory)(parms.repositoryDir))) {
+            throw new Error(`git WorkDir '${parms.repositoryDir}' not found.`);
         }
-        const ci = new ci_helper_1.CIHelper(work.repositoryDir, work.skipUpdate ? true : false, work.configRepositoryDir);
-        if (work.action === "comment") {
-            if (work.commentId) {
-                const commentId = parseInt(work.commentId, 10);
-                yield ci.handleComment(work.repoOwner, commentId);
+        const ci = new ci_helper_1.CIHelper(parms.repositoryDir, parms.skipUpdate ? true : false, parms.configRepositoryDir);
+        if (parms.action === "comment") {
+            if (parms.commentId) {
+                const commentId = parseInt(parms.commentId, 10);
+                yield ci.handleComment(parms.repoOwner, commentId);
             }
             else {
-                throw new Error(`Action '${work.action}' requires a comment-id.`);
+                throw new Error(`Action '${parms.action}' requires a comment-id.`);
             }
         }
-        else if (work.action === "push") {
-            const pullRequestNumber = parseInt(work.pullRequestNumber, 10);
-            yield ci.handlePush(work.repoOwner, pullRequestNumber);
+        else if (parms.action === "push") {
+            const pullRequestNumber = parseInt(parms.pullRequestNumber, 10);
+            yield ci.handlePush(parms.repoOwner, pullRequestNumber);
         }
         else {
-            throw new Error(`Action '${work.action}' not found.`);
+            throw new Error(`Action '${parms.action}' not found.`);
         }
     });
 }
@@ -51655,6 +51655,8 @@ GitGitGadget needs an email address to Cc: you on your contribution, so that you
             catch (e) {
                 const error = e;
                 yield addComment(error.toString());
+                // re-throw exception to avoid "succeeding" on error
+                throw e;
             }
         });
     }
@@ -52454,13 +52456,21 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.GitGitGadget = void 0;
+exports.GitGitGadget = exports.getVar = void 0;
 const fs_util_1 = __nccwpck_require__(7927);
 const git_1 = __nccwpck_require__(888);
 const git_notes_1 = __nccwpck_require__(7170);
 const patch_series_1 = __nccwpck_require__(2300);
 const project_config_1 = __nccwpck_require__(5520);
 const send_mail_1 = __nccwpck_require__(7025);
+function getVar(key, configDir) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const keyPrefix = "gitgitgadget";
+        const envVar = `${keyPrefix}_${key}`.toUpperCase();
+        return process.env[envVar] ? process.env[envVar] : yield (0, git_1.gitConfig)(`${keyPrefix}.${key}`, configDir);
+    });
+}
+exports.getVar = getVar;
 /**
  * The central class of the GitHub App.
  */
@@ -52479,7 +52489,7 @@ class GitGitGadget {
     }
     static getWorkDir(gitGitGadgetDir) {
         return __awaiter(this, void 0, void 0, function* () {
-            const workDir = yield (0, git_1.gitConfig)("gitgitgadget.workDir", gitGitGadgetDir);
+            const workDir = yield getVar("workDir", gitGitGadgetDir);
             if (!workDir) {
                 throw new Error("Could not find GitGitGadget's work tree");
             }
@@ -52491,7 +52501,7 @@ class GitGitGadget {
             if (!workDir) {
                 workDir = yield this.getWorkDir(gitGitGadgetDir);
             }
-            const publishTagsAndNotesToRemote = yield (0, git_1.gitConfig)("gitgitgadget.publishRemote", gitGitGadgetDir);
+            const publishTagsAndNotesToRemote = yield getVar("publishRemote", gitGitGadgetDir);
             if (!publishTagsAndNotesToRemote) {
                 throw new Error("No remote to which to push configured");
             }
@@ -52503,10 +52513,10 @@ class GitGitGadget {
             yield (0, git_1.git)(["fetch", publishTagsAndNotesToRemote, "--",
                 `+${git_notes_1.GitNotes.defaultNotesRef}:${git_notes_1.GitNotes.defaultNotesRef}`], { workDir });
             const notes = new git_notes_1.GitNotes(workDir);
-            const smtpUser = yield (0, git_1.gitConfig)("gitgitgadget.smtpUser", gitGitGadgetDir);
-            const smtpHost = yield (0, git_1.gitConfig)("gitgitgadget.smtpHost", gitGitGadgetDir);
-            const smtpPass = yield (0, git_1.gitConfig)("gitgitgadget.smtpPass", gitGitGadgetDir);
-            const smtpOpts = yield (0, git_1.gitConfig)("gitgitgadget.smtpOpts", gitGitGadgetDir);
+            const smtpUser = yield getVar("smtpUser", gitGitGadgetDir);
+            const smtpHost = yield getVar("smtpHost", gitGitGadgetDir);
+            const smtpPass = yield getVar("smtpPass", gitGitGadgetDir);
+            const smtpOpts = yield getVar("smtpOpts", gitGitGadgetDir);
             if (!smtpUser || !smtpHost || !smtpPass) {
                 throw new Error("No SMTP settings configured");
             }
@@ -53036,9 +53046,10 @@ class GitHubGlue {
     ensureAuthenticated(repositoryOwner) {
         return __awaiter(this, void 0, void 0, function* () {
             if (repositoryOwner !== this.authenticated) {
-                const infix = repositoryOwner === "gitgitgadget" ?
-                    "" : `.${repositoryOwner}`;
-                const token = yield (0, git_1.gitConfig)(`gitgitgadget${infix}.githubToken`);
+                const infix = repositoryOwner === "gitgitgadget" ? "" : `.${repositoryOwner}`;
+                const tokenKey = `gitgitgadget${infix}.githubToken`;
+                const tokenVar = tokenKey.toUpperCase().replace(/\./, "_");
+                const token = process.env[tokenVar] ? process.env[tokenVar] : yield (0, git_1.gitConfig)(tokenKey);
                 if (!token) {
                     throw new Error(`Need a GitHub token for ${repositoryOwner}`);
                 }
@@ -54850,7 +54861,7 @@ function run() {
             yield (0, gitgitgadget_helper_1.handlePRUpdate)(Object.assign({}, parms));
             if (octokit) {
                 if (parms.commentId) {
-                    yield octokit.rest.reactions.deleteForPullRequestComment({
+                    yield octokit.rest.reactions.deleteForIssueComment({
                         owner: parms.repoOwner,
                         repo: parms.repoName,
                         comment_id: parseInt(parms.commentId, 10),
@@ -54860,7 +54871,7 @@ function run() {
                         owner: parms.repoOwner,
                         repo: parms.repoName,
                         comment_id: parseInt(parms.commentId, 10),
-                        content: "rocket",
+                        content: "+1",
                     });
                 }
                 else {

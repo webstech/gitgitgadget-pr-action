@@ -1,9 +1,9 @@
 import * as core from "@actions/core";
-import * as github from"@actions/github";
-import { dirname } from 'path';
+import * as github from "@actions/github";
+import { dirname } from "path";
 import { inspect } from "util";
 import { handlePRUpdate } from "gitgitgadget/gitgitgadget-helper";
-import findGit, { Git } from 'find-git-exec';
+import findGit, { Git } from "find-git-exec";
 
 interface parmInterface {
     token: string;
@@ -44,7 +44,7 @@ async function run(): Promise<void> {
                     repo: parms.repoName,
                     comment_id: parseInt(parms.commentId, 10),
                     content: "eyes",
-                  });
+                });
                 id = response.data.id;
             } else {
                 const response = await octokit.rest.reactions.createForIssue({
@@ -52,36 +52,36 @@ async function run(): Promise<void> {
                     repo: parms.repoName,
                     issue_number: parseInt(parms.pullRequestNumber, 10),
                     content: "eyes",
-                  });
+                });
                 id = response.data.id;
             }
         }
 
         await handlePRUpdate({ ...parms });
+
         if (octokit) {
             if (parms.commentId) {
-                await octokit.rest.reactions.deleteForPullRequestComment({
+                await octokit.rest.reactions.deleteForIssueComment({
                     owner: parms.repoOwner,
                     repo: parms.repoName,
                     comment_id: parseInt(parms.commentId, 10),
                     reaction_id: id,
-                  });
+                });
                 await octokit.rest.reactions.createForIssueComment({
                     owner: parms.repoOwner,
                     repo: parms.repoName,
                     comment_id: parseInt(parms.commentId, 10),
-                    content: "rocket",
-                  });
+                    content: "+1",
+                });
             } else {
                 await octokit.rest.reactions.deleteForIssue({
                     owner: parms.repoOwner,
                     repo: parms.repoName,
                     issue_number: parseInt(parms.pullRequestNumber, 10),
                     reaction_id: id,
-                  });
+                });
             }
         }
-
     } catch (err) {
         const error = err as Error;
         core.debug(inspect(error));
@@ -98,8 +98,8 @@ async function setupGitEnvironment(): Promise<Git> {
     const gitInfo = await findGit();
 
     if (gitInfo.path && gitInfo.execPath) {
-      process.env.GIT_EXEC_PATH = gitInfo.execPath;
-      process.env.LOCAL_GIT_DIRECTORY = dirname(dirname(gitInfo.path));
+        process.env.GIT_EXEC_PATH = gitInfo.execPath;
+        process.env.LOCAL_GIT_DIRECTORY = dirname(dirname(gitInfo.path));
     }
 
     return gitInfo;

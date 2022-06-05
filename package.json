@@ -10,7 +10,7 @@
     "format": "prettier --write '**/*.ts'",
     "format-check": "prettier --check **/*.ts",
     "lint": "eslint src/**/*.ts",
-    "ncc:run": "ncc run ./dist/index.js",
+    "test:ncc": "cmd /c test\\ncctest.cmd",
     "test": "jest unit",
     "test:int": "jest int",
     "build:readme": "docker run -it --rm --name readme-gen -v %cd%:/usr/src/app -w /usr/src/app -e DEBUG=true -e npm_package_version=%npm_package_version% node:18 npx --trace-warnings github-action-readme-generator@1.0.12"
