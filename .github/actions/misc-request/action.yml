@@ -1,0 +1,55 @@
+name: gitgitgadget Miscelaneous Action
+author: webstech
+description: >
+  This is a GitHub action to perform various scheduled actions with
+  gitgitgadget.  It is used as a scheduled action running in a separate repo or the repo it
+  is acting upon.  The
+  use case is for repos that will not allow complex github actions in the codebase when
+  the github repo is a clone that is used to submit updates to a non-GitHub maintained
+  repo.
+
+inputs:
+  token:
+    description: A repo scoped GitHub Personal Access Token.
+    required: true
+  repository-dir:
+    description: 'The location of the repository.'
+    required: true
+  config-repository-dir:
+    description: 'The location of the repository with gitgitgadget configuration information.'
+    required: false
+  config:
+    description: 'JSON configuration for commands.'
+    required: true
+  configuration-file:
+    description: 'The file of configuration information.'
+    required: true
+  config-from-file:
+    description: 'JSON configuration from a file for commands.'
+    required: true
+  action:
+    description: >
+      Command to perform.  One of
+      - update-open-prs
+      - update-commit-mappings
+      - handle-open-prs
+      - handle-new-mails (check-emails)
+    required: true
+  repo-owner:
+    description: 'Repository owner.'
+    required: true
+  repo-name:
+    description: 'Repository name.'
+    required: true
+
+outputs:
+  error-message:
+    description: 'Validation errors or gitgitgadget errors.'
+
+runs:
+  using: 'node16'
+  main: 'index.js'
+
+branding:
+  icon: 'target'
+  color: 'gray-dark'
