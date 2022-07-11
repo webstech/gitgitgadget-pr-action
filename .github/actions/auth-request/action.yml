@@ -1,0 +1,39 @@
+name: gitgitgadget Auth Action
+author: webstech
+description: >
+  This is a GitHub action to set the app token for application use connecting to GitHub.
+
+inputs:
+  token:
+    description: A repo scoped GitHub Personal Access Token.
+    required: true
+  repository-dir:
+    description: The location of the repository.
+    required: true
+  config-repository-dir:
+    description: The location of the repository with gitgitgadget configuration information.
+    required: false
+  config:
+    description: JSON configuration for commands.
+    required: true
+  repo-owner:
+    description: Repository owner.
+    required: true
+  repo-name:
+    description: Repository name.
+    required: true
+  appid:
+    description: GitHub assigned app id.
+    required: true
+  organizations:
+    description: set of additional organization names to be authorized.  The names are
+      comma seperated with no spaces.
+    required: true
+
+runs:
+  using: 'node16'
+  main: 'index.js'
+
+branding:
+  icon: 'target'
+  color: 'gray-dark'

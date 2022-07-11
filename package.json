@@ -7,7 +7,8 @@
   "scripts": {
     "build:pr": "ncc build src/pullRequest.ts -t -d -o .github/actions/pull-request",
     "build:misc": "ncc build src/miscRequest.ts -t -d -o .github/actions/misc-request",
-    "build": "npm run build:pr && npm run build:misc",
+    "build:auth": "ncc build src/authRequest.ts -t -d -o .github/actions/auth-request",
+    "build": "npm run build:pr && npm run build:misc && npm run build:auth",
     "compile": "tsc",
     "format": "prettier --write '**/*.ts'",
     "format-check": "prettier --check **/*.ts",
