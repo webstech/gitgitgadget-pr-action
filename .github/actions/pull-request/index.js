@@ -51808,7 +51808,7 @@ GitGitGadget needs an email address to Cc: you on your contribution, so that you
     }
     handleNewMails(mailArchiveGitDir, onlyPRs) {
         return __awaiter(this, void 0, void 0, function* () {
-            // await git(["fetch"], { workDir: mailArchiveGitDir });
+            yield (0, git_1.git)(["fetch"], { workDir: mailArchiveGitDir });
             const prFilter = !onlyPRs ? undefined :
                 (pullRequestURL) => {
                     const match = pullRequestURL.match(/.*\/(\d+)$/);
@@ -53374,7 +53374,7 @@ class MailArchiveGitHelper {
             if (!this.state.latestRevision) {
                 throw new Error(`Mail archive email commit tip not set.  Please run \`misc-helper init-email-commit-tip\` ${""}to set the value.`);
             }
-            yield (0, git_1.git)(["fetch", "origin", `${this.state.latestRevision}..HEAD`], { workDir: this.mailArchiveGitDir });
+            // await git(["fetch", "origin", "--", `${this.state.latestRevision}..HEAD`], { workDir: this.mailArchiveGitDir });
             const head = yield (0, git_1.revParse)(this.branch, this.mailArchiveGitDir);
             if (this.state.latestRevision === head) {
                 return false;
