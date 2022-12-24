@@ -52663,7 +52663,7 @@ class GitHubGlue {
             const files = yield (0, git_1.git)(["diff", "--name-only",
                 `${commit}^..${commit}`, "--"], { workDir: gitWorkDir });
             const path = files.replace(/\n[^]*/, "");
-            const status = yield this.client.rest.pulls.createReviewComment(Object.assign({ body: comment, commit_id: commit, path, position: 1 }, prKey));
+            const status = yield this.client.rest.pulls.createReviewComment(Object.assign({ body: comment, commit_id: commit, path, line: 1 }, prKey));
             return {
                 id: status.data.id,
                 url: status.data.html_url,
