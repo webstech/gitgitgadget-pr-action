@@ -34,20 +34,20 @@
   },
   "homepage": "https://github.com/gitgitgadget/gitgitgadget-pr-action#readme",
   "dependencies": {
-    "@actions/core": "^1.9.0",
-    "@actions/github": "^5.0.3",
+    "@actions/core": "^1.10.0",
+    "@actions/github": "^5.1.1",
     "find-git-exec": "^0.0.4"
   },
   "devDependencies": {
     "@types/node": "^17.0.45",
-    "@typescript-eslint/parser": "^5.30.0",
+    "@typescript-eslint/parser": "^5.47.0",
     "@vercel/ncc": "^0.34.0",
-    "eslint": "^8.18.0",
+    "eslint": "^8.30.0",
     "eslint-plugin-anti-trojan-source": "^1.1.0",
-    "eslint-plugin-github": "^4.3.6",
+    "eslint-plugin-github": "^4.6.0",
     "gitgitgadget": "file:../gitgitgadget/gitgitgadget-1.0.0.tgz",
     "js-yaml": "^4.1.0",
-    "prettier": "^2.7.1",
-    "typescript": "^4.7.4"
+    "prettier": "^2.8.1",
+    "typescript": "^4.9.4"
   }
 }
